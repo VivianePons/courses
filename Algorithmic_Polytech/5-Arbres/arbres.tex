@@ -1,0 +1,1258 @@
+\def \withcache{1}
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{Cours 5 : Arbres}
+
+
+\begin{document}
+\maketitle
+ 
+\section{Définitions et algorithmes de base}
+
+\subsection{Arbres}
+
+La structure d'arbre est présente de façon récurrente en algorithmique et plus généralement en informatique : \textbf{non linéaire} mais \textbf{sans boucle}, elle permet de modéliser de nombreux problèmes ou données. 
+
+Exemples : Arbre généalogique, structure de fichier.
+
+Nous allons donner ici une définition récursive des \textbf{arbres enracinés}.
+
+\begin{Definition}
+Un arbre est un \emph{n\oe{}ud} qui possède une liste (éventuellement vide) de fils qui sont eux même des arbres. 
+\end{Definition}
+
+Ici, un \emph{n\oe{}ud} est simplement une unité de mémoire qui contient de l'information. On considère qu'on ne peut pas \emph{réutiliser} les  n\oe{}uds précédents.
+
+\begin{Example}
+\label{ex:arbre}
+Un arbre dont les nœuds contiennent des entiers.
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$3$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$5$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$2$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$3$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$4$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$2$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$7$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$1$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$9$}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \& \nodee  \&         \& \nodef  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodeg  \& \nodeh  \& \nodei  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(f) edge (g) edge (h) edge (i)
+	(a) edge (b) edge (e) edge (f);
+\end{tikzpicture}}
+\end{Example}
+
+\begin{Remark}
+En théorie des graphes, on définit un arbre comme un \emph{graphe acyclique connexe}. Notre définition revient à choisir une \emph{racine} dans le graphe.
+\end{Remark}
+
+\begin{Definition}
+
+~
+\begin{itemize}
+\item La \textbf{racine} de l'arbre est le nœud initial.
+\item Une \textbf{feuille} est un nœud dont la liste de fils est vide.
+\item Un \textbf{nœud interne} est un nœud dont la liste de fils n'est pas vide.
+\item La \textbf{taille} d'un arbre est son nombre de nœuds.
+\item La \textbf{hauteur} d'un arbre est le nombre maximal de nœuds qui sépare la racine d'une feuille.  
+\end{itemize}
+\end{Definition}
+
+\begin{Example}
+Dans l'exemple précédent, la valeur de la racine est 3, elle a trois fils dont les racine ont pour valeurs : 5, 4 et 2. Voici un dessin de l'arbre où toutes les feuilles ont été notées en gras et vert.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$3$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$5$}
+;}\newcommand{\nodec}{\node[draw,circle, ultra thick, green, font=\bf] (c) {$2$}
+;}\newcommand{\noded}{\node[draw,circle, ultra thick, green, font=\bf] (d) {$3$}
+;}\newcommand{\nodee}{\node[draw,circle, ultra thick, green, font=\bf] (e) {$4$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$2$}
+;}\newcommand{\nodeg}{\node[draw,circle, ultra thick, green, font=\bf] (g) {$7$}
+;}\newcommand{\nodeh}{\node[draw,circle, ultra thick, green, font=\bf] (h) {$1$}
+;}\newcommand{\nodei}{\node[draw,circle, ultra thick, green, font=\bf] (i) {$9$}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \& \nodee  \&         \& \nodef  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodeg  \& \nodeh  \& \nodei  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(f) edge (g) edge (h) edge (i)
+	(a) edge (b) edge (e) edge (f);
+\end{tikzpicture}}
+
+La taille est de 9 et la hauteur est de 3.
+
+\end{Example}
+
+\subsection{Arbres binaires}
+
+Les arbres binaires sont une classe d'arbres très courante : on se restreint au cas des \textbf{arbres à deux fils}.
+Plus précisément, la définition est la suivante.
+
+\begin{Definition}
+Un arbre binaire est :
+\begin{itemize}
+\item soit un arbre vide,
+\item soit la donnée de deux arbres binaires \emph{fils gauche} et \emph{fils droit}.
+\end{itemize}
+\end{Definition}
+
+
+\begin{Example}
+Un arbre binaire. Les arbres vides sont représentés par des segments noirs.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {}
+;}\newcommand{\noded}{\node[] (d) {}
+;}\newcommand{\nodee}{\node[] (e) {}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {}
+;}\newcommand{\nodeg}{\node[] (g) {}
+;}\newcommand{\nodeh}{\node[] (h) {}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {}
+;}\newcommand{\nodeba}{\node[] (ba) {}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {}
+;}\newcommand{\nodebd}{\node[] (bd) {}
+;}\newcommand{\nodebe}{\node[] (be) {}
+;}\newcommand{\nodebf}{\node[] (bf) {}
+;}\newcommand{\nodebg}{\node[draw,circle] (bg) {}
+;}\newcommand{\nodebh}{\node[] (bh) {}
+;}\newcommand{\nodebi}{\node[] (bi) {}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \&         \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \&         \&         \&         \&         \&         \& \nodebg \&         \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \& \nodebb \&         \&         \& \nodebh \&         \& \nodebi \\ 
+         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodebc \&         \&         \& \nodebf \&         \&         \&         \&         \\ 
+         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodebd \&         \& \nodebe \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] 
+	(b) edge (c) edge (f)
+	(bb) edge (bc) 
+	(j) edge (bb)
+	(i) edge (j) edge (bg)
+	(a) edge (b) edge (i);
+	
+\path (c) edge (d) edge (e)
+(f) edge (g) edge (h)
+(j) edge (ba)
+(bc) edge (bd) edge (be)
+(bb) edge (bf)
+(bg) edge (bh) edge (bi);
+\end{tikzpicture}}
+
+\end{Example}
+
+\begin{Definition}
+Un arbre binaire est dit \emph{complet} si tous les noeuds ont soit deux fils non vide, soit deux fils vides.
+\end{Definition}
+
+\subsection{Algorithmes courants}
+
+Les arbres sont des structures \textbf{récursives}, la plupart des algorithmes sur les arbres se basent sur cette structure et sont donc eux même récursifs.
+
+\begin{Example}[Calcul de la hauteur]
+
+~
+\begin{lstlisting}
+Hauteur
+Input : Un arbre A
+Procédé :
+    H <- 0
+    Pour chaque fils f de A:
+        HF = Hauteur(f)
+        Si HF > H:
+            H <- HF
+    Retourner H + 1
+Output : La hauteur de l'arbre
+\end{lstlisting} 
+
+\textbf{Complexité} La donnée d'entrée est le \textbf{le nombre de nœuds de l'arbre}, c'est-à-dire sa taille. Pour calculer la complexité, on se demande combien de fois chaque nœud est-il visité. Dans le cas de l'algorithme précédent, la réponse est simple : une fois. La complexité est donc en $O(n)$. 
+\end{Example}
+
+\begin{Example}[Parcours d'arbre]
+Il y a deux façons principales de parcourir un arbre : en \textbf{profondeur} et en \textbf{largeur}. 
+
+Le \textbf{parcours en profondeur} suit le principe suivant : je vais parcourir les fils du nœud courant en parcourant \emph{complètement} le sous-arbre
+d'un fils donné avant de passer au suivant. Sur l'arbre de l'exemple \ref{ex:arbre}, on obtient : $3, 5, 2, 3, 4, 2, 7, 1, 9$.
+
+\begin{lstlisting}
+ParcoursProf
+Input : Un arbre A
+Procédé :
+    Afficher valeur de A
+    Pour chaque fils f de A:
+        ParcoursProf(f)
+\end{lstlisting} 
+
+Le \textbf{parcours en largeur} est une lecture des nœuds par niveau : d'abord la racine, puis les nœuds à distance 1, puis à distance 2, etc. Sur l'exemple, précédent, on obtient : 3, 5, 4, 2, 2, 3, 7, 1, 9.
+
+L'algorithme est particulier car il s'écrit de façon \emph{itérative}. 
+
+\begin{lstlisting}
+ParcoursLarg
+Input : Un arbre A
+Procédé :
+    L <- Liste vide
+    AjouterFinDeListe(L,A)
+    Tant que L n'est pas vide:
+        P = SupprimerTeteListe(L) # supprime la tete de liste et la retourne
+        Afficher valeur de P
+        Pour chaque fils f de P:
+            AjouterFinDeListe(L,f)
+\end{lstlisting} 
+\end{Example}
+
+\begin{Example}[Parcours d'arbre binaire]
+
+Les arbres binaires peuvent aussi être parcours en largeur où en profondeur. Cependant, on distingue trois cas de parcours en profondeur : \textbf{préfixe} \textbf{infixe}, \textbf{suffixe}. 
+
+Voici un arbre binaire dont les nœuds contiennent des entiers.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {2}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {1}
+;}\newcommand{\noded}{\node[] (d) {}
+;}\newcommand{\nodee}{\node[] (e) {}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {3}
+;}\newcommand{\nodeg}{\node[] (g) {}
+;}\newcommand{\nodeh}{\node[] (h) {}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {2}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {5}
+;}\newcommand{\nodeba}{\node[] (ba) {}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {3}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {7}
+;}\newcommand{\nodebd}{\node[] (bd) {}
+;}\newcommand{\nodebe}{\node[] (be) {}
+;}\newcommand{\nodebf}{\node[] (bf) {}
+;}\newcommand{\nodebg}{\node[draw,circle] (bg) {2}
+;}\newcommand{\nodebh}{\node[] (bh) {}
+;}\newcommand{\nodebi}{\node[] (bi) {}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \&         \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \&         \&         \&         \&         \&         \& \nodebg \&         \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \& \nodebb \&         \&         \& \nodebh \&         \& \nodebi \\ 
+         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodebc \&         \&         \& \nodebf \&         \&         \&         \&         \\ 
+         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodebd \&         \& \nodebe \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] 
+	(b) edge (c) edge (f)
+	(bb) edge (bc) 
+	(j) edge (bb)
+	(i) edge (j) edge (bg)
+	(a) edge (b) edge (i);
+	
+\path (c) edge (d) edge (e)
+(f) edge (g) edge (h)
+(j) edge (ba)
+(bc) edge (bd) edge (be)
+(bb) edge (bf)
+(bg) edge (bh) edge (bi);
+\end{tikzpicture}}
+
+
+Pour le \textbf{parcours préfixe}, on lit \textbf{la valeur de la racine} puis récursivement, \textbf{le fils gauche} et \textbf{le fils droit}. Sur l'arbre donné en exemple, on obtient : 2, 4, 1, 3, 2, 5, 3, 7, 2. 
+
+Pour le \textbf{parcours suffixe}, on lit d'abord récursivement, \textbf{le fils gauche} et \textbf{le fils droit} puis \textbf{la racine}. Sur l'arbre donné en exemple, on obtient : 1, 3, 4, 7, 3, 5, 2, 2, 2.
+
+Enfin pour le \textbf{parcours infixe}, on lit d'abord récursivement \textbf{le fils gauche}, puis \textbf{la racine}, puis \textbf{le fils droit} . Sur l'arbre donné en exemple, on obtient : 1, 4, 3, 2, 5, 7, 3, 2, 2.
+
+Les trois algorithmes sont récursifs et sont écrits sur le modèle du parcours en profondeur dans les arbres généraux. Voici par exemple le parcours infixe.
+
+\begin{lstlisting}
+ParcoursInf
+Input : Un arbre binaire A
+Procédé :
+    ParcoursInf(A.filsGauche)
+    Afficher la valeur de A
+    ParcoursInf(A.fisDroit)
+\end{lstlisting} 
+\end{Example}
+
+\section{Application : tas}
+
+Les tas sont des arbres binaires particuliers qui s'adaptent bien à une \textbf{structure de tableau}. Ils sont utilisés dans des algorithmes de tris. 
+
+\subsection{Arbre binaire parfait et tableau}
+
+\begin{Definition}
+Un arbre binaire est dit \textbf{parfait} si tous ses niveaux sont remplis sauf le dernier niveau (plus éloigné de la racine) et si les nœuds du dernier niveau sont alignés à gauche.
+\end{Definition}
+
+\begin{Example}
+\begin{tabular}{ccc}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$$}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {$$}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {$$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$$}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {$$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodeh  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodei  \&         \&         \& \nodeba \\ 
+ \noded  \&         \& \nodee  \&         \&         \&         \& \nodeg  \&         \& \nodej  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g)
+	(b) edge (c) edge (f)
+	(i) edge (j)
+	(h) edge (i) edge (ba)
+	(a) edge (b) edge (h);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$$}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {$$}
+;}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \&         \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}}
+\end{tabular}
+
+Le premier arbre est un arbre binaire parfait mais pas les deux autres : dans le second, les nœuds du dernier niveau ne sont pas alignés à gauche et dans le troisième, le niveau 3 n'est pas complet. 
+\end{Example}
+
+\'Etant donné que les niveaux sont remplis au maximum, leur taille est fixée. Ainsi on a:
+
+\textbf{Niveau 1: } 1 nœud (racine)
+
+\textbf{Niveau 2: } 2 nœuds
+
+\textbf{Niveau 3: } 4 nœuds
+
+\textbf{Niveau 4: } 8 nœuds
+
+...
+
+\textbf{Niveau $n$ : } \cache{$2^{n-1}$} nœuds.
+
+Dans l'exemple précédent, les trois premiers niveaux étaient remplis ainsi que 5 des 8 nœuds du niveau 4.
+
+Cette structure particulière nous permet de représenter les arbres binaires parfaits en mémoire de façon beaucoup plus simple que pour les arbres binaires généraux. En effet, plutôt que d'utiliser la structure récursive classique, on peut utiliser un \textbf{tableau}. \textbf{L'indice d'une valeur dans le tableau détermine sa position dans l'arbre}.
+
+\begin{Example}
+
+On a donné à chaque nœud la valeur de son indice dans le tableau.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {0}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {1}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {3}
+;}\newcommand{\noded}{\node[draw,circle] (d) {7}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {8}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {4}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {9}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {10}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {2}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {5}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {11}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+A présent, si on utilise l'arbre pour stocker des entiers, voilà un exemple d'arbre et sa représentation en mémoire avec un tableau.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {2}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {3}
+;}\newcommand{\noded}{\node[draw,circle] (d) {1}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {9}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {12}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {3}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {25}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {4}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {4}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {10}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {18}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+4 & 2 & 4 & 3 & 12 & 4 & 18 & 1 & 9 & 3 & 25 & 10 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+\end{Example}
+
+Il faut bien comprendre que la seule donnée en mémoire sera celle du tableau et qu'il \emph{symbolise} l'arbre binaire.
+
+\textbf{Questions :} Si un nœud est à l'indice $i$,
+\begin{itemize}
+\item Quel est l'indice de son nœud père ? \cache{$\lfloor \frac{i-1}{2} \rfloor$}
+\item Quel est l'indice de son fils gauche ? \cache{$2i+1$}
+\item Quel est l'indice de son fils droit ? \cache{$2i+2$}
+\item A quel parcours de l'arbre correspond la lecture des valeurs du tableau ? \cache{Parcours en largeur} 
+\item Combien d'éléments peut-on mettre dans un arbres binaire parfait de hauteur $h$ ? \cache{$2^{h} - 1$}
+\item Quelle est la hauteur d'un arbre binaire parfait de taille $n$ ? \cache{$\log(n)+1$}
+\end{itemize}
+
+\subsection{Tas}
+
+\begin{Definition}
+Un Tas (heap en anglais) est un arbre binaire parfait tel que la valeur de chaque nœud soit supérieure ou égale à la valeur de ses fils.
+\end{Definition}
+
+
+\begin{Example}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {12}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {8}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {5}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+12 & 10 & 8 & 9 & 10 & 5 & 6 & 8 & 5 & 6 & 7 & 3 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+\end{Example}
+
+En particulier, l'élément maximal du tableau se trouve toujours à la racine du tas, donc en position 0 dans le tableau. On s'intéresse à deux algorithmes en particulier : \textbf{l'insertion dans le tas} et la \textbf{suppression du maximum}.
+
+\subsubsection{Insertion}
+
+Pour \textbf{l'insertion}, on place le nouvel élément dans la première position libre puis on le fait remonter dans le tas jusqu'à ce que la condition soit atteinte. 
+
+\begin{lstlisting}
+InsertTas
+Input : 
+    - t, un tableau qui représente un tas de taille n
+    - v, l'élément à insérer 
+Procédé :
+    t[n] <- v
+    Tant que n > 0:
+        pere <- (n-1)/2
+        Si T[pere] < T[n]:
+            T[pere], T[n] <- T[n], T[pere]
+            n <- pere
+        Sinon:
+            Sortir de la boucle
+\end{lstlisting} 
+
+\begin{Example}
+
+Insertion de 9 dans le tas précédent.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {12}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {8}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {5}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {\red{9}}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \& \nodebc \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba) edge (bc)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+12 & 10 & 8 & 9 & 10 & 5 & 6 & 8 & 5 & 6 & 7 & 3 & \red{9} & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {12}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {8}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {\red{9}}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {5}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \& \nodebc \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba) edge (bc)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+12 & 10 & 8 & 9 & 10 & \red{9} & 6 & 8 & 5 & 6 & 7 & 3 & 5 & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {12}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {\red{9}}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {5}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \& \nodebc \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba) edge (bc)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+12 & 10 & \red{9} & 9 & 10 & 8 & 6 & 8 & 5 & 6 & 7 & 3 & 5 & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Exercice : } la complexité de l'algorithme d'insertion est en $O(\log(n))$.
+
+\end{Example}
+
+\subsubsection{Suppression du maximum} 
+
+Nous avons vu l'insertion, maintenant, regardons la suppression de l'élément maximum.
+
+\begin{itemize}
+\item En supprimant un élément du tableau, la condition de tassement sur les arbres binaires parfaits nous dit que la case
+laissée vide doit être \textbf{la dernière case du tableau}. On place donc le dernier élément du tableau en position racine.
+\item Il faut maintenant faire en sorte que la condition de décroissance du tas soit respectée. Si l'élément n'est pas plus grand que
+ses deux fils, \textbf{on l'échange avec le maximum des fils} ainsi la condition sera respectée localement au niveau de la racine. 
+\item Si un des fils a été modifié, il faut vérifier la condition de décroissance sur ce fils et ainsi "descendre dans le tas" jusqu'à ce
+qu'on effectue plus d'échange ou qu'on ait atteint une feuille.
+\end{itemize}
+
+\begin{Example}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {?}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {9}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}\newcommand{\nodebc}{\node[draw,circle] (bc) {5}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \& \nodebc \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba) edge (bc)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+? & 10 & 9 & 9 & 10 & 8 & 6 & 8 & 5 & 6 & 7 & 3 & 5 & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {\red{5}}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {9}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+\red{5} & 10 & 9 & 9 & 10 & 8 & 6 & 8 & 5 & 6 & 7 & 3 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {10}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {\red{5}}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {10}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {9}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+10 & \red{5} & 9 & 9 & 10 & 8 & 6 & 8 & 5 & 6 & 7 & 3 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {10}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {\red{5}}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {7}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {9}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+10 & 10 & 9 & 9 & \red{5} & 8 & 6 & 8 & 5 & 6 & 7 & 3 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {10}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {10}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {9}
+;}\newcommand{\noded}{\node[draw,circle] (d) {8}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {5}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {7}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {6}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {\red{5}}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {9}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {8}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {3}
+;}\newcommand{\nodebb}{\node[draw,circle] (bb) {6}
+;}
+\scalebox{0.7}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \& \nodej  \&         \&         \& \nodebb \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \& \nodeba \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(b) edge (c) edge (f)
+	(j) edge (ba)
+	(i) edge (j) edge (bb)
+	(a) edge (b) edge (i);
+\end{tikzpicture}}
+}
+
+\begin{tabular}{|c||c|c||c|c|c|c||c|c|c|c|c|c|c|c||}
+\hline
+10 & 10 & 9 & 9 & 7 & 8 & 6 & 8 & 5 & 6 & \red{5} & 3 & ~ & ~ & ~ \\
+\hline
+1 & \multicolumn{2}{c||}{2} & \multicolumn{4}{c||}{3} & \multicolumn{8}{c||}{4} \\
+\hline
+\end{tabular}
+\end{Example}
+
+L'implantation précise de l'algorithme est laissée en exercice. Tout comme pour l'insertion, la complexité est en $O(\log(n))$.
+
+\subsection{Tri par tas}
+
+\subsubsection{Algorithme}
+On peut utiliser les deux algorithmes précédents pour trier les données d'un tableau, c'est ce qu'on appelle le \textbf{tri par tas} ou \textbf{heapsort} en anglais. Le principe est le suivant.
+
+\begin{itemize}
+\item La première étape consiste à fabriquer un tas en insérant une à une les valeurs du tableau selon l'algorithme d'insertion vu précédemment.
+
+\item La seconde étape consiste à supprimer une à une les données du tas. Chaque donnée supprimée est le maximum du tas, soit le maximum des données restantes : on reconstruit donc la liste des données de façon décroissante.
+\end{itemize}
+
+L'ensemble du tri peut se faire \emph{en place} à l'intérieur d'un unique tableau. Au cours de chaque opération, le tableau sera toujours divisé en deux parties : le tas formera le début du tableau et le reste du tableau contiendra les données qui ne sont pas dans le tas. Pour l'étape 1, cela correspond aux données non triées que l'on va insérer dans le tas. Pour l'étape 2, ce sont les données déjà triées qui ont été successivement supprimées du tas.
+
+\begin{Example}
+
+Tri du tableau 
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+8 &  7 & 6 & 3 & 7 & 6 & 5 & 10\\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\input{figures/tritas}
+\end{Example}
+
+\subsubsection{Complexité}
+
+Tel que nous l'avons décrit l'algorithme a une \textbf{complexité} en $O(n\log(n))$ aussi bien dans le pire des cas que en moyenne. Plus précisément,  \textbf{chacune des deux étapes} à une complexité en $O(n \log(n))$, car chaque insertion et chaque délétion a une complexité en $O(\log(n))$. Il est possible d'effectuer l'étape 1 en $O(n)$ en partant d'un arbre binaire parfait contenant toutes les valeurs du tableau que l'on transforme en tas directement sans passer par une insertion : nous verrons cet algorithme en TP.
+
+\subsubsection{Avantages / Inconvénients}
+
+~
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Complexité $O(n \log(n))$ dans le pire des cas et en moyenne
+\item tri en place
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Complexité $O(n \log(n))$ dans le meilleur des cas (donc pas linéaire)
+\item Tri non stable
+\item Implantation contre intuitive (on place d'abord les "grandes" valeurs au début)
+\end{itemize}
+\end{minipage}
+
+En pratique, le tri par tas est souvent plus lent que le quicksort mais sa meilleure complexité du pire des cas lui donne tout de même
+un avantage sur ce dernier. 
+
+\section{Application : Arbre binaire de recherche}
+
+\subsection{Définition}
+
+Les \textbf{Arbres binaires de recherche} ou (Binary Searh Tree en anglais) sont un autre exemple d'utilisation de la structure d'arbres binaires pour le tri de donnée.
+
+\begin{Definition}
+Un arbre binaire de recherche est un arbre binaire contenant des valeurs numériques tel que pour chaque nœud de valeur $x$ dont les sous arbres gauche et droit sont $T_G$ et $T_L$ respectivement, on ait:
+\begin{itemize}
+\item toutes les valeurs de $T_G$ sont \textbf{inférieures ou égales} $x$,
+\item toutes les valeurs de $T_L$ sont \textbf{supérieures strictes} à $x$.
+\end{itemize} 
+\end{Definition}
+
+\begin{Example}
+\begin{tabular}{ccc}
+\scalebox{0.5}{
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$6$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$4$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$2$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$5$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$5$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$6$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$9$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$7$}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeg  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeh  \&         \&         \\ 
+         \&         \& \nodee  \&         \& \nodef  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e) edge (f)
+	(b) edge (c) edge (d)
+	(g) edge (h)
+	(a) edge (b) edge (g);
+\end{tikzpicture}}
+}
+&
+\scalebox{0.5}{
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$2$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$4$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$2$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$5$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$3$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$1$}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeg  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeh  \&         \&         \\ 
+         \&         \& \nodee  \&         \& \nodef  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e) edge (f)
+	(b) edge (c) edge (d)
+	(g) edge (h)
+	(a) edge (b) edge (g);
+\end{tikzpicture}}
+}
+
+\scalebox{0.5}{
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$6$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$2$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$3$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$5$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$4$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$7$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$7$}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeg  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeh  \&         \&         \\ 
+         \&         \& \nodee  \&         \& \nodef  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e) edge (f)
+	(b) edge (c) edge (d)
+	(g) edge (h)
+	(a) edge (b) edge (g);
+\end{tikzpicture}}
+}
+
+\end{tabular}
+
+Le premier arbre est bien un arbre binaire de recherche mais pas les deux autres. Dans le second, on trouve par exemple les valeurs 4 et 5 dans le sous arbre gauche de la racine qui a pour valeur 2. Dans le troisième, on trouve la valeur 5 dans le sous-arbre gauche d'un nœud de valeur 3.
+\end{Example}
+
+\textbf{Question :} quel parcours de l'arbre binaire de recherche donne la liste des valeurs dans l'ordre croissant ? \cache{Le parcours infixe}.
+
+\subsection{Insertion}
+
+On cherche à rajouter une valeur dans l'arbre binaire de recherche. Pour cela, on va laisser intacte la structure existante et trouver \textbf{l'unique arbre vide} (fils droit ou fils gauche d'un nœud existant) tel qu'on puisse le remplacer par la nouvelle valeur en conservant les conditions d'un arbre binaire de recherche. On peut décrire l'algorithme récursivement de cette façon :
+\begin{itemize}
+\item Si l'arbre est vide, alors la racine de l'arbre devient un nœud contenant la nouvelle valeur.
+\item Sinon, si la valeur à insérer est plus petite ou égale que la valeur de la racine, je l'insère dans le sous-arbre gauche et sinon, dans le sous-arbre droit.
+\end{itemize}
+
+\begin{Example}
+Insertion successive des valeurs : 9, 11, 1, 5, 2, 1, 10, 13.
+
+\begin{tabular}{ccc}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {\red{9}}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+ \nodea  \\
+};
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {\red{11}}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \& \nodea  \&         \\ 
+         \&         \& \nodeb  \\
+};
+
+\path[ultra thick, red] (a) edge (b);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {\red{1}}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$11$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \& \nodea  \&         \\ 
+ \nodeb  \&         \& \nodec  \\
+};
+
+\path[ultra thick, red] (a) edge (b) edge (c);
+\end{tikzpicture}}}
+\\
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {\red{5}}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$11$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \\ 
+         \& \nodeb  \&         \&         \& \noded  \\ 
+         \&         \& \nodec  \&         \&         \\
+};
+
+\path[ultra thick, red] (b) edge (c)
+	(a) edge (b) edge (d);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$5$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {\red{2}}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$11$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \& \nodee  \\ 
+         \&         \&         \& \nodec  \&         \&         \&         \\ 
+         \&         \& \noded  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d)
+	(b) edge (c)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {\red{1}}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$5$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$2$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$11$}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \& \nodef  \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \&         \\ 
+         \&         \& \nodee  \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e)
+	(b) edge (c) edge (d)
+	(a) edge (b) edge (f);
+\end{tikzpicture}}}
+\\
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$5$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$2$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$11$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {\red{10}}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodef  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeg  \&         \&         \\ 
+         \&         \& \nodee  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e)
+	(b) edge (c) edge (d)
+	(f) edge (g)
+	(a) edge (b) edge (f);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$5$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$2$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$11$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$10$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {\red{13}}
+;}
+\scalebox{0.5}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodef  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeg  \&         \& \nodeh  \\ 
+         \&         \& \nodee  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e)
+	(b) edge (c) edge (d)
+	(f) edge (g) edge (h)
+	(a) edge (b) edge (f);
+\end{tikzpicture}}}
+\end{tabular}
+
+\end{Example}
+
+\textbf{Remarque :} La complexité de l'insertion dépend de la hauteur de l'arbre. Dans un arbre binaire classique la hauteur n'est pas fixée (contrairement à un arbre binaire parfait). Dans le pire des cas, la hauteur peut être de taille $n$ et l'insertion en $O(n)$, dans le meilleur des cas on obtient du $O(\log(n))$. Si on insère des données successives qui correspondent à un tirage aléatoire uniforme, on se retrouve dans un cas très similaire à celui du quicksort et on obtient une complexité de $O(\log(n))$ en moyenne.
+
+\subsection{Tri par arbre binaire}
+
+L'algorithme d'insertion donne directement un algorithme de tri : insertion des valeurs une à une dans l'arbre binaire, puis parcours infixe pour obtenir les données dans l'ordre croissant. Comme on l'a dit plus haut, la complexité dépendra des valeurs d'entrées. Dans le \textbf{meilleur des cas}, on obtiendra du $O(n\log(n))$ (car on effectue $n$ insertions) et ce sera aussi la \textbf{complexité en moyenne}. Mais dans le \textbf{pire des cas}, on aura une complexité en $O(n^2)$.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Complexité $O(n \log(n))$ en moyenne
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Complexité $O(n^2)$ dans le pire des cas
+\item Complexité $O(n \log(n))$ dans le meilleur des cas (donc pas linéaire)
+\item Utilise une structure externe (en particulier, complexité mémoire $O(n)$)
+\end{itemize}
+\end{minipage}
+
+En pratique, ce tri a le même gros défaut que le tri rapide avec une complexité du pire des cas quadratique sans pour autant avoir ses avantages (tri en place et rapide en pratique). Il ne sera donc jamais utilisé tel quel. Cependant, une amélioration simple consiste à \textbf{rééquilibrer} l'arbre au moment de chaque insertion ce qui permet d'obtenir une complexité globale en $O(n\log(n))$. La nécessité d'une structure externe d'arbre binaire le rend peu pratique pour trier les données d'un tableau (par rapport à un tri rapide ou un tri par tas) mais la structure pourra être utilisée pour stocker directement des données de façon ordonnée. Cette structure est à la base de nombreuses généralisations : arbres AVL, arbres rouges-noirs par exemple.
+
+\end{document}

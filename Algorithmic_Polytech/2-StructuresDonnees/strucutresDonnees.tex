@@ -1,0 +1,261 @@
+\def \withcache{1}
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{Cours 2 : Structures de données}
+
+
+\begin{document}
+\maketitle
+ 
+ 
+\section{Tableaux}
+
+\subsection{Définition et exemple}
+
+\begin{Definition}
+Un \textbf{tableau} (en anglais, \emph{array}) est une structure de donnée représentant un ensemble d'éléments accessibles par un \textbf{indice} numérique.
+\end{Definition}
+
+Structure de bas niveau, elle est très courante dans tous les langages de programmation. Concrètement, les éléments sont stockés dans des \textbf{espaces mémoires consécutifs} ce qui permet un accès indicé rapide.
+
+Quelques exemples : les tableaux C, les {\tt Vector} en C++, les {\tt list} en python, les {\tt ArrayList} en Java...
+
+\begin{Example}
+En C, un tableau est simlement un \emph{pointeur} sur la première case du tableau.
+
+\lstinputlisting[firstline=3, lastline=14]{code/tableau.c}
+\end{Example}
+
+\subsection{Complexité}
+
+\begin{itemize}
+\item Accès au premier élément : \cache{$O(1)$}
+\item Accès à l'élément $i$ : \cache{$O(1)$}
+\item Accès au dernier élément : \cache{$O(1)$}
+\item Ajout d'un élément en début de tableau : \cache{$O(n)$ }
+\item Ajout d'un élément en position $i$ : \cache{$O(n-i)$}
+\item Ajout d'un élément en fin de tableau : \cache{$O(1)$}
+\item Suppression du premier élément : \cache{$O(n)$}
+\item Suppression de l'élément $i$ : \cache{$O(n-i)$}
+\item Suppression du dernier élément : \cache{$O(1)$}
+\end{itemize}
+
+\subsection{Le problème du dépassement de capacité}.
+
+\textbf{Problème : } on ne peut réserver qu'un espace de mémoire donnée. Combien faut-il réserver d'espace ? Que se passe-t-il quand le tableau est plein ?
+
+\lstinputlisting[firstline=2, lastline=6]{code/list.py}
+
+A chaque fois que je dépasse la capacité initiale, il faut \textbf{réallouer} un espace plus important et \textbf{recopier} l'ensemble des valeurs.
+
+On va étudier les différentes stratégie en se basant sur l'algorithme suivant
+
+\begin{lstlisting}
+Input : n un entier
+Processus :
+    T un tableau vide avec une certaine allocation initiale
+    Pour i allant de 0 à n :
+        Si T est plein :
+            Reallouer(T)
+        T[i] <- i
+\end{lstlisting}
+
+\begin{Example}Une première solution.
+
+\begin{itemize}
+\item On alloue initialement une certaine taille $K$.
+\item Quand le tableau est plein, on augmente la taille de $K$.
+\end{itemize}
+
+Par exemple, si on choisis $n=100$ et $K=10$. Le tableau aura initialement une taille de 10. Lorsqu'on ajoutera le 11ème élément, on devra allouer une taille de 20 et recopier les 10 premiers éléments. Lorsqu'on ajoutera le 21ème élément, on allouera 30 et on recopiera les 20 premiers, etc. Au final, si on compte le nombre d'affectations dans le tableau, on trouve~:
+
+\begin{equation}
+100 + 10 + 20 + 30 + 40 + 50 + \dots + 90.
+\end{equation}
+
+De façon générale, si $m=\frac{n}{K}$, la complexité est de
+
+\begin{align}
+n + \sum_{i=1}^{m} ik &= n + K \sum_{i=0}^m i \\
+&= n + K \frac{(m+1)m}{2} \\
+&= \frac{1}{2K} n^2 + \frac{3}{2} n.
+\end{align}
+c'est-à-dire $O(n^2)$.
+\end{Example}
+
+\begin{Example}
+Une deuxième solution.
+\begin{itemize}
+\item On alloue initialement une taille 1.
+\item Lors d'un dépassement, on multiplie la taille par 2.
+\end{itemize}
+
+Pour le cas où $n=100$, le nombre d'affectations sera donc :
+
+\begin{equation}
+100 + 1 + 2 + 4 + 8 + 16 + 32 + 64.
+\end{equation}
+Lors de la dernière réallocation, la taille est de 128 et peut contenir l'ensemble du tableau. De façon générale, soit $m = \lfloor \log(n) \rfloor$, c'est-à-dire
+
+\begin{equation}
+2^m \leq n < 2^{m+1},
+\end{equation}
+le nombre d'affectations est de
+
+\begin{align} 
+n + \sum_{i=1}^m 2^i &= n + \frac{2^{m+1} - 1}{2 - 1} \\
+&= n + 2\cdot 2^m - 1 \\
+&\leq 3n.
+\end{align}
+En conclusion, la complexité est de $O(n)$.
+
+\end{Example}
+
+\begin{Example}
+Un exemple concret, la doc python sur la réallocation des listes :
+
+\begin{lstlisting}
+/* This over-allocates proportional to the list size, making room
+* for additional growth.  The over-allocation is mild, but is
+* enough to give linear-time amortized behavior over a long
+* sequence of appends() in the presence of a poorly-performing
+* system realloc().
+* The growth pattern is:  0, 4, 8, 16, 25, 35, 46, 58, 72, 88, ...
+*/
+\end{lstlisting}
+\end{Example}
+
+\section{Listes chaînées}
+
+\subsection{Définition}
+
+\begin{Definition}
+Une \textbf{liste chaînée} est un ensemble de \emph{cellules} telles que chaque cellule contient une \emph{valeur} ainsi que \emph{l'adresse} en mémoire de la cellule suivante. La liste en tant que telle est donnée par \emph{l'adresse de la première cellule}.
+\end{Definition}
+
+\begin{Example}
+Exemple d'implantation en {\tt C}.
+
+\lstinputlisting[firstline=5,  lastline=32]{code/liste.c} 
+
+
+\end{Example}
+
+En pseudo-code, on écrira la structure de cette façon :
+
+\begin{lstlisting}
+Structure Cellule:
+    Entier valeur
+    Cellule suivante
+    
+Structure Liste:
+    Cellule premiere
+\end{lstlisting}
+
+On supposera qu'une structure n'est manipulée que \emph{par référence} (adresse). Si on a une variable {\tt c} de type {\tt Cellule}, on accède à ses paramètres par la syntaxe {\tt c.valeur}.
+
+Exemple de listes chaînées implantées nativement : {\tt LinkedList} en Java.
+
+\subsection{Complexité}
+
+\begin{exercice}
+\'Ecrivez les algorithmes et calculez les complexités pour les opérations suivantes :
+
+\begin{itemize}
+\item Accès au premier élément : \cache{$O(1)$}
+\item Accès à l'élément $i$ : \cache{$O(i)$}
+\item Accès au dernier élément : \cache{$O(n)$}
+\item Ajout d'un élément en début de liste : \cache{$O(1)$ }
+\item Ajout d'un élément en position $i$ : \cache{$O(i)$}
+\item Ajout d'un élément en fin de liste : \cache{$O(n)$}
+\item Suppression du premier élément : \cache{$O(1)$}
+\item Suppression de l'élément $i$ : \cache{$O(i)$}
+\item Suppression du dernier élément : \cache{$O(n)$}
+\end{itemize}
+
+\end{exercice}
+
+\subsection{En pratique} .
+
+Inconvénients :
+\begin{itemize}
+\item Complexité élevée d'accès aux valeurs 
+\item En pratique, coût élevé de l'allocation mémoire
+\end{itemize}
+
+Avantages :
+\begin{itemize}
+\item S'il y a de fortes contraintes sur la mémoire
+\item Facilité d'accès et d'ajout en début de liste
+\end{itemize}
+
+Remarque : on peut modifier légèrement la structure pour un accès rapide aux dernières valeurs en ajoutant un \textbf{pointeur sur la dernière cellule} dans la structure de liste.
+
+Quelques structures similaires : listes chaînées circulaires, listes doublement chaînées.
+
+\section{Ensembles : tables de hachage}
+
+\subsection{Quel problème ?}
+
+On souhaite définir une structure $E$ tel que les opérations suivantes soient rapide :
+
+\begin{itemize}
+\item Test si un élément $e$ est dans $E$
+\item Ajout d'un élément
+\item Suppression d'un élément
+\end{itemize}
+
+\begin{Example}
+Soit $E$ un ensemble de nombres entiers entre $1$ et $100$ (chaque nombre peut apparaître au plus une seule fois). \textbf{Quelle structure peut-on adopter pour que les questions posées puissent être résolue en O(1) ?}
+
+\cache{On utilise un tableau booléen de de taille 100: si {\tt t[i] = False} alors {\tt i} n'est pas dans $E$, et si {\tt t[i] = True} alors {\tt i} est dans $E$.}
+\end{Example}
+
+\subsection{Structure générale, fonction de \emph{hachage}}
+
+\begin{Definition}
+Une table de hachage est une structure qui permet de stocker des éléments sur un modèle \textbf{d'association clé -- valeur}
+\end{Definition}
+
+Concrètement : c'est un "grand" tableau dont on définit
+\begin{itemize}
+\item l'ensemble des indices (les clés),
+\item une fonction qui à chaque objet associe une clé.
+\end{itemize}
+
+Pour retrouver un objet, on calcule sa clé et on "regarde" dans le tableau à l'indice en question.
+
+\begin{Definition}
+La fonction qui associe la clé à l'objet s'appelle \textbf{fonction de hachage} ou \textbf{hash function} en anglais.
+\end{Definition}
+
+\begin{Example}
+Reprenons l'exemple précédent mais cette fois $E$ est un ensemble d'entier dont on ne connaît pas l'intervalle. \textbf{Quelles clés ? Quelle fonction de hachage ?}
+
+\cache{On peut prendre les clés entre $1$ et un entier $k$ fixé à l'avance et choisir {\tt \%k} comme fonction de hachage. }
+
+\end{Example}
+
+\textbf{Problème : } comment faire quand deux objets ont la même clé ? Cela s'appelle une collision. 
+
+\textbf{Solution : } les cases de la table ne contiennent pas un simple objet mais la liste des objets associés à cette clé (stockée sous forme de tableau ou de liste chaînée).
+
+\subsection{Complexité}
+
+La complexité qui nous intéresse est celle de l'accès à un élément donné. Pour l'optimiser, il faut \textbf{éviter les collisions}.
+
+\begin{itemize}
+\item Premièrement, il faut que que la table soit grande par rapport au nombre d'entrées. On calcule le \textbf{facteur de compression} $k/n$ où $k$ est la taille de la table et $n$ le nombre d'entrée. Si $k$ ne varie pas, on peut obtenir qu'une complexité linéaire : la valeur de $k$ ne fera varier que la constante. Pour optimiser réellement la complexité, il faut que la table soit \emph{réallouer} lorsque le facteur augmente de la même façon que pour les tableaux.
+
+\item Par ailleurs, l'efficacité d'une table de hachage dépend grandement de sa fonction de hachage. Il faut que celle-ci distribue \textbf{uniformément} les éléments sur les clés pour éviter au maximum les collisions. Exemple pour les entiers : le modulo.
+\end{itemize}
+
+Lorsque l'implantation d'une table de hachage suit ces principes, on peut obtenir une complexité $O(1)$ \textbf{en moyenne}. Attention, la complexité du pire des cas sera toujours $O(n)$ (si tous les éléments ont la même valeur de hachage).
+
+\subsection{En pratique}
+
+Les tables de hachage sont une structure très largement utilisées dans de nombreux langages : {\tt set} et {\tt dictionnaire} python, {\tt HashMap} Java. Il est très important d'en connaître le principe pour pouvoir utiliser au mieux ces objets.
+
+Remarque : problème de la mutabilité des objets. cf demo.
+
+\end{document}

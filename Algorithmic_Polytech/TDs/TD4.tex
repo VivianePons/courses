@@ -1,0 +1,107 @@
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{TD4 : Tris}
+
+\begin{document}
+\maketitle
+
+\begin{exercice}[Casiers]
+
+Soit $t$ un tableau de taille $n$ contenant des valeurs comprises entre $0$ et un certain entier $k$. Proposez un algorithme 
+de tri pour $t$ dont la complexité soit $O(n)$. 
+
+\end{exercice}
+
+\begin{exercice}[Stabilité]
+
+On dit qu'un tri est \textbf{stable} si l'ordre des valeurs égales n'est pas modifié. Par exemple, si l'on possède la liste des étudiants ordonnée alphabétiquement et que l'on trie par note, les étudiants ayant la même note seront toujours ordonnés alphabétiquement. \textbf{Parmi les algorithmes vus en cours, lesquels sont stables ?} 
+
+\end{exercice}
+
+
+\begin{exercice}[Le tri pas rapide]
+Voici un nouvel algorithme de tri :
+
+\begin{lstlisting}
+NouveauTri
+Input :
+    - t, un tableau de taille n
+    - i un entier entre 0 et n-1
+    - j un entier entre 0 et n-1
+Procédé :
+    Si j-i = 1 et t[j] < t[i]:
+        t[i], t[j] <- t[j], t[i]
+    Si j-i <= 1:
+        Retourner
+    k <- (j+1-i)/3
+    NouveauTri(t,i,j-k)
+    NouveauTri(t,i+k,j)
+    NouveauTri(t,i,j-k)
+\end{lstlisting}
+
+\begin{enumerate}
+\item Soit {\tt t = [9,3,6,1]}, afficher les étapes d'exécutions de {\tt NouveauTri(t,0,3)}.
+\item On veut Prouver par récurrence que si $t$ est un tableau de taille $n$, l'appel de {\tt NouveauTri(t,0,n-1)} trie le tableau {\tt t},
+\begin{enumerate}
+\item Prouver le cas initial et exprimer l'hypothèse de récurrence.
+\item Soit $u$ et $v$ deux valeurs du tableau telles que $u < v$, si $u$ est avant $v$ au début de l'algorithme, peuvent-ils être inversés ?
+\item \'Etudier le cas où $v$ est avant $u$ et que les deux valeurs apparaissent dans les 2 premiers tiers du tableau.
+\item Même question pour les deux derniers tiers.
+\item Enfin, étudier le cas où $v$ est dans le premier tiers et $u$ dans le dernier tiers.
+\end{enumerate}
+
+\item Exprimer le nombre d'appels récursifs sous la forme d'une fonction récursive.
+\item Un théorème d'analyse d'algorithme, le \emph{master theorem} nous dit que si la complexité
+d'un algorithme récursif s'exprime sous la forme 
+
+\begin{equation}
+f(n) = a f\left( \frac{n}{b} \right)
+\end{equation}
+avec $a \geq 1$ et $b > 1$, alors la complexité de l'algorithme est de $n^{\frac{\log(a)}{\log(b)}}$. En comparant avec les algorithmes connus, l'algorithme {\tt NouveauTri} est-il efficace ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[Parité]
+
+Voici un algorithme
+
+\begin{lstlisting}
+Parite
+Input :
+    - t, un tableau de taille n
+Procédé :
+    j <- 0
+    Pour i allant de 0 à n-1:
+        Si t[i] est pair:
+            t[i],t[j] <- t[j],t[i]
+            j <- j+1
+    Retourner j
+\end{lstlisting}
+
+\begin{enumerate}
+\item Appliquer l'algorithme au tableau {\tt t = [9, 3, 6, 1, 2, 4, 3, 5, 6, 4]}
+\item Quel est l'effet de l'algorithme sur le tableau ? Proposer un \textbf{invariant de boucle} pour prouver votre hypothèse.
+\item Que retourne l'algorithme ?
+\item L'ordre des valeurs paires est-il conservé ? Même question pour les valeurs impaires.
+\end{enumerate}
+
+\end{exercice}
+
+\begin{exercice}[Quand l'écriture est coûteuse]
+Un professeur de la Grèce Antique a noté ses élève et a inscrit leurs noms et leurs notes sur une plaque de cire. Il voudrait à présent les ranger par ordre croissant. Cependant, il n'a plus de plaques de cire disponible... Il peut modifier la plaque existante (et recouverte par les noms et les notes) avec certaines contraintes :
+\begin{itemize}
+\item En raclant patiemment la cire, il peut effacer le nom et la note d'un élève.
+\item Il peut ensuite ré-écrire sur la ligne effacée exactement une fois (la cire est trop fine pour être à nouveau effacée et gravée).
+\item Une fois que la cire a été effacée (et éventuellement re-gravée), elle a une couleur différente (car elle est plus fine) et on peut donc savoir qu'elle a été modifiée.
+\item Le professeur possède un petit morceau de papyrus de quelques lignes (bien moins que le nombre d'élève) sur lequel il peut écrire avec du charbon et effacer à volonté.
+\end{itemize}
+
+\textbf{Décrivez l'algorithme à suivre pour ordonner la liste des élèves en fonction de leurs notes.}
+\end{exercice}
+
+\begin{exercice}[Drapeau]
+On considère un tableau d'éléments munis chacun d'une couleur, bleu, blanc ou rouge. On souhaite réordonner les éléments en fonction de leur couleur. \textbf{Proposer un algorithme qui réponde au problème en un unique parcours.}
+
+\end{exercice}
+
+\end{document}

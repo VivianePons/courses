@@ -1,0 +1,579 @@
+
+\textbf{Etape 1 : } Au départ on considère que  le tas n'est formé que du premier élément du tableau,on insère les valeurs une à une.
+
+\begin{tabular}{cc}
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{7}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \& \nodea \&        \\
+ \nodeb \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {\red{6}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c||c|c|c|c|c|c|}
+\hline
+8 &  \red{7} & \textit{6} & \textit{3} & \textit{7} & \textit{6} & \textit{5} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c||c|c|c|c|c|}
+\hline
+8 & 7 &  \red{6} & \textit{3} & \textit{7} & \textit{6} & \textit{5} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {\red{3}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {\red{7}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c||c|c|c|c|}
+\hline
+8 & 7 & 6 &  \red{3} & \textit{7} & \textit{6} & \textit{5} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c||c|c|c|}
+\hline
+8 & 7 & 6 & 3 &  \red{7} & \textit{6} & \textit{5} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {\red{6}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \& \nodef \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {\red{5}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c||c|c|}
+\hline
+8 & 7 & 6 & 3 & 7 &  \red{6} & \textit{5} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c|c||c|}
+\hline
+8 & 7 & 6 & 3 & 7 & 6 &  \red{5} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\newcommand{\nodeh}{\node[draw,circle] (nodeh) {\red{10}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+ \nodeh \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg)
+(noded) edge (nodeh);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {\red{10}};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\newcommand{\nodeh}{\node[draw,circle] (nodeh) {3};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+ \nodeh \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg)
+(noded) edge (nodeh);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c|c|c||}
+\hline
+8 & 7 & 6 & 3 & 7 & 6 & 5 &  \red{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c|c|c||}
+\hline
+8 & 7 & 6 &  \red{10} & 7 & 6 & 5 & 3\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{10}};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {7};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\newcommand{\nodeh}{\node[draw,circle] (nodeh) {3};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+ \nodeh \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg)
+(noded) edge (nodeh);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{10}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {8};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {7};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\newcommand{\nodeh}{\node[draw,circle] (nodeh) {3};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+ \nodeh \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg)
+(noded) edge (nodeh);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c|c|c||}
+\hline
+8 &  \red{10} & 6 & 7 & 7 & 6 & 5 & 3\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c|c|c||}
+\hline
+ \red{10} & 8 & 6 & 7 & 7 & 6 & 5 & 3\\
+\hline
+\end{tabular}
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{\'Etape 2 : } Toutes les valeurs du tableau on été insérées dans le tas, le maximum se trouve à la racine. On place alors ce maximum à la fin du tableau et on applique l'algorithme de suppression de la racine.
+
+\begin{tabular}{cc}
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{3}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {8};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {7};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{3}};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {7};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c|c||c|}
+\hline
+ \red{3} & 8 & 6 & 7 & 7 & 6 & 5 & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c|c||c|}
+\hline
+8 &  \red{3} & 6 & 7 & 7 & 6 & 5 & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {8};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {\red{3}};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\newcommand{\nodeg}{\node[draw,circle] (nodeg) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \&        \&        \&        \&        \& \nodea \&        \&        \&        \&        \&        \&        \&        \\
+        \&        \&        \& \nodeb \&        \&        \&        \&        \&        \&        \&        \& \nodec \&        \&        \&        \\
+        \& \noded \&        \&        \&        \& \nodee \&        \&        \&        \& \nodef \&        \&        \&        \& \nodeg \&        \\
+        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef) edge (nodeg);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{5}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \& \nodef \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c|c||c|}
+\hline
+8 & 7 & 6 &  \red{3} & 7 & 6 & 5 & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c||c|c|}
+\hline
+ \red{5} & 7 & 6 & 3 & 7 & 6 & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {7};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{5}};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {7};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \& \nodef \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {7};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {\red{5}};}
+\newcommand{\nodef}{\node[draw,circle] (nodef) {6};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \& \nodef \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee)
+(nodec) edge (nodef);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c|c||c|c|}
+\hline
+7 &  \red{5} & 6 & 3 & 7 & 6 & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c|c||c|c|}
+\hline
+7 & 7 & 6 & 3 &  \red{5} & 6 & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{6}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {7};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {7};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{6}};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\newcommand{\nodee}{\node[draw,circle] (nodee) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \& \nodee \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded) edge (nodee);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c|c||c|c|c|}
+\hline
+ \red{6} & 7 & 6 & 3 & 5 & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c|c||c|c|c|}
+\hline
+7 &  \red{6} & 6 & 3 & 5 & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\end{tabular}
+
+\begin{tabular}{cc}
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{5}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {6};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {6};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{5}};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\newcommand{\noded}{\node[draw,circle] (noded) {3};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+ \noded \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec)
+(nodeb) edge (noded);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c|c||c|c|c|c|}
+\hline
+ \red{5} & 6 & 6 & 3 & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c|c||c|c|c|c|}
+\hline
+6 &  \red{5} & 6 & 3 & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{3}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {5};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {6};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {6};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {5};}
+\newcommand{\nodec}{\node[draw,circle] (nodec) {\red{3}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \&        \&        \& \nodea \&        \&        \&        \\
+        \& \nodeb \&        \&        \&        \& \nodec \&        \\
+        \&        \&        \&        \&        \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb) edge (nodec);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c|c||c|c|c|c|c|}
+\hline
+ \red{3} & 5 & 6 & \textit{6} & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c|c||c|c|c|c|c|}
+\hline
+6 & 5 &  \red{3} & \textit{6} & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{3}};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {5};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \& \nodea \&        \\
+ \nodeb \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb);
+\end{tikzpicture}}}
+&
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {5};}
+\newcommand{\nodeb}{\node[draw,circle] (nodeb) {\red{3}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \& \nodea \&        \\
+ \nodeb \&        \&        \\
+};
+\path[ultra thick, red]
+(nodea) edge (nodeb);
+\end{tikzpicture}}}
+\\
+\begin{tabular}{|c|c||c|c|c|c|c|c|}
+\hline
+ \red{3} & 5 & \textit{6} & \textit{6} & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\begin{tabular}{|c|c||c|c|c|c|c|c|}
+\hline
+5 &  \red{3} & \textit{6} & \textit{6} & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+\\
+{\newcommand{\nodea}{\node[draw,circle] (nodea) {\red{3}};}
+\scalebox{0.5}{\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+        \& \nodea \&        \\
+        \&        \&        \\
+};
+\path[ultra thick, red];
+\end{tikzpicture}}}
+&
+\\
+\begin{tabular}{|c||c|c|c|c|c|c|c|}
+\hline
+ \red{3} & \textit{5} & \textit{6} & \textit{6} & \textit{7} & \textit{7} & \textit{8} & \textit{10}\\
+\hline
+\end{tabular}
+&
+\\
+\end{tabular}

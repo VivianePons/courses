@@ -1,0 +1,142 @@
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{TD3 : récursivité}
+
+\begin{document}
+\maketitle
+
+\begin{exercice}.
+\vspace{-0.5cm}
+\begin{enumerate}
+\item Donner un algorithme récursif qui affiche les entiers de 1 à $n$.
+\item Même chose de $n$ à 1.
+\item Puis-je modifier ces algorithmes pour qu'ils rajoutent un caractère final de retour à la ligne à la fin de la liste ?
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}
+Pour chacun des algorithmes suivant :
+\begin{enumerate}
+\item Déterminer pour quelles valeurs d'entrée l'algorithme termine
+\item Calculer un exemple à la main
+\item Expliquer ce que calcule l'algorithme
+\end{enumerate}
+
+\begin{lstlisting}
+Fonction1
+Input : un entier n
+Processus :
+    Si n == 0:
+        Retourner 1
+    Retourner Fonction1(n+1)
+\end{lstlisting}
+
+\begin{lstlisting}
+Fonction2
+Input : un entier n
+Processus :
+    Si n == 0:
+        Retourner 0
+    Retourner Fonction2(n-1)+n
+\end{lstlisting}
+
+\begin{lstlisting}
+Fonction3
+Input : un entier n
+Processus :
+    Si n == 0:
+        Retourner 0
+    Retourner Fonction3(n-1)-n
+\end{lstlisting}
+
+\begin{lstlisting}
+Fonction4
+Input : un entier n
+Processus :
+    Si n == 0:
+        Retourner 0
+    Si n < 0:
+        Retourner n + Fonction4(-n)
+    Retourner n + Fonction4(-n+1)
+\end{lstlisting}
+
+\begin{lstlisting}
+Fonction5
+Input : un entier n
+Processus :
+    Si n <= 1:
+        Retourner 0
+    Retourner 1 + Fonction5(n-2)
+\end{lstlisting}
+
+\end{exercice}
+
+\begin{exercice}
+\label{ex-fibo}
+La fonction de fibonacci est définie par :
+\begin{align*}
+U_0 &= 1 \\
+U_1 &= 1 \\
+U_n &= U_{n-1} + U_{n-2} \text{ si }n \geq 2.
+\end{align*}
+Ces premières valeurs sont donc : 1, 1, 2, 3, 5, 8, 13, ...
+
+Donner deux algorithmes, un itératif et un récursif, qui calculent la valeur $n$ de la suite.
+
+\end{exercice}
+
+\begin{exercice}
+On rappelle sur un exemple le principe de l'algorithme d'Euclide du calcul du pgcd (plus grand diviseur commun). 
+
+Calcul du pgcd de 2145 et 630 : On commence par effectuer la division euclidienne de 2145 par 630
+
+\begin{equation*}
+2145 = 630 * 3 + 255
+\end{equation*}
+
+puis on effectue la division de 630 par le reste obtenu 255
+
+\begin{equation*}
+630 = 255 * 2 + 120
+\end{equation*}
+
+On continue jusqu'à ce que l'on trouve un reste nul.
+
+\begin{align*}
+255 &= 120 *2 + 15 \\
+120 &= 15 * 8
+\end{align*}
+
+Le pgcd est le dernier reste non nul, c'est-à-dire \textbf{15}.
+
+Donner un algorithme récursif qui calcule le pgcd de deux nombres.
+\end{exercice}
+
+\begin{exercice}
+\label{ex:dicho}
+Reprendre l'algorithme de recherche dichotomique dans un tableau trié vu dans le TD1 et donner une version récursive.
+\end{exercice}
+
+\begin{exercice}
+Donner les complexités des algorithmes des exercices \ref{ex-fibo} et \ref{ex:dicho}.
+\end{exercice}
+
+\begin{exercice}
+Il existe deux définitions récursives de la fonction puissance :
+\begin{align*}
+a^b &= \begin{cases}
+1 &\text{si }b=0 \\
+a \times a^{b-1} &\text{sinon}
+\end{cases} \\
+a^b &= \begin{cases}
+1 &\text{si }b=0 \\
+a \times a^{b-1} &\text{si }b\text{ est impair} \\
+a^{\frac{b}{2}}a^{\frac{b}{2}} &\text{si }b\text{ est pair}
+\end{cases}
+\end{align*}
+
+Pour chacune des définitions, donner l'algorithme récursif correspondant ainsi que sa complexité.
+
+\end{exercice}
+
+\end{document}

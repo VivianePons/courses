@@ -1,0 +1,816 @@
+%\def \withcache{1}
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{Cours 4 : Tris de base}
+
+
+\begin{document}
+\maketitle
+
+Passage en revue des algorithmes de tris les plus courants avec preuve et complexité. 
+
+Tableau récapitulatif
+
+\begin{tabular}{|l|c|c|c|}
+\hline
+Algo & Complexité pire des cas & Complexité sur tableau trié & Complexité en moyenne \\
+\hline
+Tri sélection & $O(n^2)$ & $O(n^2)$ & $O(n^2)$ \\
+\hline
+Tri bulles & $O(n^2)$ & $O(n)$ & $O(n^2)$ \\
+\hline
+Tri insertion & $O(n^2)$ & $O(n)$ & $O(n^2)$ \\
+\hline
+Tri rapide & $O(n^2)$ & $O(n^2)$ & $O(n \log(n))$ \\
+\hline
+Tri fusion & $O(n \log(n))$ & $O(n \log(n))$ & $O(n \log(n))$ \\
+\hline
+\end{tabular}
+ 
+\section{Tri sélection}
+
+\subsection{Algorithme}
+
+Ce tri est un des plus simples à implanter : le principe est de rechercher à chaque étape le maximum des données non triées et de le placer dans la position correcte.
+
+\begin{lstlisting}
+TriSelection
+Input :
+    - tab un tableau de taille n
+Procédé :
+    Pour fin allant de n-1 à 1:
+        imax <- 0
+        Pour i allant de 1 à fin:
+            Si tab[imax] <= tab[i]:
+                imax <- i
+        tab[imax], tab[fin] <- tab[fin], tab[imax] 
+\end{lstlisting}
+
+\textit{On utilise la syntaxe python {\tt u,v <- v,u} pour échanger deux valeurs.}
+
+\begin{Example}
+Tri pas sélection du tableau 
+
+\begin{tabular}{cccccccccc}
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4
+\end{tabular}
+
+Pour chaque itération de la boucle sur la variable {\tt fin}, on sélectionne le maximum puis on l'échange avec la dernière valeur.
+
+\begin{minipage}[t]{0.49 \textwidth}
+{\tt fin = 9}
+
+\begin{tabular}{cccccccccc}
+\red{9} & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+4 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & \red{9}
+\end{tabular}
+
+{\tt fin = 8}
+
+La partie en bleu est triée
+
+\begin{tabular}{cccccccccc}
+4 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & \red{6} & \blue{9}
+\end{tabular}
+
+{\tt fin = 7}
+
+\begin{tabular}{cccccccccc}
+4 & 3 & \red{6} & 1 & 2 & 4 & 3 & 5 & \blue{6} & \blue{9} \\
+4 & 3 & 5 & 1 & 2 & 4 & 3 & \red{6} & \blue{6} & \blue{9} 
+\end{tabular}
+
+{\tt fin = 6}
+
+\begin{tabular}{cccccccccc}
+4 & 3 & \red{5} & 1 & 2 & 4 & 3 & \blue{6} & \blue{6} & \blue{9} \\
+4 & 3 & 3 & 1 & 2 & 4 & \red{5} & \blue{6} & \blue{6} & \blue{9}
+\end{tabular}
+
+{\tt fin = 5}
+
+\begin{tabular}{cccccccccc}
+4 & 3 & 3 & 1 & 2 & \red{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9}
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+
+
+{\tt fin = 4}
+
+\begin{tabular}{cccccccccc}
+\red{4} & 3 & 3 & 1 & 2 & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+2 & 3 & 3 & 1 & \red{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9}
+\end{tabular}
+
+{\tt fin = 3}
+
+\begin{tabular}{cccccccccc}
+2 & 3 & \red{3} & 1 & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+2 & 3 & 1 & \red{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} 
+\end{tabular}
+
+{\tt fin = 2}
+
+\begin{tabular}{cccccccccc}
+2 & \red{3} & 1 & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+2 & 1 & \red{3} & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9}
+\end{tabular}
+
+{\tt fin = 1}
+
+\begin{tabular}{cccccccccc}
+\red{2} & 1 & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+ 1 & \red{2}  & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9}
+\end{tabular}
+\end{minipage}
+
+\end{Example}
+
+\subsection{Preuve}
+
+La preuve d'un algorithme de ce type se fait en utilisant un \textit{invariant de boucle}, c'est-à-dire une propriété qui restera vraie après chaque itération.
+
+\textbf{Invariant de boucle :} A la fin de l'étape {\tt fin}, on a conservé l'ensemble de valeurs initiales et les valeurs {\tt tab[j]} pour $j \geq fin$ sont celles du tableau trié.
+
+On prouve facilement par une logique de récurrence que cet invariant est vérifié à chaque étape. Supposons qu'il l'est pour {\tt fin = k}, la valeur que l'on sélectionne à l'étape {\tt fin = k-1} est le maximum des {\tt tab[i]} pour $0 \leq i \leq k-1$ et par l'invariant de boucle, elle est plus petite ou égale que {\tt tab[i]} pour $k \leq i \leq n-1$, donc elle correspond bien à la valeur finale du tableau trié en position $k-1$. Le fait qu'on effectue un échange assure la conservation des valeurs.
+
+La boucle s'arrête quand {\tt fin = 1} et donc toutes les valeurs {\tt tab[i]} pour $1 \leq i \leq n-1$ sont bien placées, ce qui implique que {\tt tab[0]} est lui aussi bien placé par conservation des valeurs initiales et que le tableau est trié. 
+
+\subsection{Complexité}
+
+Le nombre d'itérations est constant quelles que soient les valeurs du tableau :
+
+\begin{align}
+(n-1) + (n-2) +  \dots + 1 = \frac{n(n-1)}{2}.
+\end{align}
+
+La complexité est donc en $O(n^2)$. Remarquez cependant que le nombre d'écriture dans le tableau est lui seulement en $O(n)$.
+
+\subsection{Avantages / Inconvénients}
+
+.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Implantation simple
+\item Faible nombre d'écritures
+\item Tri en place (directement dans le tableau sans allocation de mémoire supplémentaire)
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Forte complexité quelle que soient les données (pas d'amélioration dans le meilleur des cas)
+\end{itemize}
+
+\end{minipage}
+
+En pratique, ce tri est peu utilisé à cause de sa forte complexité \textit{dans tous les cas}.
+
+
+\section{Tri à bulles}
+
+\subsection{Algorithme}
+
+Le principe du tri est de comparer les données deux à deux sur des cases adjacentes et de continuer tant que l'on trouve des inversions. Pour qu'il soit optimal, il faut prendre avantage des propriétés des "bulles" qui poussent le maximum vers la fin du tableau ainsi que du test sur les inversions.
+
+\begin{lstlisting}
+TriBulles
+Input :
+    - tab un tableau de taille n
+Procédé :
+    Pour fin allant de n-1 à 1 :
+        inversions <- Faux
+        Pour i allant de 0 à fin-1 :
+            Si tab[i] > tab[i+1]:
+                tab[i], tab[i+1] <- tab[i+1], tab[i]
+                inversions <- Vrai
+        Si inversions est faux :
+            Quitter la boucle
+\end{lstlisting}
+
+\begin{Example}
+Tri à bulles du tableau 
+
+\begin{tabular}{cccccccccc}
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4
+\end{tabular}
+
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+\red{9} & \red{3} & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+3 & \red{9} & \red{6} & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+3 & 6 & \red{9} & \red{1} & 2 & 4 & 3 & 5 & 6 & 4 \\
+3 & 6 & 1 & \red{9} & \red{2} & 4 & 3 & 5 & 6 & 4 \\
+3 & 6 & 1 & 2 & \red{9} & \red{4} & 3 & 5 & 6 & 4 \\
+3 & 6 & 1 & 2 & 4 & \red{9} & \red{3} & 5 & 6 & 4 \\
+3 & 6 & 1 & 2 & 4 & 3 & \red{9} & \red{5} & 6 & 4 \\
+3 & 6 & 1 & 2 & 4 & 3 & 5 & \red{9} & \red{6} & 4 \\
+3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & \red{9} & \red{4} \\
+\red{3} & \red{6} & 1 & 2 & 4 & 3 & 5 & 6 & 4 & \blue{9} \\
+3 & \red{6} & \red{1} & 2 & 4 & 3 & 5 & 6 & 4 & \blue{9} \\
+3 & 1 & \red{6} & \red{2} & 4 & 3 & 5 & 6 & 4 & \blue{9} \\
+3 & 1 & 2 & \red{6} & \red{4} & 3 & 5 & 6 & 4 & \blue{9} \\
+3 & 1 & 2 & 4 & \red{6} & \red{3} & 5 & 6 & 4 & \blue{9} \\
+3 & 1 & 2 & 4 & 3 & \red{6} & \red{5} & 6 & 4 & \blue{9} \\
+3 & 1 & 2 & 4 & 3 & 5 & \red{6} & \red{6} & 4 & \blue{9} \\
+3 & 1 & 2 & 4 & 3 & 5 & 6 & \red{6} & \red{4} & \blue{9} \\
+\red{3} & \red{1} & 2 & 4 & 3 & 5 & 6 & 4 & \blue{6} & \blue{9} \\
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+1 & \red{3} & \red{2} & 4 & 3 & 5 & 6 & 4 & \blue{6} & \blue{9} \\
+1 & 2 & \red{3} & \red{4} & 3 & 5 & 6 & 4 & \blue{6} & \blue{9} \\
+1 & 2 & 3 & \red{4} & \red{3} & 5 & 6 & 4 & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & \red{4} & \red{5} & 6 & 4 & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & 4 & \red{5} & \red{6} & 4 & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & 4 & 5 & \red{6} & \red{4} & \blue{6} & \blue{9} \\
+\red{1} & \red{2} & 3 & 3 & 4 & 5 & 4 & \blue{6} & \blue{6} & \blue{9} \\
+1 & \red{2} & \red{3} & 3 & 4 & 5 & 4 & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & \red{3} & \red{3} & 4 & 5 & 4 & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & 3 & \red{3} & \red{4} & 5 & 4 & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & \red{4} & \red{5} & 4 & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & 4 & \red{5} & \red{4} & \blue{6} & \blue{6} & \blue{9} \\
+\red{1} & \red{2} & 3 & 3 & 4 & 4 & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+1 & \red{2} & \red{3} & 3 & 4 & 4 & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & \red{3} & \red{3} & 4 & 4 & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & 3 & \red{3} & \red{4} & 4 & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+1 & 2 & 3 & 3 & \red{4} & \red{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+\end{tabular}
+\end{minipage}
+\end{Example}
+
+\subsection{Preuve}
+
+La preuve du programme s'appuie sur les deux stratégies mises en place : réduction de la partie non triée du tableau et tests des inversions. On peut utiliser le même invariant de boucle que celui du tri par sélection : il est facile de voir qu'à la fin de chaque étape, le maximum se retrouve toujours à la dernière place non triée. Par ailleurs, il faut justifier l'arrêt en cour de route par les inversions :
+\begin{itemize}
+\item une inversion de {\tt tab} est un couple $i < j$ tel que {\tt tab[i] > tab[j]} ($i$ et $j$ ne sont pas forcément consécutifs),
+\item un tableau non trié contient au moins une inversion sur deux indices consécutifs,
+\end{itemize}
+donc si je n'ai observé aucune inversion sur les "bulles" de la partie non triée, je peux arrêter l'algorithme.
+
+\subsection{Complexité}
+
+Réfléchissons d'abord à la \textbf{complexité du pire des cas}. Si on se contente d'observer l'imbrication des boucles for en ignorant le tests des inversions, on trouve une complexité en $O(n^2)$ de la même façon que pour le tri sélection. Cependant, on pourrait se demander si le tests des inversions permet d'améliorer ce résultat, en d'autre terme : est-ce que le pire des cas de la boucle for est atteint lorsqu'on ajoute le test des inversions ? 
+
+Pour répondre à cette question, il faut observer un peu plus finement le mécanisme. Soit $I$, le nombre d'inversions dans mon tableau et $C$ le nombre de comparaisons effectuées par l'algorithme. Dans l'exemple ci-dessus, on trouve 20 inversions et 35 comparaisons.
+\begin{itemize}
+\item \`A chaque fois que l'on effectue un échange, on supprime exactement une inversion,
+\item il faut supprimer toutes les inversions pour obtenir le tableau trié,
+\item chaque échange suppose que l'on effectue une comparaison, donc on a $I \leq C$. 
+\end{itemize}
+Et l'on sait par les bornes de la boucle for que $C \leq \frac{n(n-1)}{2}$. Soit un tableau de taille $n$, la configuration qui maximise le nombre d'inversion est l'ordre décroissant strict, dans ce cas on trouve $I = \frac{n(n-1)}{2} \leq C \leq \frac{n(n-1)}{2}$. Autrement dit, on atteint bien le nombre maximal de comparaisons : le tests des inversions n'améliore pas l'algorithme dans le pire des cas. \textbf{La complexité reste en $O(n^2$).}
+
+Cependant, il est évident que dans le \textbf{meilleur des cas} (tableau trié), le test des inversions permet d'obtenir une complexité $O(n)$. En pratique,on va souvent améliorer le nombre d'opérations comme on peut le voir dans l'exemple où l'algorithme se termine quand {\tt fin = 5}. 
+
+Est-ce que cette amélioration se répercute sur la \textbf{complexité en moyenne} ? Pour répondre, il faut calculer le nombre d'inversions moyen d'un "tableau aléatoire". Pour simplifier, on supposera que toutes les valeurs sont distinctes et que le tableau correspond à une permutation aléatoire choisie uniformément parmi les permutations d'un certain ensemble.
+
+Soit $i$ et $j$, avec $i < j$, deux indices du tableau, la probabilité de $tab[i] < tab[j]$ est $\frac{1}{2}$ car pour deux valeurs $v$ et $w$, le nombre de tableaux tel que $t[i] = v$ et $t[j] = w$ est le même que le nombre de tableau tel que $t[i] = w$ et $t[j] = w$. Il existe donc $\frac{n(n-1)}{2}$ couples $i < j$ et chacun a une probabilité $\frac{1}{2}$ d'être une inversion. Par linéarité de l'espérance, on obtient donc que le nombre d'inversions est en moyenne de $I = \frac{n(n-1)}{4}$, et comme on sait que $I \leq C$, on en conclue que la \textbf{complexité en moyenne est toujours de $O(n^2)$.}
+
+\subsection{Avantages / Inconvénients}
+
+.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Implantation simple
+\item Tri en place 
+\item Complexité linéaire quand le tableau est trié
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Forte complexité du pire des cas
+\item Forte complexité en moyenne
+\item Une seule valeur mal placée peut induire une complexité $O(n^2)$
+\end{itemize}
+
+\end{minipage}
+
+\section{Tri par insertion}
+
+\subsection{Algorithme}
+
+Le principe du tri par insertion est de conserver triée la partie initiale du tableau et d'y insérer les éléments non triés un à un.
+
+\begin{lstlisting}
+TriInsertion
+Input :
+    - tab un tableau de taille n
+Procédé :
+    Pour i allant de 1 à n-1 :
+        j <- i-1
+        v <- tab[i]
+        Tant que j >= 0 et t[j] >v:
+            t[j+1] <- t[j]
+            j <- j - 1
+        t[j+1] <- v
+\end{lstlisting}
+
+L'élément en position $i$ est celui que l'on insère dans le tableau trié (éléments placés avant $i$). La boucle Tant que permet décaler les valeurs triées jusqu'à la position 
+de la valeur à insérer.
+
+\begin{Example}
+Tri par insertion du tableau
+
+\begin{tabular}{cccccccccc}
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+\blue{9} & \red{3} & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{\textbf{9}} & \blue{\textbf{9}} & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\textbf{\red{3}} & \blue{\textbf{9}} & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \blue{9} & \red{6} & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \blue{\textbf{9}} & \blue{\textbf{9}} & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \textbf{\red{6}} & \blue{\textbf{9}} & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \blue{6} & \blue{9} & \red{1} & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{3} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{\textbf{3}} & \blue{\textbf{3}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 2 & 4 & 3 & 5 & 6 & 4 \\
+\textbf{\red{1}} & \blue{\textbf{3}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 2 & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{3} & \blue{6} & \blue{9} & \red{2} & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{3} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{3} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{\textbf{3}} & \blue{\textbf{3}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \textbf{\red{2}} & \blue{\textbf{3}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 4 & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{6} & \blue{9} & \red{4} & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 3 & 5 & 6 & 4 \\
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+\blue{1} & \blue{2} & \blue{3} & \textbf{\red{4}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 3 & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{4} & \blue{6} & \blue{9} & \red{3} & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{4} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{4} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{\textbf{4}} & \blue{\textbf{4}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \textbf{\red{3}} & \blue{\textbf{4}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 5 & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{6} & \blue{9} & \red{5} & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \textbf{\red{5}} & \blue{\textbf{6}} & \blue{\textbf{9}} & 6 & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \blue{9} & \red{6} & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \textbf{\red{6}} & \blue{\textbf{9}} & 4 \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} & \red{4} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{\textbf{9}} & \blue{\textbf{9}} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{6} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{5} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{\textbf{5}} & \blue{\textbf{5}} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \textbf{\red{4}} & \blue{\textbf{5}} & \blue{\textbf{6}} & \blue{\textbf{6}} & \blue{\textbf{9}} \\
+\end{tabular}
+\end{minipage}
+\end{Example}
+
+\subsection{Preuve}
+
+L'invariant de boucle est le suivant : à la fin de l'étape $i$, les valeurs du tableaux {\tt tab[j]} avec $j \leq i$ sont triées et correspondent à une permutation des valeurs du tableau initial placées en position inférieures ou égales à $i$.
+
+Lorsque l'on commence une nouvelle étape, on récupère la valeur {\tt v= t[i]} à insérer. La boucle interne permet de déplacer d'un cran vers la droite toutes les valeurs supérieures à $v$ et de placer $v$ dans l'emplacement ainsi dégagé. L'invariant de boucle est donc bien respecté. 
+
+\subsection{Complexité}
+
+Le pire des cas est obtenu sur un tableau strictement décroissant. Dans ce cas, à chaque insertion, il faut décaler l'ensemble des valeurs et on obtient une \textbf{complexité en $O(n^2)$}.
+
+Dans le meilleur des cas, si le tableau est déjà trié, on effectuera un seul parcourt sans retour en arrière et on aura donc une \textbf{complexité en $O(n)$}.
+
+Pour ce qui est de la complexité en moyenne, le problème est assez similaires à celui du tri à bulles. En effet, à chaque insertion, on supprime un nombre d'inversion exactement égal au décalage que l'on fait subir au tableau trié. Observez par exemple l'insertion du nombre 2 dans l'exemple donné : on décale le 3, le 6 et le 9 et on supprime  les trois inversions de ces nombres avec le 2 lui-même (surtout, on en supprime pas plus). On en arrive donc à la même conclusion que pour le tri à bulle : en moyenne, il faudra au minimum $\frac{n(n-1)}{4}$ opérations, soit une \textbf{complexité en $O(n^2)$}.
+
+Cependant, il est à noter que si l'on peut maîtriser le nombre d'inversions : par exemple en limitant la distance possible entre une valeur et sa position finale, on limite aussi à coup sûr le nombre d'opérations. En effet, en observant l'algorithme, on observe que le nombre de comparaisons est pratiquement égal au nombre d'inversions. Ainsi, si on exprime le problème, non plus seulement en fonction de $n$, mais en fonction de $n$ et $I$ où $I$ est le nombre d'inversions on trouve une complexité en $O(n +I)$. En particulier, si on travail sur des données dont le nombre d'inversions est en $O(n)$, alors on retrouve une complexité linéaire.
+
+\subsection{Avantages / Inconvénients}
+
+.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Tri en place 
+\item Complexité linéaire quand le tableau est trié
+\item Complexité linéaire quand le tableau est "presque" trié
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Forte complexité du pire des cas
+\item Forte complexité en moyenne
+\end{itemize}
+
+\end{minipage}
+
+\section{Tri rapide / Quick sort}
+
+
+\subsection{Algorithme}
+
+Le tri rapide suit un principe de \textit{diviser pour régner}. A chaque étape, on choisit un pivot $p$ (ici la première valeur) et effectue un parcourt du tableau tel que toutes les valeurs $v \leq p$ soit au début du tableau et les autres à la fin. On place $v$ à la fin des petites valeurs, c'est-à-dire à son emplacement final dans le tableau trié. Puis on lance le tri récursivement sur les deux moitiés du tableau données par $v$.
+
+\begin{lstlisting}
+TriRapide
+Input :
+    - tab un tableau de taille n
+    - deb, l'indice de départ du tableau (0 au premier appel)
+    - fin, le premier indice hors du tableau (n au premier appel)
+Procédé:
+    Si fin - deb <=1:
+        # Le tableau contient au maximum 1 élément
+        Retourner
+    pivot <- tab[deb]
+    
+    # Première phase : organiser les valeurs par rapport au pivot
+    # toutes les valeurs aux indices <= i doivent être <=  à pivot
+    # toutes les valeurs aux indices >=j doivent être > à pivot
+    i <- deb + 1 
+    j <- fin - 1
+    Tant que i <= j:
+        Tant que i <= j et tab[i] <= pivot:
+            i <- i + 1
+        Tant que i <= j et tab[j] > pivot:
+            j <- j - 1
+        # On a augmenté i et diminue j au maximum
+        Si i < j:
+            # on sait que la valeur en i est une "grande" valeur 
+            # et que celle en j est une "petite" valeur
+            tab[i],tab[j] <- tab[j],tab[i]
+            i <- i + 1
+            j <- j - 1
+    # On remet le pivot à sa place
+    # j contient la dernière "petite" valeur
+    tab[deb],tab[j] <- tab[j],tab[deb]
+    
+    # Deuxième phase : appels récursifs
+    
+    TriRapide(t, deb, i-1)
+    TriRapide(t, j+1, fin)
+\end{lstlisting}
+
+\begin{Example}
+Tri rapide du tableau
+
+\begin{tabular}{cccccccccc}
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4
+\end{tabular}
+
+Le pivot est indiqué en rouge, les valeurs placées définitivement sont en bleu, et celles considérées par l'appel de fonction de courant sont en vert. On a affiché quelques étapes de l'algorithme du placement de pivot : les valeurs identifiées comme "petites" sont en gras, les "grandes" sont en italiques.
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+\red{9} & \green{3} & \green{6} & \green{1} & \green{2} & \green{4} & \green{3} & \green{5} & \green{6} & \green{4} \\
+\red{9} & \green{\textbf{3}} & \green{\textbf{6}} & \green{\textbf{1}} & \green{\textbf{2}} & \green{\textbf{4}} & \green{\textbf{3}} & \green{\textbf{5}} & \green{\textbf{6}} & \green{\textbf{4}} \\
+\red{4} & \green{3} & \green{6} & \green{1} & \green{2} & \green{4} & \green{3} & \green{5} & \green{6} & \blue{9} \\
+\red{4} & \green{\textbf{3}} & \green{\textbf{3}} & \green{1} & \green{2} & \green{4} & \green{\textit{6}} & \green{\textit{5}} & \green{\textit{6}} & \blue{9} \\
+\red{4} & \green{\textbf{3}} & \green{\textbf{3}} & \green{\textbf{1}} & \green{\textbf{2}} & \green{\textbf{4}} & \green{\textit{6}} & \green{\textit{5}} & \green{\textit{6}} & \blue{9} \\
+\red{4} & \green{3} & \green{3} & \green{1} & \green{2} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\red{4} & \green{\textbf{3}} & \green{\textbf{3}} & \green{\textbf{1}} & \green{\textbf{2}} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\red{2} & \green{3} & \green{3} & \green{1} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\red{2} & \green{\textbf{1}} & \green{3} & \green{\textit{3}} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\red{2} & \green{\textbf{1}} & \green{\textit{3}} & \green{\textit{3}} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+\begin{tabular}{cccccccccc}
+\blue{1} & \blue{2} & 3 & 3 & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\blue{1} & \blue{2} & \red{3} & \green{3} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\blue{1} & \blue{2} & \red{3} & \green{\textbf{3}} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & 6 & 5 & 6 & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \red{6} & \green{5} & \green{6} & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \red{6} & \green{\textbf{5}} & \green{\textbf{6}} & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \red{6} & \green{5} & \blue{6} & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \red{6} & \green{\textbf{5}} & \blue{6} & \blue{9} \\
+\blue{1} & \blue{2} & \blue{3} & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} & \blue{6} & \blue{9} \\
+\end{tabular}
+\end{minipage}
+\end{Example}
+
+\subsection{Preuve}
+
+La preuve se fait par récurrence.
+\begin{itemize}
+\item Un tableau de taille inférieure ou égale à 1 est déjà trié : la fonction ne fait rien
+\item Supposons que {\tt TriRapide} fonctionne pour les taille plus petites que $n$. Soit $p = tab[0]$ le pivot. La première partie de la fonction place les valeurs plus petites ou égales à $p$ à gauche d'un indice $i$ et les autres à droites. Cette partie là se prouve avec un invariant de boucle : à la fin de chaque étape, la distance entre $i$ et $j$ diminue d'au moins 1 et tout ce qui est à gauche de $i$ est plus petit ou égal à $p$ et tout ce qui est à droite de $j$ est plus grand que $p$. A la fin de la boucle, on échange $p$ avec la position juste à la gauche de $i$. De cette façon, les valeurs à gauche de $p$ sont exactement les valeurs plus petites ou égales à $p$, donc $p$ est bien placé dans le tableau. 
+\item Par récurrence, les appels récursifs sur les deux parties du tableau, à gauche et à droite de $p$ trient les sous-tableau car ils sont de taille strictement plus petite que $n$ (étant donné qu'aucun des deux ne contient le pivot), et donc le tableau est trié.
+\end{itemize}
+
+\subsection{Complexité}
+
+A chaque étape, le tableau est divisé en deux sous-tableaux. La taille de ces sous-tableaux n'est pas constante, elle dépend du pivot. Si l'on choisit un tableau strictement décroissant ou croissant, à chaque étape $n$, il sera décomposé en un tableau de taille $O$ et un tableau de taille $n-1$. Soit $f$ la complexité de mon tri, on obtient la formule récursive
+
+\begin{align}
+f(1) &= 1 \\
+f(n) &= n + f(n-1).
+\end{align}
+
+En dé-récursivant : $f$ est la somme des entiers de 1 à $n$. On a une \textbf{complexité quadratique} soit $O(n^2)$. 
+
+Le cas où le \textbf{tableau est trié} dans un sens ou dans l'autre est donc \textbf{le pire des cas} pour le tri rapide. Quel est le meilleur des cas ? Celui où le tableau est divisé en deux sous-parties de tailles équivalentes. Prenons par exemple la fonction récursive suivante
+
+\begin{align}
+f( n \leq 1) &= 1 \\
+f(n) &= n + 2 f \left(\frac{n}{2} \right) \\
+     &= n + 2 \left( \frac{n}{2} + 2 \left( \frac{n}{ 4} + \dots \right) \right)
+\end{align}
+
+En développant, les fractions se simplifient et on obtient $f(n) = n(\log(n) + 1)$, c'est-à-dire une complexité en $O(n \log(n))$. Donc la complexité du tri rapide est améliorée si on divise le tableau en parts égales.
+
+On peut utiliser cette propriété pour le calcul de la complexité en moyenne. Sans entrer dans les détails du calcul, si le tableau est une permutation aléatoire d'un certain ensemble, le choix du pivot le divisera en sous-parties qui seront équilibrées en moyenne et elles-mêmes des permutations aléatoires. Par une étude probabiliste et des calculs un peu plus poussés, on obtient que \textbf{la complexité en moyenne est en $O(n \log(n))$}.
+
+
+\subsection{Avantages / Inconvénients}
+
+.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Tri en place 
+\item Complexité $O(n \log(n))$ en moyenne
+\item Connu pour sa rapidité en pratique
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Forte complexité du pire des cas
+\item Forte complexité dans le cas trié ou presque trié
+\end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}
+
+Le quicksort est très utilisé en pratique car il permet d'obtenir de très bonnes performances. Cependant,
+il est le plus souvent couplé à un algorithme de \textit{randomisation} ou autres euristiques particulières 
+pour éviter de tomber dans le pire des cas. Par ailleurs, il est à éviter quand les données sont déjà \textbf{triées ou presque triées}, dans ce cas, sa complexité est très mauvaise alors qu'un tri par insertion sera fait en temps linéaire.
+
+\section{Tri Fusion}
+
+\subsection{Algorithme}
+
+Le principe du tri fusion est basé sur l'algorithme qui permet de fusionner deux listes triées en $O(n)$ en choisissant en les minimums successifs des deux listes. Tout comme le tri rapide, c'est un \textbf{tri récursif} qui divise le problème en 2 sous problèmes plus petits.
+
+\begin{lstlisting}
+Fusion
+Fusion de deux listes triées
+Input :
+    - t1 un tableau trié de taille n
+    - t2 un tableau trié de taille m
+Output :
+    un tableau trié contenant les valeurs de t1 et t2
+Procédé:
+    t3 <- tableau de taille n+m
+    i <- 0 # indice pour parcourir t1
+    j <- 0 # indice pour parcourir t2
+    k <- 0 # indice pour parcourir t3
+    Tant que i < n et j < m:
+        Si t1[i] <= t2[j]: # si < : tri pas stable !
+            t3[k] <- t1[i]
+            i <- i+1
+            k <- k+1
+        Sinon :
+            t3[k] <- t2[j]:
+            j <- j+1
+            k <- k+1
+    # on a terminé un des deux tableaux, on recopie les valeurs restantes
+    Tant que i < n:
+        t3[k] <- t1[i]
+        i <- i+1
+        k <- k+1
+    Tant que j < m:
+        t3[k] <- t2[j]
+        j <- j+1
+        k <- k+1
+    Retourner t3
+\end{lstlisting}
+
+\begin{lstlisting}
+TriFusion
+Input :
+    - tab un tableau de taille n
+Output :
+    Une copie du tableau trié
+Procédé :
+    Si n <= 1:
+        Retourner copie(t)
+    m <- n/2
+    t1 <- tab[:m] # sous tableau des indices 0 inclus à m exclus
+    t2 <- tab[m:] # sous tableau des indices m inclus à n exclus
+    t1 <- TriFusion(t1)
+    t2 <- TriFusion(t2)
+    Retourner Fusion(t1,t2)
+\end{lstlisting}
+
+\begin{Example}
+Tri fusion du tableau
+
+\begin{tabular}{cccccccccc}
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4
+\end{tabular}
+
+On affiche les appels récursifs à {\tt TriFusion} et {\tt Fusion}.
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.52 \textwidth}
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+9 & 3 & 6 & 1 & 2 & 4 & 3 & 5 & 6 & 4 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+9 & 3 & 6 & 1 & 2 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+9 & 3 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+9 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+3 \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{9}& et &\blue{3} \\
+ & \blue{3} & \red{9} \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+6 & 1 & 2 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+6 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+1 & 2 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+1 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+2 \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{1}& et &\blue{2} \\
+ & \red{1} & \blue{2} \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{6}& et &\blue{1} & \blue{2} \\
+ & \blue{1} & \blue{2} & \red{6} \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{3} & \red{9}& et &\blue{1} & \blue{2} & \blue{6} \\
+ & \blue{1} & \blue{2} & \red{3} & \blue{6} & \red{9} \\
+\end{tabular}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+4 & 3 & 5 & 6 & 4 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+4 & 3 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+4 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+3 \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{4}& et &\blue{3} \\
+ & \blue{3} & \red{4} \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+5 & 6 & 4 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+5 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+6 & 4 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+6 \\
+\end{tabular}
+
+\begin{tabular}{lcccccccccc}{\tt TriFusion} de &
+4 \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{6}& et &\blue{4} \\
+ & \blue{4} & \red{6} \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{5}& et &\blue{4} & \blue{6} \\
+ & \blue{4} & \red{5} & \blue{6} \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{3} & \red{4}& et &\blue{4} & \blue{5} & \blue{6} \\
+ & \red{3} & \red{4} & \blue{4} & \blue{5} & \blue{6} \\
+\end{tabular}
+
+\begin{tabular}{lccccccccccc}
+{\tt Fusion} de & 
+\red{1} & \red{2} & \red{3} & \red{6} & \red{9}& et &\blue{3} & \blue{4} & \blue{4} & \blue{5} & \blue{6} \\
+ & \red{1} & \red{2} & \red{3} & \blue{3} & \blue{4} & \blue{4} & \blue{5} & \red{6} & \blue{6} & \red{9} \\
+\end{tabular}
+\end{minipage}
+\end{Example}
+
+\subsection{Preuve}
+
+Tout comme pour le tri rapide, la preuve se fait par récurrence de façon immédiate.
+
+\begin{itemize}
+\item Un tableau de taille inférieure ou égale à 1 est déjà trié : la fonction retourne une copie de ce tableau
+\item Supposons que {\tt TriFusion} fonctionne pour les tailles plus petites que $n$. Par récurrence, les tableaux {\tt t1} et
+{\tt t2} sont donc des copies triées correspondant aux valeurs respectives de la première moitié de {\tt tab} et de la dernière moitié de {\tt tab}. 
+\item Il reste à prouver que la fusion de {\tt t1} et {\tt t2} retourne bien le tableau trié contenant les valeurs des deux tableaux. Cela se fait par invariant de boucle : à chaque étape de la boucle {\tt Tant que} on ajoute une valeur au tableau {\tt t3} qui est le minimum des valeurs restantes. Les deux boucles {\tt Tant que} à la fin de la fonction assurent qu'on a bien recopié toutes les valeurs.
+\end{itemize}
+
+\subsection{Complexité}
+
+Dans le cas du tri fusion, on découpe systématiquement le tableau en deux parts égales (contrairement au tri rapide, cela ne dépend plus des valeurs). A chaque étape, il faut effectuer une copie du tableau (pour créer les sous-tableaux) et la fusion, cela se fait en $O(n)$. On obtient donc une formule récursive pour la complexité du type de
+
+\begin{align}
+f( n \leq 1) &= 1 \\
+f(n) &= n + 2 f \left(\frac{n}{2} \right) \\
+\end{align}
+et donc une complexité en $O(n \log(n))$ \textbf{dans tous les cas.}
+
+Notons aussi dans l'implantation naïve que nous avons faite du tri, la \textbf{complexité en mémoire} est elle aussi en $O(n \log(n))$. Il est possible en améliorant l'algorithme de la réduire à $O(n)$ (en gérant de façon efficace une seule copie du tableau qu'on utilise pour les fusions). L'écriture d'un tri fusion \textbf{en place} et \textbf{efficace} est un un exercice difficile qui a fait l'objet de différentes recherches et propositions, on peut obtenir une complexité globale de $O(n \log(n)^2)$ mais on reste moins efficace que le tri originel.
+
+\subsection{Avantages / Inconvénients}
+
+.
+
+\begin{minipage}[t]{0.49 \textwidth}
+Avantages
+
+\begin{itemize}
+\item Complexité $O(n \log(n))$ dans le pire des cas et en moyenne
+\end{itemize}
+
+\end{minipage}
+\begin{minipage}[t]{0.49 \textwidth}
+Inconvénients
+
+\begin{itemize}
+\item Complexité $O(n \log(n))$ dans le meilleur des cas (donc pas linéaire)
+\item Pas de tri en place : "beaucoup" d'allocation mémoire.
+\end{itemize}
+\end{minipage}
+
+\end{document}

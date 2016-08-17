@@ -1,0 +1,266 @@
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{Cours 1 : Complexité}
+
+\begin{document}
+\maketitle
+ 
+ 
+\section{Algorithmes, programmes et efficacité}
+
+\subsection{Définition et premières questions}
+
+Même si vous ne vous êtes jamais posé de questions d'algorithmique, en tant qu'étudiants vous avez été confrontés à l'écriture de
+\textbf{programmes}. Un \textbf{programme} est une suite d'instructions directement destinées à être exécutées par un ordinateur. Ainsi, 
+le programme dépend du \textbf{langage} dans lequel il est écrit et sera traduit en instructions machine (compilation) qui seront exécutées par le processeur (exécution).
+
+La notion d'algorithme est plus générale et permet d'aborder les problèmes de façon théorique sans s'occuper de l'aspect matériel.
+
+\begin{Definition}
+Un \emph{Algorithme} est un procédé formel bien défini qui prend un ensemble de données en entrée (\emph{Input}) et retourne un ensemble de données résultat (\emph{Output}).
+\end{Definition}
+
+\begin{Example}
+Une recette de cuisine : \\
+Input : les ingrédients. \\
+Procédé : les instructions de la recette. \\
+Output : le plat terminé. \\
+\end{Example}
+
+En particulier, un algorithme ne dépend pas du langage de programmation. Un programme est une implantation d'un algorithme donné. 
+
+\begin{Example}
+\label{ex:chercher-nb}
+Problème : Chercher un nombre dans un tableau. \\
+Algorithme :
+
+\begin{lstlisting}
+Input : Un tableau de nombres T[0] à T[N-1], un nombre a
+Procédé :
+    Pour i entier allant de 0 à N-1, faire :
+        Si T[i] = a :
+            Retourner Vrai
+    Retourner Faux
+Output : Vrai ou Faux
+\end{lstlisting} 
+Implantation en C :
+
+\lstinputlisting[firstline=3,  lastline=11]{code/find.c} 
+Implantation en Python :
+
+\lstinputlisting[firstline=3,  lastline=7]{code/find.py}
+
+\end{Example}
+
+Un algorithme répond à un \emph{problème}. c'est-à-dire à une description formelle de l'input et output attendu. Sur un même problème, on peut définir plusieurs algorithmes. Autour des notions de problèmes et algorithmes, se posent de nombreuses questions :
+\begin{itemize}
+\item Pour un problème donné, existe-t-il un algorithme ? \emph{décidabilité d'un problème}
+\item S'il existe plusieurs algorithmes répondant à un problème, lequel est le "meilleur" ?
+\item L'algorithme termine-t-il ?
+\item L'algorithme donne-t-il la bonne réponse ?
+\item Combien de temps "dure" mon algorithme ? \emph{complexité en temps}
+\item Combien d'espace mémoire nécessite-t-il ? \emph{complexité mémoire}
+\end{itemize}
+
+Ces questions ne sont pas simples !
+
+\begin{Example}[Syracuse]
+\label{ex:syracure}
+L'algorithme suivant termine-t-il quel que soit $n$ ?
+
+\begin{lstlisting}
+Input : un entier n supérieur ou égal à 1
+Procédé :
+    Tant que n > 1, faire :
+        Afficher n
+        Si n est pair :
+            n <- n/2
+        Sinon :
+            n <- n*3+1 
+Output : l'affichage produit
+\end{lstlisting}
+\end{Example}
+
+\begin{Example}
+Soit le problème suivant, qu'on appelle \lstinline{HALT} :
+\begin{lstlisting}
+Input : Un programme P écrit en python et un input possible T.
+Output : Vrai si P(T) termine et Faux sinon
+\end{lstlisting}
+
+Si l'algorithme existait, on pourrait alors appeler \lstinline{HALT(Syracuse, 56)} où \lstinline{Syracuse} est l'implantation python de l'algorithme donné dans l'exemple \ref{ex:syracure} et \lstinline{HALT} répondrait \lstinline{Vrai}.
+
+Existe-t-il un algorithme pouvant résoudre ce problème ? \emph{Problème de l'arrêt.}
+\end{Example}
+
+\subsection{Efficacité d'un programme}
+\label{sub-sec:efficacite}
+
+\begin{Example}
+\label{ex:puissance-prog}
+Lequel de ces deux programmes est le plus efficace ?
+
+\lstinputlisting[firstline=3, lastline=10]{code/puissance.c}
+
+\pagebreak 
+
+\lstinputlisting[firstline=3, lastline=11]{code/puissance.py}
+\end{Example}
+
+Les deux programmes utilisent des algorithmes différents, un algorithme est-il intrinsèquement meilleur que l'autre ?
+ 
+Problèmes :
+
+\begin{itemize}
+\item langages différents,
+\item sur quelles données ?
+\item optimisation bas niveau : code, compilation...
+\item dépendances de l'environnement
+\end{itemize}
+
+Cependant, il est possible d'étudier les algorithmes eux mêmes en se basant sur un \textbf{modèle théorique} qui permet de guider les choix de l'implantation pratique.
+
+\section{Complexité}
+
+\subsection{Complexité en temps : analyse d'algorithme}
+
+On décrit ici un modèle pour \textbf{estimer le temps de calcul} d'un programme implantant un algorithme donné. Le modèle que l'on utilisera pour l'analyse d'algorithme s'inspire du fonctionnement de type \textbf{random-access machine (RAM)}. On suppose que les instructions sont exécutées les unes à la suite des autres sans opérations concurrentes (on ne traite donc pas des questions de parallélisme). On supposera aussi que chaque instruction élémentaire de l'algorithme prend un temps constant : par exemple, une ligne "Afficher n" prend un certain temps $c$ qui ne dépend pas de $n$. Les instructions élémentaires correspondent à toutes les opérations arithmétiques (additions, multiplications, comparaisons), à l'accès et modification des données en mémoire (affichage, affectation) ainsi qu'aux sauts conditionnels ou inconditionnels (boucles).  \textbf{Attention}, ceci est un \textbf{choix du modèle} qui correspond à une simplification de la réalité. En particulier, lorsqu'on travaille sur des grands nombre, on pourra choisir d'autres modèles où la multiplication et l'addition ne sont plus considérées comme constantes. 
+
+\begin{Example}[Analyse de l'algorithme puissance]
+\label{ex:puissance-algo}
+
+On reprend l'algorithme du programme calculant la puissance en C (Exemple \ref{ex:puissance-prog}) et on estime son temps de calcul à l'aide du modèle décrit.
+
+\begin{lstlisting}
+Input : deux entiers a et n
+Procédé :
+1.    r <- 1                                        c1
+2.    Pour i allant de 0 à n-1:                     c2
+3.        r <- r*a                                  c3
+4.    Retourner r                                   c4
+Output : a puissance n
+\end{lstlisting}
+
+On suppose que $c_1, \dots c_5$ sont les constantes qui correspondent à l'exécution des différentes lignes de code. Les lignes en dehors de la boucle seront exécutées une fois, celles de la boucle $n$ fois. On obtient donc que le temps d'exécution selon notre modèle est donné par
+
+\begin{equation}
+c_1 + c_4 +n (c_2 +c_3).
+\end{equation}
+
+Le résultat est de type $An +B$ où $A$ et $B$ sont des constantes, on dit que la complexité de l'algorithme est \textbf{linéaire en $n$}.
+
+\end{Example}
+
+On remarque que dans cet exemple, la valeur de $a$ n'influe pas sur la complexité de l'algorithme. De façon générale, il faudra définir ce qu'est la \textbf{taille} des données entrantes dont dépendra la complexité. Cela peut être la valeur du paramètre (comme dans le cas de l'exemple \ref{ex:puissance-algo}), le nombre de donnée (taille d'un tableau) ou parfois un ensemble de valeurs (nombre de sommets et nombre d'arêtes d'un graphe). 
+
+\textbf{Questions :} de quoi dépend la complexité de l'algorithme présenté dans l'exemple \ref{ex:chercher-nb}~?
+
+\textbf{Problème : } le nombre d'opérations ne dépend pas que d'une \emph{taille} mais aussi de la valeur recherchée et des valeurs du tableau.
+
+Pour répondre à ce problème, on pose des hypothèses sur les valeurs de l'input et on étudie les différentes complexités obtenues. On peut ainsi isoler trois cas différents :
+
+\begin{itemize}
+\item Les données sont dans la meilleure configuration possible : \textbf{complexité meilleur des cas}.
+\item Les données sont dans la pire configuration possible : \textbf{complexité dans le pire des cas} (complexité usuelle);
+\item Moyenne sur l'ensemble des configurations : \textbf{complexité en moyenne}. Problème : nécessite de définir quel est l'ensemble des configurations ou quelle est sa distribution de probabilité. 
+\end{itemize}
+
+\begin{Example}
+Problème : un tableau $T$ d'entiers contient-il deux entiers égaux ? 
+\begin{lstlisting}
+Input : Un tableau d'entiers T[0] à T[n-1]
+Procédé :
+1.    Pour i allant de 1 à n-1:                                     c1
+2.        Pour j allant de 0 à i-1:                                 c2
+3.            Si T[i] = T[j]                                        c3
+4.                Retourner Vrai                                    c4
+5.    Retourner Faux                                                c5
+Output : Vrai si le tableau contient deux entiers égaux, Faux sinon
+\end{lstlisting}
+
+\textbf{Complexité meilleur des cas :} Les deux premiers entiers de $T$ sont égaux, dans ce cas l'algorithme s'arrête dès le premier teste, les instructions de boucles ne sont exécutées qu'une seule fois. On obtient 
+\begin{equation}
+c_1 + c_2 + c_3 + c_4,
+\end{equation}
+c'est-à-dire une complexité en \textbf{temps constant}.
+
+\textbf{Complexité dans le pire des cas :} $T$ ne contient pas deux entiers égaux, on doit effectuer tous les tests. Pour chaque $i$, les instructions 2 et 3 sont exécutées 
+$i$ fois, on obtient donc 
+\begin{align}
+(n-1) c_1 + \sum_{i = 1}^{n-1} i(c_2 + c_3) + c_4 &= (n-1) c_1 + (c_2 + c_3) \frac{(n-1)n}{2} + c_4 \\
+&= \frac{(c_2 + c_3)}{2}n^2 + (c_1 - \frac{c_2}{2} - \frac{c_3}{2})n + c_4 - c_1.
+\end{align}
+C'est-à-dire une formule de la forme $A n^2 + Bn + C$ avec $A,B,C$ constantes. On dit que la complexité est \textbf{quadratique}.
+
+\textbf{Complexité en moyenne :} nécessite de définir l'ensemble des données où sont choisis les valeurs de $T$ puis de calculer la loi de probabilité associée à l'arrêt de l'algorithme. On suppose que le tableau est de taille $n$ et que les valeurs sont prises uniformément et indépendamment dans l'ensemble des entiers de 1 à $k > n$. On calcule la probabilité $p(i)$ qu'un indice $i$ tel que $1 \leq i < n$ soit le premier tel qu'il existe $0 \leq j < i$ avec $T[i] = T[j]$. On trouve
+
+\begin{equation}
+p(i) = \frac{k(k-1)\dots (k-i+1)}{k^{i}}(i-1).
+\end{equation}
+Par ailleurs, la probabilité qu'on soit dans le pire des cas est donnée par
+\begin{equation}
+P = \frac{k(k-1)\dots(k-n+1)}{k^n}.
+\end{equation}
+
+A partir de là, on peut calculer l'espérance du temps de calcul pour différentes valeurs de $k$ et $n$. Lorsque $k=n$, la probabilité d'avoir deux valeurs égales dans le tableau est très forte et on trouve une complexité linéaire. Quand $k=n^2$ (donc on pioche dans un ensemble de nombre qui évolue quadratiquement en fonction de la taille), on retrouve une complexité quadratique.
+
+\end{Example}
+
+Le calcul de la complexité en moyenne peut s'avérer très complexe même sur des algorithmes simples. On étudiera principalement la \textbf{complexité du pire des cas}. Cependant, les complexités en moyenne et du meilleur des cas sont intéressantes à connaître en pratique sur certains algorithmes qui s'avèrent efficaces sur des données réelles. 
+
+\subsection{Notation $O$}
+
+On cherche à comprendre comment évolue le temps de calcul en fonction de taille $n$ de l'input. Pour cette raison, les constantes liées à l'exécutions des commandes élémentaires ne sont pas très significatives dans un premier temps. On utilise la notation mathématique $O(f)$ qui représente la borne supérieure de l'évolution asymptotique de $f$.
+
+\begin{Definition}
+Soit $g(n)$ une fonction, l'ensemble $O(g)$ est l'ensemble des fonctions $f$ telles qu'il existe deux constantes $\alpha$ et $n_0$ telles que
+\begin{equation}
+f(n) \leq \alpha g(n),
+\end{equation}
+pour tout  $n \geq n_0$.
+\end{Definition}
+
+\begin{Example}
+
+Soit un algorithme dont le temps d'exécution est donné par $f(n) = An+B$ où $A$ et $B$ sont des constantes. Dans ce cas, on a
+
+\begin{equation}
+f(n) \in O(n)
+\end{equation}
+avec $\alpha = A +B$ et $n_0 = 1$.
+
+De même, si le temps d'exécution est donné par $f(n) = An^2 + Bn + C$, on a $f \in O(n^2)$. De façon générale, si $f$ est un polynôme de degré $k$, on a que $f \in O(n^k)$.
+
+\end{Example}
+
+\subsection{Fonctions de référence}
+
+Lorsque l'on pose la question "Donnez la complexité de cet algorithme", on cherche à trouver la fonction $g$ la plus "rapide" telle que $f \in O(g)$. Voici les fonctions de référence auxquels on se rapportera le plus souvent.
+
+\begin{tabular}{|l|l|l|}
+\hline
+Fonction & Désignation & Exemple d'algorithme
+\\
+\hline \hline
+1 & temps constant & lire une valeur indicée dans un tableau \\  \hline
+$\log(n)$ & logarithmique & Dichotomie \\ \hline
+$\sqrt(n)$ & racinaire & test simple de primalité \\
+\hline \hline
+$n$ & linéaire & parcours d'un tableau \\ 
+\hline \hline
+$n log(n)$ & quasi-linéaire & tri rapide (en moyenne), tri par tas \\ \hline
+$n^a$ & polynomiale & tri bulle, tri insertion \\ 
+\hline \hline
+$a^n$ & exponentielle & Tour de Hanoi \\ \hline
+$n!$ & factorielle & problème du voyageur de commerce \\  \hline
+
+\end{tabular}
+
+
+
+
+
+
+
+
+\end{document}

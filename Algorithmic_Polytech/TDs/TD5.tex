@@ -1,0 +1,265 @@
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{TD5 : Arbres}
+
+\begin{document}
+\maketitle
+
+
+\begin{exercice}[Arbres]
+
+On utilisera la structure suivante pour les arbres :
+
+\begin{lstlisting}
+Structure Arbre :
+    valeur, un entier
+    nbFils, un entier
+    Fils, un tableau de taille nbFils contenant des Arbres
+\end{lstlisting}
+
+\begin{enumerate}
+\item Donnez un algorithme calculant le nombre d'éléments dans l'arbre.
+\item Donnez un algorithme calculant la valeur maximale de l'arbre.
+\item Donnez un algorithme donnant la somme des valeurs de l'arbre.
+\item Donnez un algorithme calculant la distance minimale entre une feuille et la racine.
+\item Donnez un algorithme calculant le nombre de fils maximal des nœud de l'arbre.
+\end{enumerate}
+
+\end{exercice}
+
+\begin{exercice}[Arbres binaires]
+
+On utilisera la structure suivante pour les arbres binaires :
+
+\begin{lstlisting}
+Structure ArbreBinaire :
+    valeur, un entier
+    filsGauche, un ArbreBinaire
+    filsDroit, un ArbreBinaire
+\end{lstlisting}
+
+Si l'un des fils est vide, on supposera que la valeur filsGauche (ou filsDroit) est égale à \texttt{None} (de façon équivalente on pourrait supposer que filsGauche et filsDroit sont des pointeurs en C et dans ce cas, l'arbre vide serait un pointeur NULL).
+
+\begin{enumerate}
+\item Donnez un algorithme de parcours préfixe.
+\item Donnez un algorithme de parcours en largeur.
+\item Donnez un algorithme testant si deux arbres binaires sont égaux (même forme et même valeurs)
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[Structure Fils-Frère]
+
+~
+\begin{enumerate}
+\item Dessinez toutes les formes d'arbres binaires possible à 1 nœud, 2 nœuds et 3 nœuds.
+\item Même question pour les arbres généraux à 2 nœuds, 3 nœuds et 4 nœuds. Que remarquez-vous ?
+\label{question:liste-arbres}
+\item \'A partir de la phrase "Dans un arbre, chaque nœud possède un premier fils et un premier frère (éventuellement vides)" imaginez une structure de représentation des arbres généraux selon le modèle des arbres binaires.
+\item Donnez la représentation sous forme d'arbre binaire des arbres de la question \ref{question:liste-arbres}.
+\item Donnez l'algorithme du calcul de la hauteur en utilisant cette structure. 
+\item De même pour l'algorithme calculant le nombre maximal de fils d'un nœud dans l'arbre.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[Combinatoire des arbres binaires] .
+
+\begin{enumerate}
+\item Quelle est la hauteur maximale d'un arbre binaire à $n$ noeuds ?
+
+\item Combien de noeuds possède au maximum un arbre binaire de hauteur $h$ ?
+
+\item Quelle est la hauteur minimale d'un arbre binaire à $n$ noeuds ? 
+
+\item Dessinez les 2 arbres binaires possibles de taille 2 et les 5 arbres binaires possibles de taille 3 (on ne prend pas en compte la valeur des noeuds, seulement la forme de l'arbre).
+
+\item Si $T$ est un arbre binaire de taille 4, de quelles tailles peuvent être les sous-arbres gauches et droits de $T$ ?
+
+\item À partir de la réponse à la question précédente, donnez une formule récursive pour $C_n$ le nombre d'arbres binaires de taille $n$.
+\end{enumerate}
+
+\end{exercice}
+
+\begin{exercice}[Arbre binaire de recherche]
+
+~
+\begin{enumerate}
+\item Construisez les arbres binaires de recherche obtenus en insérant un par un les nombres des listes suivantes $\lbrace 4, 2, 5, 1, 3, 4, 5, 6 \rbrace$ et $\lbrace 4, 5, 6, 5, 2, 3, 1, 4 \rbrace$.
+
+\item Quel parcours de l'arbre binaire donne la liste triée ? 
+
+\item Cherchez des exemples de listes de taille 7 telles que l'insertion donne un arbre binaire de profondeur 7.
+
+\item Même question mais cette fois on veut un arbre binaire de profondeur $3$.
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[Rotation]
+
+L'opération suivante, (dont on donne un exemple sur la droite) s'appelle \emph{la rotation droite}. L'opération inverse s'appelle \emph{la rotation gauche}.
+
+\begin{tabular}{cc}
+\scalebox{0.7}{
+  \begin{tikzpicture}[scale=0.8]
+    \node(TX1) at (-3,0){x};
+    \node(TY1) at (-2,1){y};
+    \node(TA1) at (-3.5,-1){A};
+    \node(TB1) at (-2.5,-1){B};
+    \node(TC1) at (-1,0){C};
+    \node(to) at (0,0){$\to$};
+    \node(TX2) at (2,1){x};
+    \node(TY2) at (3,0){y};
+    \node(TA2) at (1,0){A};
+    \node(TB2) at (2.5,-1){B};
+    \node(TC2) at (3.5,-1){C};
+    
+    \draw (TA1) -- (TX1);
+    \draw (TB1) -- (TX1);
+    \draw (TC1) -- (TY1);
+    \draw (TX1) -- (TY1);
+    
+    \draw (TA2) -- (TX2);
+    \draw (TB2) -- (TY2);
+    \draw (TC2) -- (TY2);
+    \draw (TY2) -- (TX2);
+  \end{tikzpicture}
+}
+
+&
+
+\scalebox{0.7}{
+  \begin{tikzpicture}[scale=0.8]
+    \node(TX1) at (-3,0){2};
+    \node(TY1) at (-2,1){4};
+    \node(TA1) at (-3.5,-1){1};
+    \node(TB1) at (-2.5,-1){3};
+    \node(TC1) at (-1,0){5};
+    \node(to) at (0,0){$\to$};
+    \node(TX2) at (2,1){2};
+    \node(TY2) at (3,0){4};
+    \node(TA2) at (1,0){1};
+    \node(TB2) at (2.5,-1){3};
+    \node(TC2) at (3.5,-1){5};
+    
+    \draw (TA1) -- (TX1);
+    \draw (TB1) -- (TX1);
+    \draw (TC1) -- (TY1);
+    \draw (TX1) -- (TY1);
+    
+    \draw (TA2) -- (TX2);
+    \draw (TB2) -- (TY2);
+    \draw (TC2) -- (TY2);
+    \draw (TY2) -- (TX2);
+  \end{tikzpicture}
+}
+\end{tabular}
+
+Ici, $x$ et $y$ sont des noeuds de l'arbre, et $A$, $B$ et $C$ sont des sous-arbres qui peuvent contenir plusieurs neuds.
+
+\begin{enumerate}
+
+\item Effectuez une roation droite à la racine des arbres suivants :
+
+\begin{tabular}{ccc}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$5$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$3$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$2$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$4$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$7$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$6$}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \& \nodef  \&         \\ 
+         \& \nodec  \&         \&         \& \nodee  \&         \& \nodeg  \&         \&         \\ 
+         \&         \& \noded  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d)
+	(b) edge (c) edge (e)
+	(f) edge (g)
+	(a) edge (b) edge (f);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$4$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$3$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$2$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$1$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$5$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$7$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$6$}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \& \nodee  \&         \&         \&         \\ 
+         \& \nodec  \&         \&         \&         \&         \&         \&         \&         \& \nodef  \&         \\ 
+ \noded  \&         \&         \&         \&         \&         \&         \&         \& \nodeg  \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d)
+	(b) edge (c)
+	(f) edge (g)
+	(e) edge (f)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$5$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$2$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$4$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$3$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$7$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$6$}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \&         \&         \& \nodef  \&         \\ 
+ \nodec  \&         \&         \& \noded  \&         \&         \& \nodeg  \&         \&         \\ 
+         \&         \& \nodee  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (d) edge (e)
+	(b) edge (c) edge (d)
+	(f) edge (g)
+	(a) edge (b) edge (f);
+\end{tikzpicture}}
+}
+\end{tabular}
+
+\item Même question avec une rotation gauche.
+
+\item La rotation peut s'appliquer sur n'importe quel noeud. Appliquez une rotation droite sur le noeud 3 dans les 2 premiers arbres exemples.
+
+\item Prouvez que la rotation (droite ou gauche) préserve la structure d'arbres binaires de recherche. 
+
+\end{enumerate}
+\end{exercice}
+
+\begin{exercice}[\'Equilibrage]
+
+Les opérations de rotation peuvent servir à "équilibrer" des arbres binaires de recherche. On dit qu'un arbre binaire est équilibré si pour chacun de ses noeuds la différence de profondeur entre son sous-arbre gauche et son sous-arbre droit est strictement inférieure en valeur absolue à 2. Dans la suite, on appellera cette différence la \emph{valeur d'équilibre} du noeud.
+
+\begin{enumerate}
+\item Calculez les valeurs d'équilibre pour tous les noeuds des 3 arbres donnés en exemple dans l'exercice précédent.
+
+\item Lesquels sont des arbres binaires équilibrés ?
+
+\item Parmis les 5 arbres binaires de taille 3, lesquels sont équilibrés ? 
+
+\item Quelles opérations sont nécessaires pour "équilibrer" les autres ?
+
+\item Dans la figure décrivant la rotation droite, on suppose que $A$, $B$ et $C$ sont équilibrés et que les valeurs d'équilibre de $x$, et $y$ sont respectivement 1 et 2. Prouvez que l'arbre obtenu après rotation est équilibré.
+
+\item \'Etudiez les autres cas (utilisez les résultats obtenus pour les arbres de taille 3).
+\end{enumerate}
+\end{exercice}
+
+\end{document}
