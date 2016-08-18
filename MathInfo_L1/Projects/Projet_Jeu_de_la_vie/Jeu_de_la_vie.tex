@@ -1,0 +1,122 @@
+\documentclass{../ficheTDTP}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows,fit}
+
+\title{Projet "Jeu de la vie"}
+\def \pname{jeuvie}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{figure}[h]
+\vspace{-5mm}
+	\begin{center}
+            \includegraphics[width=4cm]{proie-pred}
+            
+        \end{center}
+	
+	%\caption{Évolution dans le temps de trois nénuphars.}\label{fig1}
+\end{figure}
+
+
+\section*{Introduction}
+
+	Le but de ce projet est de modéliser l'évolution dans le temps d'une population (ou plusieurs) interagissant avec son environnement. Ces modèles permettent notamment de comprendre l'évolution d'une maladie dans une population ou encore l'interaction existant entre les proies et le prédateurs dans le monde animal.
+	
+\textbf{Mots clés : simulation, équations différentielles ordinaire, suite.}
+    
+\input{../intro}
+		
+
+\section{Partie théorique}
+
+	
+\subsection{Le modèle "bactérien"}
+
+	Notons par $y(t)$ l'évolution au cours du temps d'une population. On supposera continue la fonction $y(t)$ et même dérivable par rapport au temps, ce qui est justifiable pour une population de grande taille. Les premiers modèles d'évolution de la population étaient simplement décrit par $y'(t) = a y(t)$ où $a$ est une constante positive indiquant le \textit{taux d'accroissement}. Ce modèle correspond à supposer que la population possède une possibilité d'expansion illimitée.\\
+	
+	Afin de proposer un modèle plus réaliste, le mathématicien \textit{Verhulst} a proposé de prendre en compte la capacité d'accueil du milieu dans lequel la population vit, ce qui conduit au modèle suivant :
+\begin{equation}\label{eq:mod-verh}
+	y'(t) = a y(t) \left( 1 - \dfrac{y(t)}{K} \right), \quad \text{où} \quad a,K >0.
+\end{equation}
+La constante $a$ correspond toujours au \textit{taux d'accroissement} et $K$ à la capacité d'accueil du milieu. Par exemple, on peut modéliser ainsi l'évolution d'un population de bactéries dans une boite limitant leur expansion à la capacité $K$.\\
+
+\subsection{Questions sur le modèle "bactérien"}
+\begin{enumerate}
+	\item Pour $t=0$, on note $y_0 = y(0)>0$ la population initiale. Que se passe t'il si $y_0 = 0$ ou $y_0 = K$ ? Maintenant, si $y_0 <K$, comment évolue la population ? De même, si $y_0>K$, comment évolue la population ? Conjecturer la limite $y(t)$ quand $t$ tend vers $+\infty$.
+	
+	\item Vérifier que la fonction
+\[
+	y(t) = K \dfrac{1}{1+\left( \frac{K}{y_0} - 1 \right)e^{-a t} }
+\]
+est solution des équations \eqref{eq:mod-verh}. Donner le comportement asymptotique de la solution en $t=+\infty$, et tracer cette fonction (avec son asymptote).\\
+
+\noindent Une version discrète de ce modèle est donnée par la \textit{suite logistique} $u_{n+1} - u_n = a u_n (1 - \frac{u_n}{K})$. On peut interpréter ce modèle comme l'évolution de la population d'une année à l'autre.\\
+
+\item En posant $\mu = a+1$ et $v_n = \frac{a u_n}{\mu K}$, donner la relation de récurrence vérifiée par la suite $v_n$. Si $v_n \in [0,1]$, que peut on dire sur $v_{n+1}$ ?
+
+\item En cas de convergence de la suite $v_n$, donner sa limite.\\
+\end{enumerate}
+
+\subsection{Le modèle Proies-Prédateurs}
+
+	Dans la nature, il existe une étroite corrélation entre l'évolution de toutes les espèces. Si une espèce disparaît, l'impact sur les autres peut être catastrophique. Nous allons maintenant étudier l'interaction entre deux populations $x(t)$ et $y(t)$ modélisant respectivement le nombre de \textit{proies} et de \textit{prédateurs}. Un modèle pour décrire l'évolution dans le temps de ces deux populations a été proposé par les mathématiciens \textit{Alfred James Lotka} et \textit{Vito Volterra} :
+\begin{equation}\label{eq:mod-Lotka-Volterra}
+	\begin{cases}
+		x'(t) = \alpha x(t) - \beta x(t) y(t),\\
+		y'(t) = -\gamma y(t) + \delta x(t) y(t),
+	\end{cases}
+\end{equation}	
+où $\alpha, \beta, \gamma, \delta$ sont des constantes positives représentants \begin{itemize}
+\item $\alpha$ : le taux d'accroissement des \textit{proies},
+\item $\beta$ : le taux de mortalité des \textit{proies} due aux \textit{prédateurs},
+\item $\gamma$ : le taux de mortalité naturelle des \textit{prédateurs},
+\item $\delta$ : le taux d'accroissement des \textit{prédateurs} en mangeant les \textit{proies}.\\
+\end{itemize}
+
+
+\subsection{Questions sur le modèle Proies-Prédateurs}
+\begin{enumerate}
+	\item Interprétons ce modèle. Que se passe t'il si l'une des deux espèces disparaît ? Que se passe t'il si la population de proie (ou de prédateur) est très grande ? À l'inverse, que se passe t'il si la population de proie est très faible ?	
+	\item Une situation d'équilibre est atteinte lorsque les deux populations conservent un même nombre d'individus au cours du temps. Déterminer les points d'équilibre en fonction des paramètres $\alpha, \beta, \gamma$ et $\delta$.
+	\item Montrer que la quantité :
+\[
+	V(t) = -\delta x(t) + \gamma \text{ln}\left( x(t) \right) - \beta y(t) + \alpha \text{ln} \left( y(t) \right),
+\]
+est conservée au cours du temps (i.e. $V'(t) = 0$). Étant donné une population initiale $(x_0,y_0)>0$, que peut-on déduire (une population peut elle s'éteindre avec ce modèle) ? Conjecturer le comportement des fonctions $x(t)$ et $y(t)$.
+\end{enumerate}
+
+
+
+\section{Modélisation et extensions}
+
+	Le but de cette partie sera d'explorer différentes extensions possibles de nos deux précédents modèles. On s'appuiera sur le logiciel sage pour visualiser notre résultats. Nous proposons ici quelques pistes d'études que vous pouvez compléter avec de nouvelles si vous le souhaitez.
+	
+\subsection{La suite logistique} Le comportement de la suite $v_n$ définie précédemment dépend du paramètre $\mu$. On observe que pour certaine valeurs, le comportement peut devenir \textit{chaotique} et la suite peut ne pas converger.
+\begin{enumerate}
+\item Afficher pour différentes valeurs de $\mu$ dans l'intervalle $[0,4]$ les termes de la suite $v_n$. Que constatez vous pour $\mu \leq 3$ ? Si $\mu \in [3,4]$ (essayer de faire varier $v_0$) ?
+\item Tracer en fonction de $\mu$ la limite $v_{\infty}$ de la suite $v_n$ obtenue numériquement, c'est à dire après un nombre suffisant d'itérations. Faire plusieurs calculs de $v_{\infty}$ pour une même valeur de $\mu$ en tirant aléatoirement $v_0$ entre $[0,1]$.
+\item La suite $v_n$ peut être vue comme le calcul d'un point fixe par la \textit{méthode de Newton}. Représenter graphiquement l'algorithme de Newton dans notre situation.
+\end{enumerate}
+
+\subsection{Visualisation du modèle Proies-Prédateurs} Le but ici est de simuler l'évolution au cours du temps des proies et des prédateurs dans notre modèle.
+\begin{enumerate}
+	\item La fonction $V(t)$ définie précédemment peut être considérée comme $V(x,y)$. Tracer les lignes de niveaux de $V(x,y)$ dans un graphe 2D avec $x$ en abscisse et $y$ en ordonnée (i.e. l'ensemble des points tels que $V(x,y) = C$ pour différentes constantes $C$). Ce diagramme est appelé \textit{portrait de phase}.
+	\item En utilisant la \textit{méthode d'Euler explicite}, tracer dans un graphique l'évolution de $x(t)$ et de $y(t)$ en fonction du temps $t$.  Vous choisirez et testerez différentes valeurs des coefficients $\alpha,\beta,\gamma$ et $\delta$.
+	\item Tester la \textit{méthode d'Euler modifiée}. Comparer les deux méthodes.
+	\item Faire une animation qui montre l'évolution des deux populations dans le temps, et la position $V(x(t),y(t))$ sur la courbe de niveau.
+\end{enumerate}
+
+\subsection{Modèle Proies-Prédateurs avec compétition}  
+\begin{enumerate}
+	\item Étudier un nouveau modèle incluant une notion de compétition entre les deux espèces (chercher dans la littérature).
+	\item Reprendre les questions précédentes pour ce nouveau modèle.
+\end{enumerate}
+
+\vspace{2cm}
+\footnotesize{Image: Dreamstime}
+	
+\end{document}
