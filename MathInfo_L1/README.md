@@ -46,4 +46,4 @@ of the teacher.
 
 ## Authorship
 
-I am the sole author if this class.
+I share the authorship of this course with [Antoine Tonnoir](https://m3disim.saclay.inria.fr/people/antoine-tonnoir/).
