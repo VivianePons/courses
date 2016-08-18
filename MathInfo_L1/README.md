@@ -20,7 +20,7 @@ but any programming language could do.
 ## Public
 
 This has been written for the students of [Paris-Sud](http://www.u-psud.fr/fr/formations/diplomes/licences/sciences-technologies-sante/mpi.html)
-in their first undergrad year, following the common program for mathematics,
+in their first undergrad year, who are following the common program for mathematics,
 computer science and physics.
 
 This is an optional class for the second semester of the program. Students have 
