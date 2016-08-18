@@ -5,11 +5,11 @@
 This is the content of a pluri-disciplinary class involving mathematics and
 computer science.
 
-The folder *SMCWorksheets* contains worksheets to be run on the platform [SageMathCloud](https://cloud.sagemath.com/)
+The *SMCWorksheets* folder contains worksheets to be run on the platform [SageMathCloud](https://cloud.sagemath.com/)
 using [SageMath](http://www.sagemath.org/). Their intent is to teach the basics
 of Sage and Python through exercises and examples.
 
-The folder *Projects* contain a list of pluri-disciplinary projects. They are all 
+The *Projects* folder contains a list of pluri-disciplinary projects. They are all 
 divided into two parts: the first part consists of mathematical
 questions and the second part is a computer exploration / modelization approach. 
 
@@ -20,7 +20,7 @@ but any programming language could do.
 ## Public
 
 This has been written for the students of [Paris-Sud](http://www.u-psud.fr/fr/formations/diplomes/licences/sciences-technologies-sante/mpi.html)
-in their first undergrad year, following the common program for mathematics,
+in their first undergrad year, who are following the common program for mathematics,
 computer science and physics.
 
 This is an optional class for the second semester of the program. Students have 
