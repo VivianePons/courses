@@ -39,7 +39,7 @@ and explaining.
 ## Time frame
 
 The class consists of 32 hours of lectures / exercise sessions and 16 hours in front
-of Computers. Due to their*apprentis* status, my students have quite an 
+of Computers. Due to their *apprentis* status, my students have quite an 
 irregular schedule and these hours are spread out from October to May by sessions
 of 4 hours in a row (that is dense!).
 
