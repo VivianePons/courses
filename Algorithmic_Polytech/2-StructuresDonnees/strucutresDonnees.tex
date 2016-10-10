@@ -1,4 +1,4 @@
-\def \withcache{1}
+%\def \withcache{1}
 \documentclass{../cours}
 \usepackage{hyperref}
 \title{Cours 2 : Structures de données}
@@ -245,7 +245,7 @@ Reprenons l'exemple précédent mais cette fois $E$ est un ensemble d'entier don
 La complexité qui nous intéresse est celle de l'accès à un élément donné. Pour l'optimiser, il faut \textbf{éviter les collisions}.
 
 \begin{itemize}
-\item Premièrement, il faut que que la table soit grande par rapport au nombre d'entrées. On calcule le \textbf{facteur de compression} $k/n$ où $k$ est la taille de la table et $n$ le nombre d'entrée. Si $k$ ne varie pas, on peut obtenir qu'une complexité linéaire : la valeur de $k$ ne fera varier que la constante. Pour optimiser réellement la complexité, il faut que la table soit \emph{réallouer} lorsque le facteur augmente de la même façon que pour les tableaux.
+\item Premièrement, il faut que que la table soit grande par rapport au nombre d'entrées. On calcule le \textbf{facteur de compression} $k/n$ où $k$ est la taille de la table et $n$ le nombre d'entrée. Si lorsque $n$ augmente, $k$ ne varie pas, on peut obtenir qu'une complexité linéaire pour l'accès aux éléments : la valeur de $k$ ne fera varier que la constante. Pour optimiser réellement la complexité, il faut que la table soit \emph{réallouée} lorsque le facteur augmente de la même façon que pour les tableaux.
 
 \item Par ailleurs, l'efficacité d'une table de hachage dépend grandement de sa fonction de hachage. Il faut que celle-ci distribue \textbf{uniformément} les éléments sur les clés pour éviter au maximum les collisions. Exemple pour les entiers : le modulo.
 \end{itemize}
@@ -254,7 +254,7 @@ Lorsque l'implantation d'une table de hachage suit ces principes, on peut obteni
 
 \subsection{En pratique}
 
-Les tables de hachage sont une structure très largement utilisées dans de nombreux langages : {\tt set} et {\tt dictionnaire} python, {\tt HashMap} Java. Il est très important d'en connaître le principe pour pouvoir utiliser au mieux ces objets.
+Les tables de hachage sont une structure très largement utilisées dans de nombreux langages : {\tt set} et {\tt dict} python, {\tt HashMap} Java. Il est très important d'en connaître le principe pour pouvoir utiliser au mieux ces objets.
 
 Remarque : problème de la mutabilité des objets. cf demo.
 
