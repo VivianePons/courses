@@ -36,7 +36,7 @@
   \hrule%
   \medskip\smallskip%
   \noindent
-  Licence MPI, Semestre 2, Projets pluridisciplinaires \hfill Année 2014--2015%
+  Licence MPI, Semestre 2, Projets pluridisciplinaires \hfill Année 2016--2017%
   \medskip%
   \hrule%
   \bigskip%
