@@ -17,12 +17,8 @@ def average(n,k,r):
     for i in xrange(r):
         L = [randint(1,k) for j in xrange(n)]
         c+= double(L)
-    return int(c/r)
-
-def esperance(n,k):
-    p = lambda i: factorial(i-1) * binomial(k,i-1)*(i-1)/k**i
-    return float(sum([p(i)*i for i in xrange(1,n+1)]) + binomial(k,n)*factorial(n)*(n+1)/k**n)
+    return float(c/r)
 
 def complexity(n,k):
-    p = lambda i: float(factorial(i-1) * binomial(k,i-1)*(i-1))/float(k**i)
-    return float(sum([p(i)*i**2/2 for i in xrange(1,n+1)]) + float(binomial(k,n)*factorial(n)*n**2/2)/float(k**n))
+    p = lambda i: float(i*factorial(i-1) * binomial(k-1,i-1))/float(k**i)
+    return float(sum([p(i)*(i*(i-1)/2+i/2) for i in xrange(1,n+1)]) + float(binomial(k,n)*factorial(n)*n**2/2)/float(k**n))

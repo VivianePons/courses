@@ -195,11 +195,11 @@ C'est-à-dire une formule de la forme $A n^2 + Bn + C$ avec $A,B,C$ constantes. 
 \textbf{Complexité en moyenne :} nécessite de définir l'ensemble des données où sont choisis les valeurs de $T$ puis de calculer la loi de probabilité associée à l'arrêt de l'algorithme. On suppose que le tableau est de taille $n$ et que les valeurs sont prises uniformément et indépendamment dans l'ensemble des entiers de 1 à $k > n$. On calcule la probabilité $p(i)$ qu'un indice $i$ tel que $1 \leq i < n$ soit le premier tel qu'il existe $0 \leq j < i$ avec $T[i] = T[j]$. On trouve
 
 \begin{equation}
-p(i) = \frac{k(k-1)\dots (k-i+1)}{k^{i}}(i-1).
+p(i) = \frac{(k-1)(k-2)\dots (k-i+1)}{k^{i}}i.
 \end{equation}
 Par ailleurs, la probabilité qu'on soit dans le pire des cas est donnée par
 \begin{equation}
-P = \frac{k(k-1)\dots(k-n+1)}{k^n}.
+P = \frac{(k-1)\dots(k-n+1)}{k^{n-1}}.
 \end{equation}
 
 A partir de là, on peut calculer l'espérance du temps de calcul pour différentes valeurs de $k$ et $n$. Lorsque $k=n$, la probabilité d'avoir deux valeurs égales dans le tableau est très forte et on trouve une complexité linéaire. Quand $k=n^2$ (donc on pioche dans un ensemble de nombre qui évolue quadratiquement en fonction de la taille), on retrouve une complexité quadratique.
