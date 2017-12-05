@@ -1,0 +1,78 @@
+
+\begin{exercice}[Complexité -- 5 pts].
+
+\begin{enumerate}
+
+\item Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+prend en entrée un entier $n$. 
+
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_a :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à i:
+            Pour k allant de 1 à j:
+                c <- c + 1
+            
+Algo_b :
+    c <- 0
+    Pour i allant de 1 à n:
+        c <- c + 1
+        
+    Pour i allant de 1 à n:
+       c <- c + 1     
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_c :
+    c <- 0
+    Tant que c < n:
+        Algo_b(c)
+
+Algo_d :
+    c <- n
+    Tant que c > 0:
+        c <- c / 2 
+
+Algo_e :
+    c <- 1
+    Tant que c < n:
+        c <- c+2
+\end{lstlisting}
+\end{minipage}
+
+\begin{lstlisting}
+Algo_f :
+    Si n = 0:
+        Retourner 1
+    Sinon :
+        Retourner Algo_f(n-1) + Algo_f(n-1)
+\end{lstlisting}
+
+\item
+
+Voici un algorithme récursif
+
+\begin{lstlisting}
+MonCalcul
+Input :
+    - n, un entier
+Procédé :
+    Si n = 0:
+        Retourner 0
+    Retourner 1 + MonCalcul(n/2)
+\end{lstlisting}
+
+\begin{enumerate}
+\item Calculer la valeur retournée pour les entrées : 1, 2, 3, 4, 5.
+\item Donner une valeur d'entrée telle que le résultat soit 4.
+\item Que calcul cet algorithme ?
+\item Quelle est sa complexité ?
+\end{enumerate}
+
+
+\end{enumerate}
+
+\end{exercice}

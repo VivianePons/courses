@@ -46,6 +46,7 @@
 {}% Manually specify head
 \theoremstyle{info111}
 \newtheorem{exercice}{Exercice}
+\newtheorem{aav}{AAV}
 \newtheorem{Example}[Theorem]{Exemple}
 \newtheorem{exerciceavance}[exercice]{Exercice $\clubsuit$}
 %\newcommand{\TODO}[1]{{\color{red} TODO: #1}}
@@ -91,7 +92,7 @@
   \hrule%
   \medskip\smallskip%
   \noindent
-  Polytech App3, Algorithmique \hfill Année 2015--2016%
+  Polytech App3, Algorithmique%
   \medskip%
   \hrule%
   \bigskip%

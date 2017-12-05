@@ -1,0 +1,73 @@
+
+\begin{exercice}
+
+Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+prend en entrée un entier $n$. La réponse sera donnée en utilisant la notation $O$.
+
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_a :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à i:
+            c <- c + 1
+            
+Algo_b :
+    c <- 0
+    Pour i allant de 1 à n:
+        Algo_a(i)
+        
+Algo_c :
+    c <- 0
+    Tant que c < n:
+        c <- c + 1000
+        
+        
+        
+.        
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_d :
+    c <- 0
+    Tant que c*c < n:
+        c <- c+1
+
+Algo_e :
+    c <- 1
+    Tant que c < n :
+        c <- c*2
+        
+Algo_f :
+    f <- 1
+    c <- 0
+    Tant que c < n:
+        i <- 0
+        Tant que i < f:
+            i <- i+1
+        f <- f+i
+        c <- c+1
+\end{lstlisting}
+\end{minipage}
+
+Exemple de réponses et note finale associée. 
+
+Remarque : parfois certaines cases sont laissées vide si la réponse n'a pas été donnée (il vaut mieux avouer
+qu'on ne sait pas pas plutôt que d'écrire quelque chose de complètement faux).
+
+\textbf{La première ligne donne les réponses correctes attendues}
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+a & b & c & d & e & f & note \\ \hline
+$O(n^2)$ & $O(n^3)$ & $O(n)$ & $O(\sqrt{n})$ & $O(\log(n))$ & $O(2^n)$ & A \\ \hline \hline
+$O(\frac{n(n-1)}{2})$ & $O(n^3)$ & $O(\frac{n}{1000})$ & $O(\sqrt{n})$ & $O(\log(n))$ & $O(2^n)$ & B \\ \hline
+$O(\frac{n(n-1)}{2})$ & $O(n^2)$ & $O(\frac{n}{1000})$ & $\sqrt{n}$ & $\log(\frac{n}{2})$ &  & C \\ \hline
+$O(n^2)$ & $O(n^3)$ & $O(n)$ & $O(\frac{n}{2})$ & &  & C \\ \hline
+$O(n^2)$ & $O(n^3)$ & $O(n)$ & $O(\sqrt{n})$ & $O(\frac{n}{2})$ &  & D \\ \hline
+$O(n^2)$ & $O(n)$ &  & $O(\log(n))$ & $O(\log(n))$ & $O(\log(n))$ & E \\ \hline
+\end{tabular}
+
+
+\end{exercice}
