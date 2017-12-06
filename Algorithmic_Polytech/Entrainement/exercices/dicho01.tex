@@ -1,0 +1,50 @@
+
+\begin{exercice}
+Le problème est le suivant : on a accès en lecture à un certain tableau de données qui contient une suite
+de 0 suivi d'une suite de 1. Exemple : un tableau de taille 10 qui contiendrait trois {\tt 0} suivi de sept {\tt 1}. 
+Une fois qu'on a lu un 1, il n'y aura plus que des 1. 
+\textbf{On cherche à connaître la position du premier 1.}
+
+Pour les deux cas suivant, donnez un algorithme optimal qui donne la position du premier 1.
+
+\begin{enumerate}
+\item \textbf{Premier cas} : on prend entier le tableau $Tab$ ainsi qu'un entier $n$ qu'on suppose être la taille du tableau.
+Les positions sont indexées à partir de 0. 
+
+Cas particuliers : si le tableau ne continent que des 0, on retourne sa taille, s'il ne contient que des 1, on retourne 0.
+\item \textbf{Deuxième cas} : on considère que le tableau est de taille infinie, c'est-à-dire que Tab[i] donne toujours une valeur, 
+même si $i$ est très grand. 
+
+Cas particulier : si le tableau ne contient que des 1, on retourne 0. On a la certitude que le tableau ne contient pas que des 0.
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{lstlisting}
+Algo1
+Input : Tab, n
+Procédé :
+    i <- 0
+    j <- n
+    Tant que i < j:
+        m <- (i+j)/2
+        Si T[m] = 1:
+            Si m = 0 ou T[m-1] = 0
+                Retourner m
+            j <- m
+        Sinon:
+            i <- m+1
+    Retourner n
+    
+Algo2
+Input : Tab
+Procédé :
+    i <- 1 
+    Tant que Tab[i] = 0:
+        i <- i*2
+    Retourner Algo1(Tab, i)
+\end{lstlisting}
+
+Remarque : dans les deux cas la complexité est $O(log(n))$.
+\end{exercice}
+

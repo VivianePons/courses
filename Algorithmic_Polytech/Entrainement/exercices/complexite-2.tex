@@ -1,9 +1,7 @@
 
-\begin{exercice}[Complexité -- 5 pts].
+\begin{exercice}
 
-\begin{enumerate}
-
-\item Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
 prend en entrée un entier $n$. 
 
 \begin{minipage}[t]{0.48 \textwidth}
@@ -21,15 +19,21 @@ Algo_b :
         c <- c + 1
         
     Pour i allant de 1 à n:
-       c <- c + 1     
+       c <- c + 1
+       
+       
+.            
 \end{lstlisting}
 \end{minipage}
 \begin{minipage}[t]{0.48 \textwidth}
 \begin{lstlisting}
 Algo_c :
-    c <- 0
-    Tant que c < n:
-        Algo_b(c)
+    c <- 1
+    d <- 0
+    Pour i allant de 1 à n:
+        c <- 2*c
+        Pour j allant de 1 à c:
+            d <- d+1
 
 Algo_d :
     c <- n
@@ -39,40 +43,34 @@ Algo_d :
 Algo_e :
     c <- 1
     Tant que c < n:
-        c <- c+2
+        c <- c + 2
 \end{lstlisting}
 \end{minipage}
 
 \begin{lstlisting}
 Algo_f :
-    Si n = 0:
-        Retourner 1
-    Sinon :
-        Retourner Algo_f(n-1) + Algo_f(n-1)
+    c <- 0
+    Tant que c < n:
+        Algo_b(c)
+        c <- c + 1
 \end{lstlisting}
 
-\item
+Exemple de réponses et note finale associée. 
 
-Voici un algorithme récursif
+Remarque : parfois certaines cases sont laissées vide si la réponse n'a pas été donnée (il vaut mieux avouer
+qu'on ne sait pas pas plutôt que d'écrire quelque chose de complètement faux).
 
-\begin{lstlisting}
-MonCalcul
-Input :
-    - n, un entier
-Procédé :
-    Si n = 0:
-        Retourner 0
-    Retourner 1 + MonCalcul(n/2)
-\end{lstlisting}
+\textbf{La première ligne donne les réponses correctes attendues}
 
-\begin{enumerate}
-\item Calculer la valeur retournée pour les entrées : 1, 2, 3, 4, 5.
-\item Donner une valeur d'entrée telle que le résultat soit 4.
-\item Que calcul cet algorithme ?
-\item Quelle est sa complexité ?
-\end{enumerate}
-
-
-\end{enumerate}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+a & b & c & d & e & f & note \\ \hline
+$O(n^3)$ & $O(n)$ & $O(2^n)$ & $O(\log(n))$ & $O(n)$ & $O(n^2)$ & A \\ \hline \hline
+$O(n^3)$ & $O(2n)$ & $O(2^n)$ & $O(\log(n))$ & $O(\frac{n}{2})$ & $O(n^2)$ & B \\ \hline
+$O(n^3)$ & $O(n^2)$ & $O(2^n)$ & $O(\log(n))$ & $O(2n)$ & $O(n^2)$ & C \\ \hline
+$O(n^3)$ & $O(n)$ &  &  & $O(n)$ & $O(n^2)$ & C \\ \hline 
+$O(n^3)$ & $O(n)$ & $O(n^2)$ & $O(\frac{n}{2})$ & $O(n)$ & $O(n^2)$ & D \\ \hline
+$O(n^3)$ & $O(n^2)$ &  &  & $O(n)$ & $O(n)$ & E \\ \hline
+\end{tabular}
 
 \end{exercice}

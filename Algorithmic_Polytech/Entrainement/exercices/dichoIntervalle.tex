@@ -1,0 +1,55 @@
+
+\begin{exercice}
+Soit $T$ un tableau trié d'entiers, par exemple
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+2 & 45 & 120 & 150 & 220 & 250 & 368 & 410 & 582 & 1000 \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+Donner les deux algorithmes suivant avec complexité optimale. (Le second ne compte que si vous avez écrit le premier)
+
+\begin{enumerate}
+\item Un algorithme qui prend en entrée le tableau trié $T$ de taille $n$ et un entier $v$ et qui renvoie le plus petit indice $i$ tel que $T[i] > v$. Par exemple, pour le tableau ci-dessus et $v = 160$, l'algorithme répond $4$. Si toutes les valeurs sont plus inférieures ou égales à $v$, l'algorithme renvoie $n$.
+
+\item Un algorithme qui prend en entrée le tableau trié $T$ et deux entiers $min$ et $max$ et qui renvoie le nombre de valeurs $v$ du tableau telle que $min < v \leq max$. Par exemple, pour $min = 200$ et $max = 300$, l'algorithme doit répondre 2. Pour $min = 0$ et $max = 1000$, l'algorithme doit répondre 10. 
+\end{enumerate}
+
+\textbf{Solution}
+
+(Remarque : je donne la solution itérative mais ça marche aussi en récursif)
+
+\begin{lstlisting}
+Algo1
+Input : Un tableau d'entier trié T de taille n, un entier v
+Procédé :
+    i <- 0
+    j <- n
+    Tant que i < j:
+        m <- (i+j)/2
+        Si v < T[m]:
+            Si m = 0 ou T[m-1] <= v:
+                Retourner m
+            j <- m
+        Sinon:
+            i <- m+1
+    Retourner n 
+            
+
+Algo2
+Input : Un tableau d'entier trié T de taille n, deux entiers min et max
+Procédé :
+    a <- Algo1(T, min)
+    b <- Algo1(T,max)
+    Retourner b - a
+    
+\end{lstlisting}
+
+La complexité optimale est donc $O(log(n))$, on résout le problème par dichotomie.
+
+Exemple de "petites" erreurs type $B$ : vous avez oublié de retourner $n$ à la fin, vous avez oublié de tester $m=0$, vous avez inversé les comparaisons.
+
+\end{exercice}
