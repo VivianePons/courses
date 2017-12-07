@@ -1,0 +1,34 @@
+
+\begin{exercice}
+Voici un algorithme récursif
+
+\begin{lstlisting}
+MonCalcul
+Input :
+    - n, un entier
+Procédé :
+    Si n = 1:
+        Retourner 0
+    Retourner 1 + MonCalcul(n/2)
+\end{lstlisting}
+
+\begin{enumerate}
+\item Calculer la valeur retournée pour les entrées : 1, 2, 3, 4, 5.
+\item Donner une valeur d'entrée telle que le résultat soit 4.
+\item Sur quelles valeurs d'entrée cet algorithme termine-t-il et que calcule-t-il de façon générale ?
+\item Combien d'appels récursifs sont effectués pour la valeur d'entrée 10.
+\item Exprimer le nombre d'appels récursives sous forme d'une fonction mathématiques récursives.
+\item Donner la complexité de la fonction.
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item 1 -> 0 -- 2 -> 1 -- 3 -> 1 -- 4 -> 2 -- 5 -> 2
+\item 32
+\item Termine sur les entiers supérieurs ou égaux à 1 et calcule Le logarithme en base 2 (partie entière).
+\item 4
+\item $f(n) = 1 + f(n/2)$ et $f(1) = 1$ 
+\item $O(\log(n))$
+\end{enumerate}
+\end{exercice}
