@@ -1,0 +1,43 @@
+\documentclass{../cours}
+\usepackage{hyperref}
+\title{Entraînement : concevoir une fonction récursive}
+
+\begin{document}
+\maketitle
+
+Les solutions peuvent être rédigées en \textbf{pseudo-code, python, C, C++ ou Java}. La syntaxe du langage n'a pas d'importance tant que celle-ci reste \textbf{cohérente} et \textbf{compréhensible}. (Dans les exemples, les solutions sont données en pseudo-code).
+
+
+\section*{Niveau 1}
+
+\textbf{Grille d'évaluation}
+
+\vspace{0.5cm}
+
+\begin{tabular}{|l|p{12cm}|}
+\hline
+A (20) & \small{L’algorithme est récursif et répond au problème donné. La complexité calculée est correcte (cohérente avec l'algorithme).} \\ \hline
+B (16) &\small{La partie récursive de l’algorithme est correcte mais il y des erreurs sur les cas d'arrêts ou cas particuliers OU sur la complexité calculée.} \\ \hline
+C (11) & \small{La partie récursive de l’algorithme est correcte mais il y a des erreurs sur les cas d'arrêts ou cas particuliers ET sur la complexité.}\\ \hline
+D (8) &\small{Erreur sur la partie récursive de l'algorithme ou cas d'arrêt complètement absents.} \\ \hline
+E (1) & \small{Algorithme non récursif ou récursif sans cas d'arrêts et faux.} \\ \hline
+\end{tabular}
+
+\input{exercices/binomial}
+
+\section*{Niveau 2 (bonus en partiel)}
+
+\textbf{Grille d'évaluation}
+
+\vspace{0.5cm}
+
+\begin{tabular}{|l|p{12cm}|}
+\hline
+A (20) & \small{L’algorithme est récursif et répond au problème donné.} \\ \hline
+B (16) &\small{Le principe récursif est en partie correct mais il y a des erreurs dans son implantation et / ou dans les cas particuliers et conditions d'arrêt. } \\ \hline
+C (11) & \small{Un algorithme récursif est proposé qui tente de répondre à la question posée même s'il ne répond pas aux spécifications du problème.}\\ \hline
+\end{tabular}
+
+\input{exercices/binomiaux-string}
+
+\end{document}

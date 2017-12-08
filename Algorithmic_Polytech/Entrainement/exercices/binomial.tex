@@ -1,0 +1,32 @@
+\begin{exercice}
+Les coefficients binomiaux $\binom{n}{k}$ sont des nombres mathématiques qui donnent le nombre de façon de choisir
+$k$ objets parmi $n$. Ils vérifient en particulier les propriétés suivantes :
+
+\begin{itemize}
+\item $\binom{n}{n} = \binom{n}{0} = 1$,
+\item si $k < 0$ ou $k > n$, $\binom{n}{k} = 0$,
+\item Pour $ n > 0$, $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+\end{itemize}
+
+\begin{enumerate}
+\item Donner un algorithme \textbf{récursif} qui calcule le coefficient binomial $\binom{n}{k}$. Votre fonction devra retourner un résultat (et donc terminer) quels que soient les entiers $n$ et $k$ passés en paramètre.
+
+\item Quelle est la complexité de votre algorithme ?
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{lstlisting}
+Binomimal
+Input : deux entiers n et k
+Procédé :
+    Si n = k ou k = 0 :
+        Retourner 1
+    Si k < 0 ou k > n:
+        Retourner 0
+    Retourner Binomal(n-1,k-1) + Binomial(n-1, k)
+\end{lstlisting}
+
+Complexité $O(2^n)$.
+
+\end{exercice}

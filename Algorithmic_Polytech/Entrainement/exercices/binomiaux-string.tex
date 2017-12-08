@@ -1,0 +1,41 @@
+\begin{exercice}
+\'Ecrire une fonction qui prend en paramètre une chaîne de caractère ainsi qu'un entier $k$ et retourne la liste de toutes les
+façon de choisir $k$ lettres dans la chaîne.
+
+Par exemple, si je lance ma fonction sur \texttt{"chat"} et $2$, elle devra renvoyer : \texttt{[ "ch", "ca", "ct", "ha", "ht", "at"]}. Remarquez que l'ordre des des lettres reste le même que dans la chaîne originale. L'ordre des mots dans la liste n'a pas d'importance. La fonction ne s'occupera pas de supprimer les éventuels doublons et on retournera donc toujours une liste de taille $\binom{n}{k}$ où $n$ est la taille de la chaîne.
+
+On pourra utiliser la syntaxe python pour les listes et les chaînes de caractères:
+
+Liste vide : {\tt L <- [ ]}
+
+Ajout : {\tt L.append(valeur)}
+
+Première lettre d'un mot : {\tt u[0]}
+
+Dernière lettre d'un mot : {\tt u[-1]}
+
+Concaténation de deux chaînes de caractère : {\tt u + v}
+
+La chaîne de caractère obtenue en copiant les lettres de {\tt u} à partir de l'indice 1 : {\tt u[1:]}
+
+La chaîne de caractère obtenue en copiant les lettres de {\tt u} sauf la dernière : {\tt u[:-1]}
+
+\textbf{Solution}
+
+\begin{lstlisting}
+KParmiN
+Input : une chaine de caractère s et un entier k
+Procédé :
+    Si k = 0:
+        Retourner [""] # liste contenant le mot vide
+    Si s = "":
+        Retourner [] # liste vide (pas de résultat)
+    resultat = []
+    Pour e dans KParmiN(s[1:], k-1):
+        resultat.append(s[0] + e)
+    Pour e dans KParmiN(s[1:], k):
+        resultat.append(e)
+    Retourner resultat
+
+\end{lstlisting}
+\end{exercice}
