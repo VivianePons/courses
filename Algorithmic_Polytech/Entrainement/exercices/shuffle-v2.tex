@@ -1,0 +1,61 @@
+
+\begin{exercice}[Partiel 2017-18]
+Le \textit{shuffle} entre deux mots $u$ et $v$ est la liste des mots obtenus en mélangeant entre elles les lettres de $u$ et $v$ tout en conservant l'ordre des lettres des mots de départ. Par exemple, les mots du shuffle de {\tt "bob"} et {\tt "cat"} sont exactement ceux de la liste suivante
+
+bobcat bocbat bocabt bocatb bcobat bcoabt bcoatb bcaobt bcaotb bcatob cbobat cboabt cboatb cbaobt cbaotb cbatob cabobt cabotb cabtob catbob.
+
+Remarquez que les lettres de "bob" et "cat" sont toujours dans le même ordre. Ainsi, le mot "tbobca" n'appartient pas au shuffle car les lettres de "cat" ne sont plus dans le bon ordre.
+
+ Voici quelques propriétés du shuffle:
+
+\begin{itemize}
+\item Si l'un des deux mots est vide, le shuffle ne contient qu'un seul élément : l'autre mot. (Si les deux sont vides, il ne contient que le mot vide "").
+
+\item Sinon, un mot du shuffle commence soit par la première lettre de $u$, soit par la première lettre de $v$, la suite est donnée par le shuffle des lettres restantes. 
+\end{itemize}
+
+\textbf{Implanter un algorithme récursif qui prend en paramètres deux mots {\tt u} et {\tt v} et retourne la liste des mots de leur shuffle.}
+
+On pourra utiliser la syntaxe python pour les listes et les chaînes de caractères.
+
+Liste vide : {\tt L <- [ ]}
+
+Ajout : {\tt L.append(valeur)}
+
+Première lettre d'un mot : {\tt u[0]}
+
+Concaténation de deux chaînes de caractère : {\tt u + v}
+
+Le chaîne de caractère obtenue en copiant les lettres de {\tt u} à partir de l'indice 1 : {\tt u[1:]}
+
+\textbf{Solution}
+
+\vspace{0.5cm}
+
+\begin{lstlisting}
+Shuffle
+Input : deux chaines de caractères u et v
+Procédé :
+    Si u = "":
+        Retourner [v]
+    Si v = "":
+        Retourner [u]
+    resultat <- []
+    Pour e dans Shuffle(u[1:], v):
+         resultat.append(u[0] + e)
+    Pour e dans Shuffle(u,v[1:]):
+         resultat.append(v[0] + e)
+    Retourner resultat 
+\end{lstlisting}
+
+
+
+Question donnée au partiel 1 2017-2018, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+A & B & C & Non répondu  \\ \hline
+$9.5\%$ & $9.5\%$ & $14.3\%$ & $66.7\%$ \\ \hline
+\end{tabular} 
+
+\end{exercice}

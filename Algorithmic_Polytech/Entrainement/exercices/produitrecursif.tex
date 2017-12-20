@@ -1,0 +1,40 @@
+
+\begin{exercice}[Partiel 2017-2018]~
+
+\begin{enumerate}
+\item Donner un algorithme \textbf{récursif} qui calcule le produit $a \times b$ de deux entiers donnés en utilisant \textbf{uniquement} des additions ou soustractions. Votre algorithme doit donner un résultat correct pour tous les entiers positifs ou négatifs.
+
+\item Donner la complexité de votre algorithme.
+\end{enumerate}
+
+\textbf{Solution}
+
+(Une solution possible)
+
+\begin{lstlisting}
+Produit
+Input : deux entiers a et b
+Procédé :
+    Si a = 0 ou b = 0:
+        Retourner 0
+    Si a < 0:
+        Retourner -Produit(-a,b)
+    Si b < 0:
+        Retourner -Produit(a,-b)
+    Si a > b :
+        Retourner Produit(b,a)
+    Retourner b+Produit(a-1,b)
+\end{lstlisting}
+
+Complexité $O(a)$.
+
+Question donnée au partiel 1 2017-2018, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$47.6\%$ & $42.9\%$ & $9.5\%$ & $0\%$ & $0\%$ \\ \hline
+\end{tabular} 
+
+
+\end{exercice}

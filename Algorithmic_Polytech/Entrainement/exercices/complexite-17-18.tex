@@ -1,0 +1,79 @@
+
+\begin{exercice}[Partiel 2017-18]
+
+Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+prend en entrée un entier $n$. 
+
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_a :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à i:
+            c <- c + 1
+            
+        Pour j allant de i à n:
+            c <- c + 1
+            
+Algo_b :
+    c <- 1
+    Tant que c < n:
+       c <- c*2   
+.       
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_c :
+    c <- 1
+    Tant que c < n:
+        c <- c + 2
+
+Algo_d :
+    c <- n
+    Tant que c > 0:
+        c <- c / 2 
+
+Algo_e :
+    Pour i allant de 1 à n:
+        Si i*i > n:
+            Retourner i
+\end{lstlisting}
+\end{minipage}
+
+\begin{lstlisting}
+Algo_f :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à n:
+            Pour k allant de 1 à n:
+                Pour l allant de 1 à n:
+                    c <- c + 1
+\end{lstlisting}
+
+Exemple de réponses et note finale associée. 
+
+\textbf{La première ligne donne les réponses correctes attendues}
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+a & b & c & d & e & f & note \\ \hline
+$O(n^2)$ & $O(\log(n))$ & $O(n)$ & $O(\log(n))$ & $O(\sqrt{n})$ & $O(n^4)$ & A \\ \hline \hline
+$O(n^2)$ & $O(\log(n))$ & $O(\frac{n}{2})$ & $O(\log(n))$ & $O(\sqrt{n})$ & $O(n^4)$ & B \\ \hline 
+$O(n^2)$ & $O(\log(n))$ & $O(n)$ & $O(\log(n))$ & $O(n)$ & $O(n^4)$ & C \\ \hline 
+$O(n^3)$ & $O(\log(n))$ & $O(n)$ & $O(\log(n))$ & $O(\sqrt{n})$ & $O(n^4)$ & C \\ \hline
+$O(n^3)$ & $O(\log(n))$ & $O(n)$ & $O(n)$ & $O(\sqrt{n})$ & $O(n^4)$ & D \\ \hline 
+$O(n^2)$ & $O(\frac{n}{2})$ & $O(n)$ & $O(\log(n))$ & $O(\sqrt{n})$ & $O(n^4)$ & D \\ \hline 
+$O(n^2)$ & $O(\log(n))$ & $O(n)$ & $O(\log(n))$ & $O(n)$ & $O(4^n)$ & D \\ \hline 
+\end{tabular}
+
+Question donnée au partiel 1 2017-2018, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+85\% & 0\% & 0\% & 15\% & 0\% \\ \hline
+\end{tabular} 
+
+
+\end{exercice}

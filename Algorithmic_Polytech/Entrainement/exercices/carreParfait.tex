@@ -1,0 +1,94 @@
+
+\begin{exercice}[Partiel 2017-18]
+Problème : tester si un entier $n$ est un carré parfait, c'est-à-dire est-ce qu'il existe $k$ tel quel $k \times k = n$. Par exemple: 0, 1, 4, 9 et 16 sont des carrés parfait mais pas 2 et 5.
+
+Donner \textbf{deux} algorithmes qui répondent au problème (seules les opérations mathématiques de base sur des entiers sont autorisées). Les deux doivent avoir une complexité \textbf{sous-linéaire}, c'est-à-dire inférieure stricte à $O(n)$. Cependant l'un des deux sera beaucoup plus efficace que l'autre.
+
+
+Remarque : si $n$ n'est pas un carré parfait, il existera $k$ tel que $k\times k <n$ et \linebreak $(k+1) \times (k+1) >n$.
+
+\textbf{Solution}
+
+Algorithme 1 en $O\left(\sqrt{n}\right)$
+
+\begin{lstlisting}
+Algo1:
+i <- 0
+Tant que i*i < n:
+    i <- i+1
+Si i*i = n:
+    Retourner Vrai
+Retourner Faux
+\end{lstlisting}
+
+Algorithme 2 en $O(\log(n))$
+
+On cherche l'entier $k$ tel que $k \times k = n$ dans les entiers plus petits ou égaux à $n$ : on peut utiliser la dichotomie.  
+
+\begin{lstlisting}
+Algo2
+i <- 0
+j <- n+1
+Tant que i < j:
+    m <- (i+j) /2
+    Si m*m = n:
+        Retourner Vrai
+    Si m*m < n:
+        i <- m+1
+    Sinon :
+        j <- m
+Retourner Faux
+    
+
+\end{lstlisting}
+
+Question donnée au partiel 1 2017-2018, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$9.5\%$ & $9.5\%$ & $62\%$ & $19\%$ & $0\%$ \\ \hline
+\end{tabular} 
+
+2 étudiants ont obtenu $A$ : ils ont donné les deux algos. 2 étudiants ont obtenu $B$ : ils ont donné l'algo 2 dichotomique mais pas pas l'algo 1 (remarque : ce cas ne faisait pas partie du barème d'origine, je l'ai rajouté). Les étudiants qui ont obtenu $C$ sont ceux qui ont donné une version "plus ou moins" correcte de l'algo 1. Les étudiants qui ont obtenus $D$ ont soit donné un algorithme linéaire, soit un algorithme avec une erreur qui ne me permettait pas de décider si la complexité finale de l'algo corrigé serait $O(n)$ ou $O\left(\sqrt{n}\right)$.
+
+Exemple d'un algorithme qui ne marche pas mais qui obtient $C$ :
+
+\begin{lstlisting}
+Algo1:
+i <- 0
+Tant que i*i < n:
+    i <- i+1
+Si (i+1)*(i+1) > n:
+    Retourner Faux
+Sinon :
+    Retourner Vrai
+\end{lstlisting}
+
+La boucle s'arrête au bon moment cependant le test final ne marche pas (l'algo renvoie toujours "Faux"). Le principe général pour obtenir une complexité $O\left(\sqrt{n}\right)$ est bien là malgré l'erreur : l'étudiant obtient $C$.
+
+Exemple de deux algorithmes qui obtiennent $D$ :
+
+\begin{lstlisting}
+Algo1:
+Pour i allant de 0 à n/2:
+    Si i*i = n:
+        Retourner Vrai
+Retourner Faux
+\end{lstlisting}
+
+Quand $n$ n'est pas un carré parfait, cet algorithme a une complexité $O(n)$, il est donc linéaire. On teste de nombreuses valeurs "inutiles" car une fois que $i*i > n$, ça ne sert plus à rien de continuer la boucle.
+
+\begin{lstlisting}
+Algo1
+Pour i allant de 0 à n/2 :
+    Si (i*i <n) et ((i+1)*(i+1)) > n:
+        Retourner Faux
+    Sinon 
+        Retourner Vrai
+\end{lstlisting} 
+
+Dans ce cas, la boucle s'arrête immédiatement. Il est impossible de savoir si la version corrigée effectuerait la boucle jusqu'au bout ou non, donc le "principe général" n'est pas bon. 
+
+
+\end{exercice}

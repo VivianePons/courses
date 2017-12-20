@@ -1,0 +1,42 @@
+
+\begin{exercice}[Partiel 2017-18]
+Voici un algorithme récursif
+
+\begin{lstlisting}
+MonCalcul
+Input :
+    - n, un entier
+Procédé :
+    Si n = 0:
+        Retourner 1
+    Retourner 2*MonCalcul(n-1)
+\end{lstlisting}
+
+\begin{enumerate}
+\item Calculer la valeur retournée pour les entrées : 1, 2, 3.
+\item Sur quelles valeurs d'entrée cet algorithme termine-t-il et que calcule-t-il de façon générale ?
+\item Combien d'appels récursifs sont effectués pour la valeur d'entrée 10.
+\item Exprimer le nombre d'appels récursives sous forme d'une fonction mathématiques récursives.
+\item Donner la complexité de la fonction.
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item 1 -> 2 -- 2 -> 4 -- 3 -> 8
+\item Termine si $n \geq 0$ et calcule $2^n$.
+\item 11 (ou 10 si on ne compte pas le premier appel)
+\item $f(n) = f(n-1) + 1$ et $f(0) = 1$
+\item $O(n)$
+\end{enumerate}
+
+Question donnée au partiel 1 2017-2018, résultats obtenus :
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$42.9\%$ & $57.1\%$ & $0\%$ & $0\%$ & $0\%$ \\ \hline
+\end{tabular} 
+\end{exercice}
