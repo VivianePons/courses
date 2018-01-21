@@ -5,45 +5,46 @@
 This is the content of a pluri-disciplinary class involving mathematics and
 computer science.
 
-The *SMCWorksheets* folder contains worksheets to be run on the platform [SageMathCloud](https://cloud.sagemath.com/)
-using [SageMath](http://www.sagemath.org/). Their intent is to teach the basics
+The *SMCWorksheets* folder contains worksheets to be run on the
+[CoCalc](https://cocalc.com/) online platform, using
+[SageMath](http://www.sagemath.org/), the Sage mathematics software system,
+also called Sage for short. The intent is to teach the basics
 of Sage and Python through exercises and examples.
 
-The *Projects* folder contains a list of pluri-disciplinary projects. They are all 
-divided into two parts: the first part consists of mathematical
-questions and the second part is a computer exploration / modelization approach. 
+The *Projects* folder contains a list of pluri-disciplinary projects. Each
+of them is divided into two parts: the first part consists of mathematical
+questions, the second part is a computer exploration / modelization approach.
 
-The projects are conceived to be realized through [SageMath](http://www.sagemath.org/)
-but any programming language could do.
-
+The projects are designed with [SageMath](http://www.sagemath.org/) in mind,
+but any programming language can be used instead.
 
 ## Public
 
-This has been written for the students of [Paris-Sud](http://www.u-psud.fr/fr/formations/diplomes/licences/sciences-technologies-sante/mpi.html)
-in their first undergrad year, who are following the common program for mathematics,
-computer science and physics.
+This course was written for first year undergraduate students following the
+[common program for mathematics, computer science and physics at Université Paris-Sud](http://www.u-psud.fr/fr/formations/diplomes/licences/sciences-technologies-sante/mpi.html).
 
-This is an optional class for the second semester of the program. Students have 
-followed a programming class for one semester but most of them still have very 
-little knowledge in programming.
+This course is an optional one, in the second semester of that program. Students
+have followed a programming class in the previous semester but most of them still
+have very little knowledge in programming.
 
 ## Spirit
 
-The spirit of this class is to lead the students to conduct challenging projects
-on their own, following their own ideas and questions. 
+The spirit of this class is to lead students to undertake challenging projects
+on their own, following their own ideas and questions.
 
 ## Time frame
 
-This is a one semester class divided into 11 2-hours sessions plus one final 4-hours 
-session where students present their work. There is no formal
-lectures: every session is conducted in a computer room. 
+This is a one-semester class divided into 11 two-hour sessions plus one final
+four-hour session where students present their work. There is no formal lectures:
+every session is run in a computer room.
 
-During the first 5 to 6 sessions, students work on the SMC worksheets so that 
-they can familiarize themselves with Sage and python. The rest of the semester
-is dedicated to the realization of the projects. The time frame allows for most 
-of the coding to be done in class, so that the students can benefit from the help 
-of the teacher.
+During the first 5 to 6 sessions, students work on prepared worksheets so that
+they can familiarize themselves with Sage and Python. The rest of the semester
+is dedicated to the realization of the projects. The time frame allows for most
+of the coding to be done in class, so that students can benefit from the help
+of those teaching the course.
 
 ## Authorship
 
-I share the authorship of this course with [Antoine Tonnoir](https://m3disim.saclay.inria.fr/people/antoine-tonnoir/).
+I share the authorship of this course with
+[Antoine Tonnoir](https://m3disim.saclay.inria.fr/people/antoine-tonnoir/).
