@@ -1,0 +1,287 @@
+\documentclass{../ficheTDTP}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows,fit}
+\title{Projet Champions League}
+\def \pname{championsleague}
+
+\begin{document}
+\maketitle
+
+\begin{figure}[h]
+\vspace{-5mm}
+	\begin{center}
+            \includegraphics[width=4cm]{championsleague.png}
+        \end{center}
+	
+\end{figure}
+
+\section*{Introduction}
+
+Tous les ans, après la phase de groupe, la Ligue des Champion de l'UEFA se prépare à la phase finale. Pour cela, il faut tirer au sort les équipes qui s'affronteront lors des 8ème de finale. Mais comment fonctionne ce tirage ? Toutes les équipes ont-elles la même probabilité de s'affronter ?
+
+\textbf{Mots clés : couplages, probabilité, graphes.}
+
+\input{../intro}
+
+\section{\'Etude théorique du problème}
+
+\subsection{Description du problème}
+
+La ligue des champions de l'UEFA est une compétition internationale de football qui voit d'affronter les meilleurs clubs européens. Lors d'une première phase appelée "Phase de groupes", les équipes sont réparties en 8 groupes. Des matchs ont lieu au sein de chaque groupe pour décider d'un classement : le premier et le second de chaque groupe sont sélectionnés pour la phase finale. On a donc 16 équipes, chaque équipe appartenant à un groupe (A, B, C, D, E, F, G, H) et avec un classement (1er ou 2ème). \`A la fin de cette phase, au mois de décembre, le tirage au sort a lieu pour décider des \textbf{8 matchs} qui feront les 8ème de finale. Le but du projet est d'étudier ce tirage au sort en suivant les règles de l'UEFA.
+
+Les règles sont les suivantes :
+
+\begin{enumerate}
+\item Chaque match est constitué d'une équipe arrivée première et d'une équipe arrivée seconde.
+\label{cond:ordre}
+\item Chaque match est constitué de deux équipes issues de groupes différents.
+\label{cond:groupe}
+\item Deux équipes d'un même pays ne peuvent pas s'affronter en 8ème de finale.
+\label{cond:pays}
+\end{enumerate}
+
+Par exemple, voilà le résultat de la phase de groupe lors de la ligue des Champions 2017-2018.
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|ll|ll|}
+\hline
+Groupe & & 1er & & 2ème \\ \hline
+A & \includegraphics[height=0.2cm]{flags/en.png} & Manchester United & \includegraphics[height=0.2cm]{flags/ch.png} & Basel \\ \hline
+B & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain & \includegraphics[height=0.2cm]{flags/de.png} & Bayern Munich \\ \hline
+C & \includegraphics[height=0.2cm]{flags/it.png} & Roma & \includegraphics[height=0.2cm]{flags/en.png} & Chelsea \\ \hline
+D & \includegraphics[height=0.2cm]{flags/es.png} & Barcelona & \includegraphics[height=0.2cm]{flags/it.png} & Juventus \\ \hline
+E & \includegraphics[height=0.2cm]{flags/en.png} & Liverpool & \includegraphics[height=0.2cm]{flags/es.png} & Sevilla \\ \hline
+F & \includegraphics[height=0.2cm]{flags/en.png} & Manchester City & \includegraphics[height=0.2cm]{flags/ua.png} & Shakhtar Donetsk \\ \hline
+G & \includegraphics[height=0.2cm]{flags/tr.png} & Beşiktaş & \includegraphics[height=0.2cm]{flags/po.png} & Porto \\ \hline
+H & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includegraphics[height=0.2cm]{flags/es.png} & Real Madrid \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+Dans la suite on appellera ``équipe de type 1'' les équipes arrivées premières et ``équipes de type 2'', les équipes arrivées secondes. Ainsi, \textit{Manchester United} ne peut pas jouer contre \textit{Roma} car ils sont tous les deux de type 1, il ne peut pas non plus jouer contre \textit{Basel} car ils sont issus du même groupe. Et enfin il ne peut pas jouer contre \textit{Chelsea} car les deux sont des équipes anglaises. 
+
+Voilà les matchs qui ont été tirés au sort et qui seront joués cette saison. Finalement, \textit{Manchester United} affrontera \textit{Sevilla}. 
+
+\vspace{0.5cm}
+
+\begin{tabular}{|clccl|}
+\hline
+\includegraphics[height=0.2cm]{flags/it.png} & Juventus & & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur \\ \hline
+\includegraphics[height=0.2cm]{flags/ch.png} & Basel & & \includegraphics[height=0.2cm]{flags/en.png} & Manchester City \\ \hline
+\includegraphics[height=0.2cm]{flags/po.png} & Porto & & \includegraphics[height=0.2cm]{flags/en.png} & Liverpool \\ \hline
+\includegraphics[height=0.2cm]{flags/es.png} & Sevilla & & \includegraphics[height=0.2cm]{flags/en.png} & Manchester United \\ \hline
+\includegraphics[height=0.2cm]{flags/es.png} & Real Madrid & & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain \\ \hline
+\includegraphics[height=0.2cm]{flags/ua.png} & Shakhtar Donetsk & & \includegraphics[height=0.2cm]{flags/it.png} & Roma \\ \hline
+\includegraphics[height=0.2cm]{flags/en.png} & Chelsea & & \includegraphics[height=0.2cm]{flags/es.png} & Barcelona \\ \hline
+\includegraphics[height=0.2cm]{flags/de.png} & Bayern Munich & & \includegraphics[height=0.2cm]{flags/tr.png} & Beşiktaş \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+Mais quelle était la probabilité d'un tel match ? Combien de tirages étaient possibles ? Quelle était la probabilité de ce tirage en particulier ? Voilà les questions que nous allons nous poser pendant le projet.
+
+\subsection{Questions}
+
+Une façon d'aborder ce problème est de le \textit{simplifier}. Dans cette première étude théorique, nous allons aborder différents cas ou les contraintes et le nombre d'équipes sont réduites.
+
+\begin{enumerate}
+\item \textbf{Moins de contraintes.} Dans les questions suivantes, on ne conserve que la condition~\eqref{cond:ordre} (on ignore le groupe et la nationalité des équipes). Supposons pour l'instant qu'on ne cherche à organiser que 3 matchs. On a donc 6 équipes différentes. Prenons la situation où les équipes de type 1 sont \textit{Manchester United}, le \textit{Paris Saint-Germain} et \textit{Liverpool} et les équipes de type 2 sont le \textit{Bayern Munich}, la \textit{Juventus} et le \textit{Real Madrid}. Une possibilité de configuration est donc :
+
+\begin{tabular}{lcl}
+Manchester United & & Juventus \\
+Paris Saint-Germain & & Bayern Munich \\
+Liverpool & & Real Madrid
+\end{tabular}
+
+\begin{enumerate}
+\item Donnez toutes les configuration possibles. (Vous devez en trouver 6)
+
+\item En supposant que chaque configuration apparaît avec la même probabilité, quelle est la probabilité que \textit{Manchester United} joue contre la \textit{Juventus} ?
+
+\item Si on cherche maintenant à organiser 4 matchs (donc 8 équipes en tout : 4 de type 1 et 4 de type 2), combien de configurations différentes sont possibles ?
+
+\item Donnez et justifiez une formule donnant le nombre de configurations possibles pour l'organisation de $n$ matchs (donc $2n$ équipes : $n$ de type 1 et $n$ de type 2).
+\end{enumerate}
+
+\item \textbf{Un peu plus de contraintes.} On rajoute la contrainte~\eqref{cond:groupe} sur les groupes des équipes. Reprenons la configuration précédente à 3 matchs / 6 équipes. On suppose à présent que les équipes sont réparties en groupe selon le schéma de la Figure~\ref{fig:ex3}.
+
+\begin{figure}[ht]
+\begin{tabular}{|c|ll|ll|}
+\hline
+Groupe & & 1er & & 2ème \\ \hline
+A & \includegraphics[height=0.2cm]{flags/en.png} & Manchester United & \includegraphics[height=0.2cm]{flags/de.png} & Bayern Munich \\ \hline
+B & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain & \includegraphics[height=0.2cm]{flags/it.png} & Juventus \\ \hline
+C & \includegraphics[height=0.2cm]{flags/en.png} & Liverpool & \includegraphics[height=0.2cm]{flags/es.png} & Real Madrid \\ \hline
+\end{tabular}
+
+\caption{Conditions à 3 équipes}
+\label{fig:ex3}
+\end{figure}
+
+\begin{enumerate}
+\item Donnez les deux configurations possibles selon ces conditions.
+
+\item En supposant que chaque configuration apparaît avec la même probabilité, quelle est la probabilité que \textit{Manchester United} joue contre la \textit{Juventus} ?
+
+\item On rajoute un nouveau groupe $D$ et on obtient les conditions à 4 équipes du schéma Figure~\ref{fig:ex4}. Donnez les 9 configurations possibles.
+
+\begin{figure}[ht]
+\begin{tabular}{|c|ll|ll|}
+\hline
+Groupe & & 1er & & 2ème \\ \hline
+A & \includegraphics[height=0.2cm]{flags/en.png} & Manchester United & \includegraphics[height=0.2cm]{flags/de.png} & Bayern Munich \\ \hline
+B & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain & \includegraphics[height=0.2cm]{flags/it.png} & Juventus \\ \hline
+C & \includegraphics[height=0.2cm]{flags/en.png} & Liverpool & \includegraphics[height=0.2cm]{flags/es.png} & Real Madrid \\ \hline
+D & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includegraphics[height=0.2cm]{flags/po.png} & Porto \\ \hline
+\end{tabular}
+
+\caption{Conditions à 4 équipes}
+\label{fig:ex4}
+\end{figure}
+
+\item Le tirage de l'UEFA fonctionne de cette façon : on tire au hasard une équipe de type 2, puis on tire une équipe parmi ses adversaires possibles restants et on recommence jusqu'à ce qu'il n'y ai plus de choix. 
+
+Par exemple en suivant les conditions de la Figure~\ref{fig:ex3}  :
+
+\begin{itemize}
+\item Je tire la \textit{Juventus} parmi 3 équipes. \textbf{Probabilité $\frac{1}{3}$}.
+\item Les adversaires possibles sont : \textit{Manchester United} et \textit{Liverpool}. Je tire \textit{Manchester United}. \textbf{Probabilité $\frac{1}{2}$}.
+\item Il n'y a plus qu'une seule solution possible pour le reste de la configuration : le \textit{Bayern Munich} contre \textit{Liverpool} et \textit{Real Madrid} contre le \textit{Paris Saint-Germain}. 
+\end{itemize}
+
+La probabilité d'obtenir exactement ce \textbf{tirage} est le \textbf{produit} des probabilités qui apparaissent, donc $\frac{1}{3} \times \frac{1}{2} = \frac{1}{6}$. 
+La probabilité d'obtenir cette cette \textbf{configuration} est la \textbf{somme} des probabilités sur chacun des tirages.
+
+Donnez les 6 tirages possibles en suivant les contraintes de la Figure~\ref{fig:ex3} et vérifiez que vous obtenez une probabilité $\frac{1}{2}$ pour chacune des 2 configurations possibles.
+
+\item On se place maintenant sur les conditions à 8 équipes de la Figure~\ref{fig:ex4}. Donnez les 16 tirages associés à leur probabilité qui permettent d'obtenir la configuration suivante (l'ordre des matchs n'est pas important)
+
+\begin{tabular}{|clccl|}
+\hline
+\includegraphics[height=0.2cm]{flags/it.png} & Juventus & & \includegraphics[height=0.2cm]{flags/en.png} & Manchester United \\ \hline
+\includegraphics[height=0.2cm]{flags/de.png} & Bayern Munich & & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain \\ \hline
+\includegraphics[height=0.2cm]{flags/es.png} & Real Madrid & & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur \\ \hline
+\includegraphics[height=0.2cm]{flags/po.png} & Porto & & \includegraphics[height=0.2cm]{flags/en.png} & Liverpool \\ \hline
+\end{tabular}
+
+Vous devez obtenir une probabilité totale $\frac{5}{54}$
+
+\item Cette règle de tirage permet-elle d'obtenir une probabilité uniforme (la même probabilité) sur toutes les configurations ?
+\end{enumerate}
+
+\item \textbf{Avec toutes les contraintes de l'UEFA}. On rajoute à présent la condition~\eqref{cond:pays} sur le pays d'origine des clubs (les pays sont représentés par des drapeaux).
+
+\begin{enumerate}
+\item Donnez les 3 configurations à 8 équipes qui vérifient les conditions de la Figure~\ref{fig:ex4-pays}
+
+\begin{figure}[ht]
+\begin{tabular}{|c|ll|ll|}
+\hline
+Groupe & & 1er & & 2ème \\ \hline
+A & \includegraphics[height=0.2cm]{flags/es.png} & Barcelona & \includegraphics[height=0.2cm]{flags/it.png} & Juventus \\ \hline
+B & \includegraphics[height=0.2cm]{flags/fr.png} & Paris Saint-Germain & \includegraphics[height=0.2cm]{flags/es.png} & Sevilla \\ \hline
+C & \includegraphics[height=0.2cm]{flags/it.png} & Roma & \includegraphics[height=0.2cm]{flags/es.png} & Real Madrid \\ \hline
+D & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includegraphics[height=0.2cm]{flags/po.png} & Porto \\ \hline
+\end{tabular}
+\caption{Conditions à 4 équipes avec contraintes de pays}
+\label{fig:ex4-pays}
+
+\end{figure}
+
+\item Existe-t-il une configuration qui vérifie les contraintes suivantes :
+
+\begin{tabular}{|c|ll|ll|}
+\hline
+Groupe & & 1er & & 2ème \\ \hline
+A & \includegraphics[height=0.2cm]{flags/es.png} & Barcelona & \includegraphics[height=0.2cm]{flags/it.png} & Juventus \\ \hline
+B & \includegraphics[height=0.2cm]{flags/it.png} & Roma & \includegraphics[height=0.2cm]{flags/es.png} & Sevilla \\ \hline
+C & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includegraphics[height=0.2cm]{flags/po.png} & Porto \\ \hline
+\end{tabular}
+
+\item Donnez des contraintes sur 8 équipes (4 matchs) qui n'ont pas de solutions. Vous ne devez utiliser au maximum que 2 équipes par Pays.
+
+\item On peut utiliser le \textbf{Théorème de Hall} pour vérifier qu'un système de contraintes contient au moins une configuration possible. Voilà comment le théorème s'exprime dans notre cas précis :
+
+Le système de contraintes a au moins une solution si et seulement si : pour tout sous ensemble $\mathcal{E}$ de taille $k \leq n$ d'équipes de type 1, l'ensemble $\mathcal{F}$ des équipes de type $2$ qui peuvent jouer avec \textbf{au moins} une des équipes de $\mathcal{E}$ est de taille supérieure ou égale à $k$. 
+
+Par exemple, sur les contraintes de la Figure~\ref{fig:ex4-pays}. Si on prend $\mathcal{E} = \lbrace \text{Barcelona}, \text{Paris Saint-Germain} \rbrace$, l'ensemble $\mathcal{F}$ est constitué de la \textit{Juventus}, du \textit{Real Madrid} et de \textit{Porto}. L'ensemble $\mathcal{E}$ est de taille 2, et l'ensemble $\mathcal{F}$ est de taille 3 donc la condition est bien vérifiée sur ce sous ensemble. Pour que le système ait une solution, il faut que ce soit vérifié sur \textbf{tous} les sous-ensembles (pour 4 équipes de type 1, ça fait $2^4 = 16$ sous ensembles).
+
+Trouvez les sous-ensembles qui \textbf{ne vérifient} pas la condition dans l'exemple de contraintes impossibles que vous avez trouvez à la question précédente.
+\end{enumerate} 
+\end{enumerate}
+
+
+
+
+\section{Modélisation et exploration}
+
+Le but de cette partie est de modéliser de différentes façons le tirage de l'UEFA et de calculer les probabilités associées. Nous vous proposons ici des pistes, à vous de les explorer ou d'en proposer de nouvelles. L'ordre qu'on vous donne est \textit{indicatif}, vous pouvez explorer les pistes dans l'ordre que vous voulez. 
+
+\subsection{Méthode de Monte-Carlo}
+
+Le principe de cette méthode est de simuler le tirage de l'UEFA un grand nombre de fois et d'en déduire une valeur approchée des probabilités associées à chaque configuration. La probabilité approchée d'obtenir une configuration est donnée par 
+
+\begin{equation*}
+\frac{\text{Nomdre de fois que j'ai obtenu la configuration}}{\text{Nombre de tirages effectués}}
+\end{equation*}
+
+
+\begin{enumerate}
+\item Commencez par ignorer la condition~\ref{cond:pays} sur les pays et simulez des tirages sur des petits nombres d'équipes selon la méthode de l'UEFA décrite dans l'étude théorique (par tirage successif des équipes). Voilà certaines questions que vous devrez vous poser.
+\begin{enumerate}
+\item Quelle structure de donnée utiliser pour stocker les équipes en prenant en compte leur type et leur groupe ?
+\item Comment effectuer un tirage uniforme sur un ensemble d'équipes possibles ?
+\item Comment savoir quand arrêter le tirage ?
+\item Comment stocker les configurations et le nombre de fois qu'elles apparaissent ?
+\end{enumerate}
+\item Observez les résultats avec plus d'équipes (par exemple avec 16 équipes comme pour la ligue des Champions) et essayez de comprendre quelles sont les configurations qui sont plus probables que les autres.
+\item Comment faire pour rajouter la contrainte du pays ?
+\begin{enumerate}
+\item Comment modéliser cette contrainte ?
+\item Comment vérifier qu'une configuration est possible ?
+\item Comment éliminer les configurations impossibles lors du tirage ?
+\end{enumerate}
+\item Arrivez-vous à simuler les probabilités associées aux conditions de l'UEFA 2017-1018 ?
+\begin{enumerate}
+\item Combien d'essai avant que les probabilités ne se ``stabilisent'' ?
+\item Combien de configurations possibles trouvez-vous ?
+\item Quelle était la probabilité d'obtenir la configuration qui va être jouée cette année ?
+\item Quels sont les matchs qui avaient le plus de probabilité d’apparaître ?
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Comptage des configurations}
+
+On voudrait savoir si les probabilités obtenue par la méthode de Monte-Carlo sont proche de la distribution uniforme, c'est-à-dire celle ou chaque configuration a la même probabilité d'être choisie que les autres donnée par
+
+\begin{equation*}
+\frac{1}{\text{Nombre de configurations possible}}
+\end{equation*}
+
+\begin{enumerate}
+\item \'Ecrivez un programme qui vous donne la liste de toutes les configurations possible à partir d'un système de contraintes. Commencez avec peu d'équipes. Vous pouvez aussi ignorer la contrainte du pays dans un premier temps.
+\item Lorsqu'il n'y a pas de contraintes de pays, le nombre de configurations peut se calculer facilement. Cherchez comment calculer ces nombres et programmez la formule qui les calcule.
+\end{enumerate}
+
+\subsection{Probabilités exactes}
+
+Lors de l'étude théorique, nous avons calculer tous les tirages possibles avec 6 équipes et les probabilités associées. Programmez ce calcul qui vous permettra d'obtenir des probabilités exactes que vous pourrez comparer avec celles obtenues par la méthode de Monte-Carlo.
+
+\begin{enumerate}
+\item Commencez avec un petit nombre d'équipes (6, 8, 10).
+\item Votre programme fonctionne-t-il avec les 16 équipes de la coupe des champions ou devient-il très très lent voire ne termine jamais ? Réfléchissez à comment vous pouvez l'améliorer : certains calculs sont peut-être inutiles ou redondants. 
+\end{enumerate}
+
+Quelques pistes en plus : explorez ce que sont les \textbf{graphes}, les \textbf{graphes bipartites}, et les \textbf{isomorphismes de graphes}.
+
+\subsection{Et la Ligue Europa ? Et la phase de groupe ?}
+
+La ligue Europa offre un challenge plus important avec cette fois 32 équipes ! Par ailleurs, vous pourriez essayer de modéliser l'ensemble de la coupe et non plus seulement le tirage au sort de la phase finale en ajoutant par exemple des probabilités pour le résultats des matchs et comme ça ``deviner'' qui a le plus de chance de gagner la ligue des champions !
+
+
+\end{document}
+
+
+
