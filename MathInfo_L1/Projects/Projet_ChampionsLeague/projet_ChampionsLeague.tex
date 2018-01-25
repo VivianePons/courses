@@ -28,7 +28,7 @@ Tous les ans, après la phase de groupe, la Ligue des Champion de l'UEFA se pré
 
 \subsection{Description du problème}
 
-La ligue des champions de l'UEFA est une compétition internationale de football qui voit d'affronter les meilleurs clubs européens. Lors d'une première phase appelée "Phase de groupes", les équipes sont réparties en 8 groupes. Des matchs ont lieu au sein de chaque groupe pour décider d'un classement : le premier et le second de chaque groupe sont sélectionnés pour la phase finale. On a donc 16 équipes, chaque équipe appartenant à un groupe (A, B, C, D, E, F, G, H) et avec un classement (1er ou 2ème). \`A la fin de cette phase, au mois de décembre, le tirage au sort a lieu pour décider des \textbf{8 matchs} qui feront les 8ème de finale. Le but du projet est d'étudier ce tirage au sort en suivant les règles de l'UEFA.
+La ligue des champions de l'UEFA est une compétition internationale de football qui voit d'affronter les meilleurs clubs européens. Lors d'une première phase appelée ``Phase de groupe'', les équipes sont réparties en 8 groupes. Des matchs ont lieu au sein de chaque groupe pour décider d'un classement : le premier et le second de chaque groupe sont sélectionnés pour la phase finale. On a donc 16 équipes, chaque équipe appartenant à un groupe (A, B, C, D, E, F, G, H) et avec un classement (1er ou 2ème). \`A la fin de cette phase, au mois de décembre, le tirage au sort a lieu pour décider des \textbf{8 matchs} qui feront les 8ème de finale. Le but du projet est d'étudier ce tirage au sort en suivant les règles de l'UEFA.
 
 Les règles sont les suivantes :
 
@@ -84,7 +84,7 @@ Mais quelle était la probabilité d'un tel match ? Combien de tirages étaient 
 
 \subsection{Questions}
 
-Une façon d'aborder ce problème est de le \textit{simplifier}. Dans cette première étude théorique, nous allons aborder différents cas ou les contraintes et le nombre d'équipes sont réduites.
+Une façon d'aborder ce problème est de le \textit{simplifier}. Dans cette première étude théorique, nous allons aborder différents cas où les contraintes et le nombre d'équipes sont réduites.
 
 \begin{enumerate}
 \item \textbf{Moins de contraintes.} Dans les questions suivantes, on ne conserve que la condition~\eqref{cond:ordre} (on ignore le groupe et la nationalité des équipes). Supposons pour l'instant qu'on ne cherche à organiser que 3 matchs. On a donc 6 équipes différentes. Prenons la situation où les équipes de type 1 sont \textit{Manchester United}, le \textit{Paris Saint-Germain} et \textit{Liverpool} et les équipes de type 2 sont le \textit{Bayern Munich}, la \textit{Juventus} et le \textit{Real Madrid}. Une possibilité de configuration est donc :
@@ -204,11 +204,11 @@ C & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includeg
 
 \item On peut utiliser le \textbf{Théorème de Hall} pour vérifier qu'un système de contraintes contient au moins une configuration possible. Voilà comment le théorème s'exprime dans notre cas précis :
 
-Le système de contraintes a au moins une solution si et seulement si : pour tout sous ensemble $\mathcal{E}$ de taille $k \leq n$ d'équipes de type 1, l'ensemble $\mathcal{F}$ des équipes de type $2$ qui peuvent jouer avec \textbf{au moins} une des équipes de $\mathcal{E}$ est de taille supérieure ou égale à $k$. 
+Le système de contraintes a au moins une solution si et seulement si : pour tout sous-ensemble $\mathcal{E}$ de taille $k \leq n$ d'équipes de type 1, l'ensemble $\mathcal{F}$ des équipes de type $2$ qui peuvent jouer avec \textbf{au moins} une des équipes de $\mathcal{E}$ est de taille supérieure ou égale à $k$. 
 
-Par exemple, sur les contraintes de la Figure~\ref{fig:ex4-pays}. Si on prend $\mathcal{E} = \lbrace \text{Barcelona}, \text{Paris Saint-Germain} \rbrace$, l'ensemble $\mathcal{F}$ est constitué de la \textit{Juventus}, du \textit{Real Madrid} et de \textit{Porto}. L'ensemble $\mathcal{E}$ est de taille 2, et l'ensemble $\mathcal{F}$ est de taille 3 donc la condition est bien vérifiée sur ce sous ensemble. Pour que le système ait une solution, il faut que ce soit vérifié sur \textbf{tous} les sous-ensembles (pour 4 équipes de type 1, ça fait $2^4 = 16$ sous ensembles).
+Par exemple, sur les contraintes de la Figure~\ref{fig:ex4-pays}. Si on prend $\mathcal{E} = \lbrace \text{Barcelona}, \text{Paris Saint-Germain} \rbrace$, l'ensemble $\mathcal{F}$ est constitué de la \textit{Juventus}, du \textit{Real Madrid} et de \textit{Porto}. L'ensemble $\mathcal{E}$ est de taille 2, et l'ensemble $\mathcal{F}$ est de taille 3 donc la condition est bien vérifiée sur ce sous-ensemble. Pour que le système ait une solution, il faut que ce soit vérifié sur \textbf{tous} les sous-ensembles (pour 4 équipes de type 1, ça fait $2^4 = 16$ sous-ensembles).
 
-Trouvez les sous-ensembles qui \textbf{ne vérifient} pas la condition dans l'exemple de contraintes impossibles que vous avez trouvez à la question précédente.
+Trouvez les sous-ensembles qui \textbf{ne vérifient} pas la condition dans l'exemple de contraintes impossibles que vous avez trouvé à la question précédente.
 \end{enumerate} 
 \end{enumerate}
 
@@ -267,7 +267,7 @@ On voudrait savoir si les probabilités obtenue par la méthode de Monte-Carlo s
 
 \subsection{Probabilités exactes}
 
-Lors de l'étude théorique, nous avons calculer tous les tirages possibles avec 6 équipes et les probabilités associées. Programmez ce calcul qui vous permettra d'obtenir des probabilités exactes que vous pourrez comparer avec celles obtenues par la méthode de Monte-Carlo.
+Lors de l'étude théorique, nous avons calculé tous les tirages possibles avec 6 équipes et les probabilités associées. Programmez ce calcul qui vous permettra d'obtenir des probabilités exactes que vous pourrez comparer avec celles obtenues par la méthode de Monte-Carlo.
 
 \begin{enumerate}
 \item Commencez avec un petit nombre d'équipes (6, 8, 10).
