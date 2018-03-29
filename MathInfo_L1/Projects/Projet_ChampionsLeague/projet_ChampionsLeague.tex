@@ -156,7 +156,7 @@ La probabilité d'obtenir cette cette \textbf{configuration} est la \textbf{somm
 
 Donnez les 6 tirages possibles en suivant les contraintes de la Figure~\ref{fig:ex3} et vérifiez que vous obtenez une probabilité $\frac{1}{2}$ pour chacune des 2 configurations possibles.
 
-\item On se place maintenant sur les conditions à 8 équipes de la Figure~\ref{fig:ex4}. Donnez les 16 tirages associés à leur probabilité qui permettent d'obtenir la configuration suivante (l'ordre des matchs n'est pas important)
+\item On se place maintenant sur les conditions à 8 équipes de la Figure~\ref{fig:ex4}. Donnez les tirages associés à leur probabilité qui permettent d'obtenir la configuration suivante (l'ordre des matchs n'est pas important)
 
 \begin{tabular}{|clccl|}
 \hline
@@ -174,7 +174,7 @@ Vous devez obtenir une probabilité totale $\frac{5}{54}$
 \item \textbf{Avec toutes les contraintes de l'UEFA}. On rajoute à présent la condition~\eqref{cond:pays} sur le pays d'origine des clubs (les pays sont représentés par des drapeaux).
 
 \begin{enumerate}
-\item Donnez les 3 configurations à 8 équipes qui vérifient les conditions de la Figure~\ref{fig:ex4-pays}
+\item Donnez les \textbf{2} configurations à 8 équipes qui vérifient les conditions de la Figure~\ref{fig:ex4-pays}
 
 \begin{figure}[ht]
 \begin{tabular}{|c|ll|ll|}
@@ -200,7 +200,7 @@ B & \includegraphics[height=0.2cm]{flags/it.png} & Roma & \includegraphics[heigh
 C & \includegraphics[height=0.2cm]{flags/en.png} & Tottenham Hotspur & \includegraphics[height=0.2cm]{flags/po.png} & Porto \\ \hline
 \end{tabular}
 
-\item Donnez des contraintes sur 8 équipes (4 matchs) qui n'ont pas de solutions. Vous ne devez utiliser au maximum que 2 équipes par Pays.
+\item Donnez deux ensembles de contraintes sur 8 équipes (4 matchs) qui n'ont pas de solutions. Pour la première, n'utilisez pas plus de 4 équipes par pays. Pour la seconde, utilisez un pays avec cinq équipes et 3 autres pays à une équipe.
 
 \item On peut utiliser le \textbf{Théorème de Hall} pour vérifier qu'un système de contraintes contient au moins une configuration possible. Voilà comment le théorème s'exprime dans notre cas précis :
 
@@ -208,7 +208,7 @@ Le système de contraintes a au moins une solution si et seulement si : pour tou
 
 Par exemple, sur les contraintes de la Figure~\ref{fig:ex4-pays}. Si on prend $\mathcal{E} = \lbrace \text{Barcelona}, \text{Paris Saint-Germain} \rbrace$, l'ensemble $\mathcal{F}$ est constitué de la \textit{Juventus}, du \textit{Real Madrid} et de \textit{Porto}. L'ensemble $\mathcal{E}$ est de taille 2, et l'ensemble $\mathcal{F}$ est de taille 3 donc la condition est bien vérifiée sur ce sous-ensemble. Pour que le système ait une solution, il faut que ce soit vérifié sur \textbf{tous} les sous-ensembles (pour 4 équipes de type 1, ça fait $2^4 = 16$ sous-ensembles).
 
-Trouvez les sous-ensembles qui \textbf{ne vérifient} pas la condition dans l'exemple de contraintes impossibles que vous avez trouvé à la question précédente.
+Trouvez les sous-ensembles qui \textbf{ne vérifient} pas la condition dans les exemples de contraintes impossibles que vous avez trouvé à la question précédente.
 \end{enumerate} 
 \end{enumerate}
 
