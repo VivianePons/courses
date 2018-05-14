@@ -1,0 +1,74 @@
+
+\begin{exercice}[Tri Fusion -- 5 pts]
+
+~
+\begin{enumerate}
+\item Rappeler en quelques phrases le principe du tri fusion.
+\end{enumerate}
+
+En voici une implantation partielle :
+
+\begin{lstlisting}
+TriFusion
+Input :
+    - T, un tableau de taille n 
+Output :
+    - Un tableau trié contenant les mêmes valeurs que T 
+Procédé :
+    Si n <= 1:
+        Retourner T
+    m <- n/2
+    T1 <- TriFusion(T[:m+1])
+    T2 <- TriFusion(T[m+1:])
+    Retourner Fusion(T1,T2)
+    
+    
+Fusion
+Input :
+    - T1, un tableau de taille m1 supposé trié
+    - T2, un tableau de taille m2 supposé trié
+Output:
+    - un tableau trié contenant les valeurs de T1 et T2
+Procédé
+    ....
+\end{lstlisting}
+
+L'écriture {\tt T[:m+1]} signifie une copie du tableau {\tt T} entre les indices 0 et $m$ inclus, {\tt T[m+1:]} signifie une copie du tableau {\tt T} entre les indices $m+1$ et $n-1$ inclus.
+
+Voici un exemple du résultat de la fonction {\tt Fusion} :
+
+
+\begin{tabular}{cccccc}
+{\tt T1} 2 & 2 & 4 & 5 & 5
+\end{tabular}
+
+\begin{tabular}{ccccc}
+{\tt T2} 3 & 4 & 6 & 7
+\end{tabular}
+
+la fonction renvoie
+
+\begin{tabular}{ccccccccc}
+2 & 2 & 3 & 4 & 4 & 5 & 5 & 6 & 7
+\end{tabular}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+
+\item Compléter le procédé de la fonction {\tt Fusion}. Votre algorithme doit avoir une complexité $O(n)$ où $n = m1 + m2$.
+
+\item Donner les étapes de votre propre algorithme de fusion sur l'exemple ci-dessus.
+
+\item Quelle est la complexité de l'algorithme complet {\tt TriFusion} dans le pire des cas ?
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item L'algorithme découpe le tableau en deux parts égales et trie les deux sous-tableaux puis les fusionne en un tableau unique.
+\item cf cours
+\item cf cours
+\item Pire des cas : $O(n \log(n))$
+\end{enumerate}
+
+\end{exercice}

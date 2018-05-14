@@ -1,0 +1,148 @@
+
+\begin{exercice}
+On rappelle qu'un tas est un \textbf{arbre binaire parfait décroissant} :
+\begin{itemize}
+\item tous les niveaux sauf le dernier sont remplis au maximum et les feuilles du dernier niveaux sont alignées à gauche,
+\item la valeur d'un nœud est toujours supérieure égale aux valeurs de ses fils.
+\end{itemize}
+
+La structure d'arbre binaire parfait permet au tas d'être stocké dans un tableau.
+
+\begin{enumerate}
+\item Donner le tableau correspondant au tas suivant
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$16$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$11$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$10$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$4$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$6$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$8$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$5$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$9$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$2$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$1$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeh  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \& \nodei  \&         \& \nodej  \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g)
+	(b) edge (c) edge (f)
+	(h) edge (i) edge (j)
+	(a) edge (b) edge (h);
+\end{tikzpicture}}
+}
+
+\item Dessiner l'arbre correspondant au tableau suivant 
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\emph{indice} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+\emph{valeur} & 5 & 4 & 2 & 3 & 2 & 1 & 1 & 2 & 1 \\
+\hline
+\end{tabular}
+\end{enumerate}
+
+On se place dans le contexte suivant : on possède un ensemble de serveurs qui gèrent des processus. Chaque serveur possède un certain nombre de \textit{cœurs} libres pour traiter de nouveaux processus. On stocke la disponibilité des serveurs dans un tableau sous forme de tas, par exemple
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+ 0 & 1 & 2 & 3 \\
+\hline
+4 & 2 & 2 & 0 \\
+\hline
+\end{tabular}
+
+signifie que j'ai 4 serveurs. Le serveur 0 possède 4 cœurs disponibles, les serveurs 1 et 2 en possèdent chacun 2 et le serveur 3, 0. Le serveur 0 sera toujours celui avec le plus de cœurs disponibles.
+
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+
+\item Considérer les 3 exemples suivants :
+
+\begin{tabular}{ccc}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {3}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {3}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {2}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {1}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {0}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {0}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {4}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+\end{tabular}
+
+Pour chacun des exemples, 
+\begin{enumerate}
+\item Diminuer la valeur de {\tt T[0]} de 1 (on lui affecte un processus) et regarder si le résultat obtenu est un tas.
+\item Si ce n'est pas le cas, décrire le processus à suivre pour \emph{corriger} le résultat et obtenir un tas.
+\end{enumerate}
+
+\item Implanter une fonction qui réalise de façon générale l'algorithme décrit sur les exemples précédents. Quelle est sa complexité ?
+
+\end{enumerate}
+\end{exercice}

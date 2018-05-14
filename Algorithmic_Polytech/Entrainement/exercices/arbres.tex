@@ -1,0 +1,125 @@
+\begin{exercice}
+
+On définit la structure suivante pour représenter les arbres :
+
+\begin{lstlisting}
+Structure Arbre :
+    valeur, un entier
+    nbFils, un entier
+    Fils, un tableau de taille nbFils contenant des Arbres
+\end{lstlisting}
+
+Et les trois exemples suivants,
+
+\begin{tabular}{c|c|c}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$1$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$2$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$2$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$3$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$1$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$4$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$2$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \\ 
+         \& \nodeb  \&         \& \nodee  \& \nodef  \\ 
+ \nodec  \&         \& \noded  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(f) edge (g)
+	(a) edge (b) edge (e) edge (f);
+\end{tikzpicture}}
+}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$3$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$1$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$3$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$2$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$4$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$6$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$1$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$1$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$3$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \& \nodea  \&         \&         \&         \\ 
+ \nodeb  \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \nodef  \& \nodeg  \& \nodei  \\ 
+ \noded  \&         \&         \& \nodeh  \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d)
+	(b) edge (c)
+	(g) edge (h)
+	(e) edge (f) edge (g) edge (i)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}}
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$2$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$3$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$1$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$3$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$5$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$5$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$2$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$2$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$4$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$3$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \& \nodee  \&         \& \nodeg  \&         \\ 
+ \nodec  \&         \& \noded  \& \nodef  \& \nodeh  \& \nodei  \& \nodej  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f)
+	(g) edge (h) edge (i) edge (j)
+	(a) edge (b) edge (e) edge (g);
+\end{tikzpicture}}}
+\\
+Exemple 1 & Exemple 2 & Exemple 3
+
+\end{tabular}
+
+
+\begin{enumerate}
+
+\item Donner les valeurs de {\tt mystere1} et {\tt mystere2} sur les 3 exemples d'arbres donnés.
+\begin{lstlisting}
+
+Fonction mystere1(Arbre arbre):
+    s = 1
+    Pour chaque fils f de arbre:
+        s = s + mystere1(f)
+    retourner s
+
+Fonction mystere2(Arbre arbre):
+    m = 0
+    Pour chaque fils f de arbre:
+        h = mystere2(e)
+        Si h > m:
+            m = h
+    retourner m + 1
+Fin fonction
+
+\end{lstlisting}
+
+\item Que calculent {\tt mystere1} et {\tt mystere2} ?
+
+\item Donner une fonction qui calcule le nombre de \emph{feuilles} de l'arbre (nombre de nœuds qui n'ont pas de fils). La fonction doit retourner 4 sur l'exemple 1, 4 sur l'exemple 2 et 6 sur l'exemple 3.
+
+
+\item $\clubsuit$ On dit qu'un arbre est équilibré si toutes les feuilles sont à la même profondeur. Dans les arbres donnés en exemple, seul l'exemple 3 est équilibré (toutes ses feuilles sont à la profondeur 3, pour les exemples 1 et 2, il y a des feuilles aux profondeurs 2 et 3). Proposer un algorithme qui teste si un arbre donné est équilibré. (Note : il y a plusieurs solutions possibles, plus l'algorithme est optimal en terme de complexité, mieux c'est).
+
+\end{enumerate}
+
+
+\end{exercice}

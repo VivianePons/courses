@@ -1,0 +1,69 @@
+
+\begin{exercice}[Tri rapide -- 5 pts]
+
+~
+\begin{enumerate}
+\item Rappeler en quelques phrases le principe du tri rapide (quicksort).
+\end{enumerate}
+
+En voici une implantation partielle :
+
+\begin{lstlisting}
+TriRapide
+Input :
+    - T, un tableau de nombres
+    - a, le premier indice de la zone à trier
+    - b, le dernier indice de la zone à trier 
+Procédé :
+    Si b <= a:
+        Retourner
+    m <- Pivot(T,a,b)
+    TriRapide(T,a,m-1)
+    TriRapide(T,m+1,b)
+\end{lstlisting}
+
+Pour un tableau {\tt T} de taille 5, on appellerait la fonction de cette façon {\tt TriRapide(T,0,4)} car 4 est le dernier indice du tableau.
+
+La fonction {\tt Pivot} modifie le tableau de telle sorte qu'après son passage, toutes les valeurs avant l'indice {\tt m} doivent être plus petite ou égale à {\tt T[m]} et toutes les valeurs après l'indice {\tt m} doivent être plus grande que {\tt T[m]}. Par exemple, elle pourrait modifier le tableau suivant de cette façon :
+
+Avant le passage de Pivot :
+
+\begin{tabular}{ccccc}
+5 & 2 & 6 & 3 & 1
+\end{tabular}
+
+Après le passage de Pivot :
+
+\begin{tabular}{ccccc}
+3 & 2 & 1 & \red{5} & 6
+\end{tabular}
+
+L'indice {\tt m} retourné par la fonction dans ce cas est \textbf{3}.
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+
+\item Donner une implantation de la fonction {\tt Pivot}
+
+\textit{Remarque : } votre fonction n'est pas obligée d'agir exactement comme dans l'exemple, elle doit seulement respecter les propriétés énoncées ci-dessus.
+
+\item Donner les étapes de votre propre algorithme de pivot sur le tableau donné en exemple:
+
+\begin{tabular}{ccccc}
+5 & 2 & 6 & 3 & 1
+\end{tabular}
+
+\item Quelle est la complexité de l'algorithme {\tt TriRapide} dans les trois cas suivant : tableau déjà trié, meilleur des cas, en moyenne.
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item Principe : A chaque étape on choisit un pivot $v$ (par exemple, le premier élément du tableau), puis on place les éléments du tableau tel que tous les éléments \emph{plus petits} que $v$ soient sur la gauche du tableau, tous les éléments \emph{plus grands} sur la droite et $v$ entre la partie gauche et la partie droite. Puis on trie récursivement les parties gauches et droites.
+
+\item cf cours
+\item cf cours
+\item tableau déjà trié : $O(n^2)$, meilleur des cas : $O(n \log(n))$, en moyenne $O(n \log(n))$.
+\end{enumerate}
+
+\end{exercice}
