@@ -1,0 +1,143 @@
+\begin{exercice}[Arbres Binaires]
+
+On définit la structure suivante pour représenter les arbres binaires :
+
+\begin{lstlisting}
+Structure ArbreBinaire :
+    valeur, un entier
+    filsGauche, un ArbreBinaire
+    filsDroit, un ArbreBinaire
+\end{lstlisting}
+
+Si un fils est vide, on considérera qu'il est égal à {\tt None}, sur les exemples, on représente les arbres vides par des arrêtes sans noeud au bout.
+
+\begin{tabular}{|c|c|}
+\scalebox{0.5}{
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$8$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$6$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$4$}
+;}\newcommand{\noded}{\node (d) {}
+;}\newcommand{\nodee}{\node (e) {}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$9$}
+;}\newcommand{\nodeg}{\node (g) {}
+;}\newcommand{\nodeh}{\node (h) {}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$9$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$5$}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {$3$}
+;}\newcommand{\nodebb}{\node (bb) {}
+;}\newcommand{\nodebc}{\node (bc) {}
+;}\newcommand{\nodebd}{\node[draw,circle] (bd) {$10$}
+;}\newcommand{\nodebe}{\node (be) {}
+;}\newcommand{\nodebf}{\node (bf) {}
+;}\newcommand{\nodebg}{\node (bg) {}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \&         \& \nodei  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \&         \&         \&         \& \nodej  \&         \&         \&         \&         \& \nodebg \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \& \nodeh  \&         \&         \& \nodeba \&         \&         \&         \& \nodebd \&         \&         \&         \\ 
+         \&         \&         \&         \&         \&         \&         \&         \& \nodebb \&         \& \nodebc \&         \& \nodebe \&         \& \nodebf \&         \&         \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (f)
+	(j) edge (ba) edge (bd)
+	(i) edge (j)
+	(a) edge (b) edge (i);
+	
+\path (c) edge (d) edge (e)
+	(f) edge (g) edge (h)
+	(ba) edge (bb) edge (bc)
+	(bd) edge (be) edge (bf)
+	(i) edge (bg);
+\end{tikzpicture}}
+}
+&
+\scalebox{0.5}{
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$9$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$7$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$3$}
+;}\newcommand{\noded}{\node (d) {}
+;}\newcommand{\nodee}{\node (e) {}
+;}\newcommand{\nodef}{\node (f) {}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$12$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$11$}
+;}\newcommand{\nodei}{\node (i) {}
+;}\newcommand{\nodej}{\node (j) {}
+;}\newcommand{\nodeba}{\node[draw,circle] (ba) {$13$}
+;}\newcommand{\nodebb}{\node (bb) {}
+;}\newcommand{\nodebc}{\node (bc) {}
+;}\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \&         \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeg  \&         \&         \&         \\ 
+         \& \nodec  \&         \&         \& \nodef  \&         \&         \& \nodeh  \&         \&         \&         \& \nodeba \&         \\ 
+ \noded  \&         \& \nodee  \&         \&         \&         \& \nodei  \&         \& \nodej  \&         \& \nodebb \&         \& \nodebc \\
+};
+
+\path[ultra thick, red] (b) edge (c)
+	(g) edge (h) edge (ba)
+	(a) edge (b) edge (g);
+	
+\path (c) edge (d) edge (e)
+	(b) edge (f)
+	(h) edge (i) edge (j)
+	(ba) edge (bb) edge (bc);
+\end{tikzpicture}}
+}
+\\
+Exemple 1 & Exemple 2
+
+\end{tabular}
+
+
+\begin{enumerate}
+
+\item Donner un algorithme calculant la hauteur d'un arbre binaire. Sur les exemples, vous devez trouver 4 sur l'Exemple 1 et 3 sur l'Exemple 2.
+
+\item Donner les valeurs de la fonction {\tt Strahler} sur les 2 exemples d'arbres donnés.
+\begin{lstlisting}
+Strahler
+Input :
+    - A, un arbre binaire ou bien None
+Output :
+    - Un entier
+Procédé :
+	Si A = None:
+	    retourner 0
+	s1 <- Strahler(A.filsGauche)
+	s2 <- Strahler(A.filsDroit)
+	Si s1 = s2:
+	    retourner s1+1
+	Sinon:
+	    retourner max(s1,s2)
+\end{lstlisting}
+
+
+\item Donner le résultat de la fonction suivante sur les deux exemples d'arbres donnés. Comment s'appelle ce parcours ?
+
+\begin{lstlisting}
+Parcours
+Input :
+    - A, un arbre binaire ou bien None
+Output :
+    - Une liste d'entiers
+Procédé :
+	Si A = None:
+	    retourner [] # Liste vide
+	L <- [A.valeur] # liste contenant une seule valeur
+	L1 <- Parcours(A.filsGauche)
+	L2 <- Parcours(A.filsDroit)
+	retourner L1 + L + L2 # concaténation de listes
+\end{lstlisting}
+
+\item On rappelle qu'un arbre binaire de recherche est un arbre tel que pour chaque noeud, les noeuds de son sous arbre gauche ont des valeurs \textbf{plus petites ou égales} et les noeuds de son sous arbre droit ont des valeurs \textbf{strictement supérieures}. L'exemple~1 n'est pas un arbre  binaire de recherche et l'exemple~2 en est un. 
+\begin{enumerate}
+\item \'Ecrivez une fonction qui prend en paramètre un arbre binaire de recherche et un entier $v$ et qui retourne Vrai si $v$ est dans l'arbre et Faux sinon.
+\item De quoi dépend la complexité de votre algorithme ?
+\item Quelle est la particularité d'un parcours infixe dans un arbre binaire de recherche~?
+\item $\clubsuit$ Utilisez cette propriété pour écrire une fonction qui teste si un arbre donné est un arbre binaire de recherche. (Vous pouvez utiliser les fonctions précédentes)
+\end{enumerate}
+
+\end{enumerate}
+
+\end{exercice}
