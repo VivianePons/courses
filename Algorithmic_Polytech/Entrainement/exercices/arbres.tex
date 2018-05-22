@@ -121,5 +121,52 @@ Fin fonction
 
 \end{enumerate}
 
+\textbf{Solution}
+
+\begin{enumerate}
+\item mystère 1 : Exemple 1 = 7, Exemple 2 = 9, Exemple 3 = 10. mystère 2 : Exemple 1 = 3, Exemple 2 = 4, Exemple 3 = 3.
+
+\item mystère 1 : nombre de n\oe uds. mystère 2 : hauteur de l'arbre.
+
+\item 
+
+\begin{lstlisting}
+Feuilles(Arbre a):
+    Si a.nbFils = 0:
+        Retourner 1
+    s <- 0
+    Pour chaque fils f de a:
+        s <- s + Feuilles(f)
+    Retourner s
+\end{lstlisting}
+
+
+\item Une solution possible (pas la seule), on effectue un parcours en largeur par niveaux
+
+\begin{lstlisting}
+Equilibre(Arbre a):
+   N1 <- [a] (tableau contenant a)
+   Tant que len(N1) > 0:
+       N2 <- [] (tableau vide)
+       TousFeuilles <- Vrai
+       UneFeuille <- Faux
+       Pour chaque n dans N1:
+          Si n.nbFils = 0:
+              UneFeuille <- Vrai
+          Sinon :
+              TousFeuilles <- Faux
+              Pour chaque b dans n.Fils:
+                  N2.append(b)
+       Si TousFeuilles :
+           Retourner Vrai
+       Sinon :
+           Si UneFeuille :
+               RetournerFaux
+       
+   
+\end{lstlisting}
+
+\end{enumerate}
+
 
 \end{exercice}

@@ -145,4 +145,63 @@ Pour chacun des exemples,
 \item Implanter une fonction qui réalise de façon générale l'algorithme décrit sur les exemples précédents. Quelle est sa complexité ?
 
 \end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+\hline
+16 & 11 & 9 & 10 & 8 & 2 & 1 & 4 & 6 & 5 \\
+\hline
+\end{tabular}
+
+\item
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$5$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$4$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$3$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$2$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$1$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$2$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$2$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$1$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$1$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeh  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \& \nodei  \&         \& \nodej  \\ 
+ \noded  \&         \& \nodee  \&         \&   \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(b) edge (c) edge (f)
+	(h) edge (i) edge (j)
+	(a) edge (b) edge (h);
+\end{tikzpicture}}
+}
+
+\item Aucun des trois ne reste un tas : il faut échanger la valeur avec son fils maximal puis recommencer récursivement sur le fils échangé.
+
+\item Une solution possible
+
+\begin{lstlisting}
+Input : Tableau T
+Procédé :
+    i <- 0
+    Tant que 2*i+1 < T.taille:
+       filsMax <- 2*i+1
+       Si 2*i +2 < T.taille et T[2*i+2] > T[2*i+1]:
+           filsMax <- 2*i+2
+       Si T[i] < T[filsMax]:
+           Echanger T[i], T[filsMax]
+           i <- filsMax    
+\end{lstlisting}
+\end{enumerate}
 \end{exercice}
