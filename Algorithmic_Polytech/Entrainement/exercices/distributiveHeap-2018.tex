@@ -1,0 +1,248 @@
+
+\begin{exercice}[Partiel 2018]
+On rappelle qu'un tas est un \textbf{arbre binaire parfait décroissant} :
+\begin{itemize}
+\item tous les niveaux sauf le dernier sont remplis au maximum et les feuilles du dernier niveaux sont alignées à gauche,
+\item la valeur d'un nœud est toujours supérieure égale aux valeurs de ses fils.
+\end{itemize}
+
+La structure d'arbre binaire parfait permet au tas d'être stocké dans un tableau.
+
+\begin{enumerate}
+\item Donner le tableau correspondant au tas suivant
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$15$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$14$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$10$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$2$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$8$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$5$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$3$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$13$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$12$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$8$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeh  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \& \nodei  \&         \& \nodej  \\ 
+ \noded  \&         \& \nodee  \&         \& \nodeg  \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(f) edge (g)
+	(b) edge (c) edge (f)
+	(h) edge (i) edge (j)
+	(a) edge (b) edge (h);
+\end{tikzpicture}}
+}
+
+\item Dessiner l'arbre correspondant au tableau suivant 
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\emph{indice} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+\emph{valeur} & 5 & 4 & 2 & 3 & 2 & 1 & 1 & 2 & 1 \\
+\hline
+\end{tabular}
+\end{enumerate}
+
+On utilise un tableau organisé en tas pour représenter les disponibilités dans des salles de jeu en ligne : chaque case du tableau correspond à une salle et sa valeur correspond aux nombres de places disponibles pour accueillir un nouveau joueur. La salle avec le plus grand nombre de places disponibles est au sommet du tas. 
+ 
+\begin{enumerate}
+\setcounter{enumi}{2}
+
+\item Un joueur peut quitter une salle à tout moment et dans ce cas, la valeur dans le tableau augmente. Observer les 2 exemples suivants :
+
+\begin{tabular}{ccc}
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {3}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+&
+$\rightarrow$
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {3}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {\red{3}}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+\\
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {4}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+&
+$\rightarrow$
+&
+{ \newcommand{\nodea}{\node[draw,circle] (a) {4}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {\red{5}}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+\end{tabular}
+
+Dans quel cas le résultat obtenu est-il un tas ? Proposer une solution pour l'autre cas : décrire le principe et dessiner l'arbre obtenu.
+
+\item Implanter la fonction {\tt QuitteSalle(T,i)} qui augmente la valeur de {\tt T[i]} pour signifier qu'une place s'est libérée et modifie le tableau pour que la structure de tas soit conservée. Quelle est sa complexité ?
+
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+\hline
+15 & 14 & 13 & 10 & 5 & 12 & 8 & 2 & 8 & 3 \\
+\hline
+\end{tabular}
+
+\item
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {$5$}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {$4$}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {$3$}
+;}\newcommand{\noded}{\node[draw,circle] (d) {$2$}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {$1$}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {$2$}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {$3$}
+;}\newcommand{\nodeh}{\node[draw,circle] (h) {$2$}
+;}\newcommand{\nodei}{\node[draw,circle] (i) {$1$}
+;}\newcommand{\nodej}{\node[draw,circle] (j) {$1$}
+;}
+\scalebox{0.8}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \&         \&         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \&         \&         \& \nodeb  \&         \&         \&         \&         \&         \& \nodeh  \&         \\ 
+         \& \nodec  \&         \&         \&         \& \nodef  \&         \&         \& \nodei  \&         \& \nodej  \\ 
+ \noded  \&         \& \nodee  \&         \&         \&         \&         \&         \&         \&         \&         \\
+};
+
+\path[ultra thick, red] (c) edge (d) edge (e)
+	(b) edge (c) edge (f)
+	(h) edge (i) edge (j)
+	(a) edge (b) edge (h);
+\end{tikzpicture}}
+}
+
+\item Dans le deuxième cas, l'arbre obtenu n'est plus un tas. Il faut échanger le n\oe ud 5 avec son père, puis à nouveau récursivement avec la racine.
+
+{ \newcommand{\nodea}{\node[draw,circle] (a) {\red{5}}
+;}\newcommand{\nodeb}{\node[draw,circle] (b) {4}
+;}\newcommand{\nodec}{\node[draw,circle] (c) {2}
+;}\newcommand{\noded}{\node[draw,circle] (d) {4}
+;}\newcommand{\nodee}{\node[draw,circle] (e) {3}
+;}\newcommand{\nodef}{\node[draw,circle] (f) {2}
+;}\newcommand{\nodeg}{\node[draw,circle] (g) {2}
+;}
+\scalebox{0.6}{
+\begin{tikzpicture}[auto]
+\matrix[column sep=.3cm, row sep=.3cm,ampersand replacement=\&]{
+         \&         \&         \& \nodea  \&         \&         \&         \\ 
+         \& \nodeb  \&         \&         \&         \& \nodee  \&         \\ 
+ \nodec  \&         \& \noded  \&         \& \nodef  \&         \& \nodeg  \\
+};
+
+\path[ultra thick, red] (b) edge (c) edge (d)
+	(e) edge (f) edge (g)
+	(a) edge (b) edge (e);
+\end{tikzpicture}}
+}
+
+\item
+
+\begin{lstlisting}
+QuitteSalle
+Input :
+    - un tableau T de taille n
+    - un entier i
+Procédé :
+    Si i < n:
+        T[i] <- T[i] - 1
+        pere <- (i-1)/2
+        Tant que pere >= 0 et T[i] > T[pere]:
+            Echanger T[pere],T[i]
+            i <- pere
+            pere <- (i-1)/2
+\end{lstlisting}
+
+Complexité : $O(\log(n))$ (hauteur de l'arbre)
+
+\end{enumerate}
+
+
+\end{exercice}
