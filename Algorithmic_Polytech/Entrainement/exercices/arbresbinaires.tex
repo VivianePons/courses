@@ -135,9 +135,72 @@ Procédé :
 \item \'Ecrivez une fonction qui prend en paramètre un arbre binaire de recherche et un entier $v$ et qui retourne Vrai si $v$ est dans l'arbre et Faux sinon.
 \item De quoi dépend la complexité de votre algorithme ?
 \item Quelle est la particularité d'un parcours infixe dans un arbre binaire de recherche~?
-\item $\clubsuit$ Utilisez cette propriété pour écrire une fonction qui teste si un arbre donné est un arbre binaire de recherche. (Vous pouvez utiliser les fonctions précédentes)
+\item $\clubsuit$ Utilisez cette propriété pour écrire une fonction qui teste si un arbre donné est un arbre binaire de recherche. (Vous pouvez utiliser les fonctions précédentes). On ne traitera que le cas de valeurs distinctes (pas d'égalité). 
 \end{enumerate}
 
 \end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item 
+
+\begin{lstlisting}
+Hauteur
+Input : un arbre binaire A
+Procédé :
+Si A = None: 
+    Renvoyer 0
+Renvoyer 1 + max(Hauteur(A.filsG), Hauteur(A.filsD))
+\end{lstlisting}
+
+\item Exemple 1 :  3 -- Exemple 2 : 2
+
+\item Exemple 1 : [4,6,9,8,3,5,10,9] -- Exemple 2 : [3,7,9,11,12,13]
+
+\item \begin{enumerate}
+
+\item 
+
+\begin{lstlisting}
+Recherche
+Input : 
+    - un arbre binaire de recherche A
+    - un entier v
+Procédé :
+Si A = None:
+    Renvoyer Faux
+Si v = A.valeur:
+    Renvoyer Vrai
+Si v < A.valeur:
+    Renvoyer Recherche(A.filsG,v)
+Sinon :
+    Renvoyer Recherche(A.filsD, v)
+\end{lstlisting}
+
+\item La complexité dépend de la hauteur de l'arbre
+
+\item Un parcours infixe sur un arbre binaire de recherche renvoie les valeurs dans l'ordre croissant.
+
+\item 
+
+\begin{lstlisting}
+TestABR
+Input : Un arbre binaire A
+Procédé :
+L = Parcours(A) # le parcours infixe décrit plus haut
+Pour i allant de 1 à taille(L):
+    Si L[i] < L[i-1]:
+        Renvoyer Faux
+Renvoyer Vrai
+\end{lstlisting}
+
+(Remarque : dans le cas où un arbre contient des valeurs égales, il se peut que le parcours renvoie une liste triée alors que ce n'est pas un ABR).
+
+\end{enumerate}
+
+\end{enumerate}
+
+
 
 \end{exercice}
