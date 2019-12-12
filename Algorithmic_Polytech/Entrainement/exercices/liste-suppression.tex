@@ -1,0 +1,92 @@
+
+\begin{exercice}[Listes chaînées]
+On utilise la structure de donnée suivante :
+
+\begin{lstlisting}
+Structure Cellule:
+    Entier valeur
+    Cellule suivante
+
+Structure File:
+    Cellule premiere
+\end{lstlisting}
+
+Donner un algorithme qui prend en entrée une liste chaînée et une valeur $a$ et qui supprime \textbf{toutes les occurences} de $a$ dans la liste.
+
+Par exemple, si la liste est 
+\scalebox{.8}{
+\begin{tikzpicture}[>=latex]
+\node(L) at (-2,0){$L$};
+\node(Prem) at (-1,0){premiere};
+
+\node(T1)[draw, ultra thick, fill=blue!20, rectangle] at (0.5,0) {2};
+\node(T2)[draw, ultra thick, fill=blue!20, rectangle] at (1.5,0) {3};
+\node(T3)[draw, ultra thick, fill=blue!20, rectangle] at (2.5,0) {4};
+\node(T4)[draw, ultra thick, fill=blue!20, rectangle] at (3.5,0) {2};
+\node(T5)[draw, ultra thick, fill=blue!20, rectangle] at (4.5,0) {2};
+\node(T6)[draw, ultra thick, fill=blue!20, rectangle] at (5.5,0) {5};
+\node(T7)[draw, ultra thick, fill=blue!20, rectangle] at (6.5,0) {4};
+
+\draw (Prem.east) edge[->] (T1.west);
+\draw (T1.east) edge[->] (T2.west);
+\draw (T2.east) edge[->] (T3.west);
+\draw (T3.east) edge[->] (T4.west);
+\draw (T4.east) edge[->] (T5.west);
+\draw (T5.east) edge[->] (T6.west);
+\draw (T6.east) edge[->] (T7.west);
+\draw (T7.east) edge[->] ++(.5,0);
+\end{tikzpicture}
+}
+
+Le résultat après le passage de l'algorithme supprimant $2$ sera
+\scalebox{.8}{
+\begin{tikzpicture}[>=latex]
+\node(L) at (-2,0){$L$};
+\node(Prem) at (-1,0){premiere};
+
+\node(T1)[draw, ultra thick, fill=blue!20, rectangle] at (0.5,0) {3};
+\node(T2)[draw, ultra thick, fill=blue!20, rectangle] at (1.5,0) {4};
+\node(T3)[draw, ultra thick, fill=blue!20, rectangle] at (2.5,0) {5};
+\node(T4)[draw, ultra thick, fill=blue!20, rectangle] at (3.5,0) {4};
+
+\draw (Prem.east) edge[->] (T1.west);
+\draw (T1.east) edge[->] (T2.west);
+\draw (T2.east) edge[->] (T3.west);
+\draw (T3.east) edge[->] (T4.west);
+\draw (T4.east) edge[->] ++(.5,0);
+\end{tikzpicture}
+}
+
+
+\vspace{0.5cm}
+
+\textbf{Solution}
+
+Un algorithme possible (ce n'est pas le seul)
+
+\begin{lstlisting}
+Algo
+Input : Liste L, valeur a
+Procédé :
+    c <- L.premiere
+    Tant que c !=None et c.valeur == a:
+        c <- c.suivante
+    L.premiere <- c
+    Tant que c != None:
+        c2 <- c.suivante
+        Tant que c2 != None et c2.valeur == a:
+            c2 <- c2.suivante
+        c.suivante <- c2
+        c <- c.suivante
+
+\end{lstlisting}
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$9\%$ & $41\%$ & $36\%$ & $13\%$ & $0\%$ \\ \hline
+\end{tabular} 
+
+\end{exercice}

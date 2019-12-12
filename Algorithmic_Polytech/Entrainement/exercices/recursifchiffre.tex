@@ -1,0 +1,35 @@
+
+\begin{exercice}[Partiel 2018-2019]~
+
+\begin{enumerate}
+\item Donner un algorithme \textbf{récursif} qui calcule le nombre de chiffre (en base 10) d'un nombre entier positif. On considère que 0 s'écrit avec un chiffre.
+Par exemple, pour 16546, on renvoie 5. 
+
+\item Donner la complexité de votre algorithme.
+\end{enumerate}
+
+\textbf{Solution}
+
+(Une solution possible)
+
+\begin{lstlisting}
+Chiffres
+Input : un entier n positif
+Procédé :
+    Si n < 10:
+        renvoyer 1
+    renvoyer 1 + Chiffres(n/10)
+\end{lstlisting}
+
+Complexité $O(\log(n))$.
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$45\%$ & $50\%$ & $5\%$ & $0\%$ & $0\%$ \\ \hline
+\end{tabular} 
+
+
+\end{exercice}

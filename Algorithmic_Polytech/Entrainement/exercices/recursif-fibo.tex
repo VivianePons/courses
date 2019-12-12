@@ -1,0 +1,43 @@
+
+\begin{exercice}[Partiel 2018-2019]
+Voici un algorithme récursif
+
+\begin{lstlisting}
+MonCalcul
+Input :
+    - n, un entier
+Procédé :
+    Si n = 0 ou n = 1:
+        Retourner 1
+    Retourner MonCalcul(n-1) + MonCalcul(n-2)
+\end{lstlisting}
+
+\begin{enumerate}
+\item Calculer la valeur retournée pour les entrées : 1, 2, 3, 4.
+\item Sur quelles valeurs d'entrée cet algorithme termine-t-il ? (On ne demande pas les cas d'arrêt mais toutes les valeurs d'entrée où l'on obtient une réponse).
+\item Combien d'appels récursifs sont effectués pour la valeur d'entrée 5.
+\item Exprimer le nombre d'appels récursifs sous forme d'une fonction mathématique récursive.
+\item Donner la complexité de la fonction.
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}
+\item 1 -> 1 -- 2 -> 2 -- 3 -> 3 -- 4 -> 5
+\item Termine si $n \geq 0$.
+\item 15
+\item $f(n) = f(n-1) + f(n-2)$
+\item $O(2^n)$
+\end{enumerate}
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+$45\%$ & $14\%$ & $5\%$ & $36\%$ & $0\%$ \\ \hline
+\end{tabular} 
+
+\end{exercice}

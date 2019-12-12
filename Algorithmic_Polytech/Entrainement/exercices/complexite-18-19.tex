@@ -1,0 +1,74 @@
+
+\begin{exercice}[Partiel 2018-2019]
+
+Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+prend en entrée un entier positif $n$. 
+
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_a :
+    c <- 0
+    Pour i allant de 1 à n:
+        c <- c+2
+            
+Algo_b :
+    c <- 1
+    Tant que c < n:
+       c <- c*2   
+       
+Algo_c :
+    c <- 0
+    Pour i allant de 1 à n:
+        c <- c * c
+        Pour j allant de 1 à n:
+	        c <- c * 2       
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_d :
+    c <- 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+        Pour j allant de 1 à i:
+            c <- c + 1
+
+Algo_e :
+    Tant que n > 0:
+        n <- n//2
+        
+Algo_f :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à i:
+            Pour k allant de 1 à j:
+                c <- c + 1
+\end{lstlisting}
+\end{minipage}
+
+
+Exemple de réponses et note finale associée. 
+
+\textbf{La première ligne donne les réponses correctes attendues}
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+a & b & c & d & e & f & note \\ \hline
+$O(n)$ & $O(\log(n))$ & $O(n^2)$ & $O(n^2)$ & $O(\log(n))$ & $O(n^3)$ & A \\ \hline \hline
+$O(\frac{n}{2})$ & $O(\log(n))$ & $O(n^2)$ & $O(n^2)$ & $O(\log(n))$ & $O(n^3)$ & B \\ \hline
+$O(n)$ & $O(\log(n))$ & $O(n^2)$ & $O(n^3)$ & $O(\log(n))$ & $O(n^3)$ & C \\ \hline
+$O(n)$ & $O(\log(n))$ & $O(n^2)$ & $O(n^2)$ & $O(\log(n))$ & $O(n^2)$ & C \\ \hline
+$O(n)$ & $O(n)$ & $O(n^2)$ & $O(n^2)$ & $O(\log(n))$ & $O(n^3)$ & D \\ \hline
+\end{tabular}
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+60\% & 0\% & 18\% & 22\% & 0\% \\ \hline
+\end{tabular} 
+
+
+
+\end{exercice}

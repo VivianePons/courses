@@ -1,0 +1,37 @@
+
+\begin{exercice}[Partiel 2018-2019]
+Donner un algorithme qui prend en paramètre un tableau de taille $n$ contenant des valeurs distinctes et renvoie les $2^n$ sous ensemble possible.
+Par exemple, si on donne en entrée : {\tt [1,2,3] }, l'algorithme renverra {\tt [ [1,2,3], [1,2], [1,3], [1], [2,3], [2], [3], [] ] }. Dans
+chaque tableau, les nombres seront dans l'ordre initial, par contre, l'ordre des sous-ensemble dans le résultat n'a pas d'importance. 
+
+Remarque : pour un tableau vide, on renvoie le tableau contenant l'unique sous-ensemble vide donc {\tt [ [] ] }.
+
+(Vous pouvez utiliser la syntaxe que vous voulez pour tronquer / concaténer des tableaux).
+
+
+\textbf{Solution}
+
+\vspace{0.5cm}
+
+\begin{lstlisting}
+SousEnsemble
+Input : un tableau t de taille n
+Procédé :
+    Si n = 0:
+       Renvoyer [[]]
+    Resultat <- []
+    V <- SousEnsemble(t[1:])
+    Pour e dans v:
+        Resultat.append([t[0]] + e)
+    Resultat.extend(V)
+    Renvoyer Resultat
+\end{lstlisting}
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+A & B & C & Non répondu  \\ \hline
+$5\%$ & $18\%$ & $50\%$ & $27\%$ \\ \hline
+\end{tabular} 
+\end{exercice}
