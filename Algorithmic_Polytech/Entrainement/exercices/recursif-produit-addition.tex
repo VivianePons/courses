@@ -1,0 +1,52 @@
+
+\begin{exercice}[2019 -- 2020]
+Voici un algorithme récursif
+
+\begin{lstlisting}
+MonCalcul
+Input :
+    - a, b, 2 entiers
+Procédé :
+    Si a = 0 ou si b = 0:
+        Renvoyer 0
+    Si a < 0:
+        Renvoyer MonCalcul(-a,b)
+    Si a > b:
+        Renvoyer MonCalcul(b,a)
+    Si a%2 = 0:
+        c <- MonCalcul(a/2,b)
+        Renvoyer c+c
+    Sinon :
+        c <- MonCalcul((a-1)/2,b)
+        Renvoyer b + c + c
+\end{lstlisting}
+
+\begin{enumerate}
+\item Calculer la valeur retournée pour les entrées : $a = 8$ ,$b = 10$
+\item Que calcule cet algorithme de façon générale ?
+\item Sur quelles valeurs d'entrée cet algorithme termine-t-il ? (On ne demande pas les cas d'arrêt mais toutes les valeurs d'entrée où l'on obtient une réponse).
+\item Combien d'appels récursifs sont effectués pour les valeurs $a = 8$ ,$b = 10$
+\item Exprimer le nombre d'appels récursifs sous forme d'une fonction mathématique récursive.
+\item Donner la complexité de la fonction.
+\end{enumerate}
+
+\begin{correction}
+\begin{enumerate}
+\item 80
+\item $a \times b$
+\item Termine pour tout $a,b$
+\item 5
+\item $f(a) = 1 + f(\frac{a}{2})$ 
+\item $O(\log(n))$ où $n = min(a,b)$
+\end{enumerate}
+\end{correction}
+
+Question donnée au partiel 2019 -- 2020, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+41\% & 4\% & 33\% & 11\% & 11\% \\ \hline
+\end{tabular} 
+
+\end{exercice}

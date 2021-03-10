@@ -1,0 +1,77 @@
+
+\begin{exercice}[2019-20]
+
+Donner la complexité de chacun des algorithmes suivants (sans justification). Chaque algorithme 
+prend en entrée un entier positif $n$. 
+
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_a :
+    c <- n
+    Tant que c > 1:
+        c <- c/2 (division entière)
+            
+Algo_b :
+    c <- 1
+    Tant que c < n:
+       c <- c*2   
+       
+Algo_c :
+    c <- 0
+    Pour i allant de 1 à n:
+        Pour j allant de 1 à n:
+	        c <- c+1   
+	        
+Algo_d :
+    c <- 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+        Pour j allant de 1 à i:
+            c <- c + 1
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{0.48 \textwidth}
+\begin{lstlisting}
+Algo_e :
+    c <- 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+        
+Algo_f :
+    c <- 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+    Pour i allant de 1 à n:
+        c <- c + 1
+        Pour i allant de 1 à n:
+            c <- c + 1
+\end{lstlisting}
+\end{minipage}
+
+\textbf{Solution}
+
+
+\begin{itemize}
+\item a -- $O(\log(n))$
+\item b -- $O(\log(n))$
+\item c -- $O(n^2)$
+\item d -- $O(n^2)$
+\item e -- $O(n)$
+\item f -- $O(n^2)$
+\end{itemize}
+
+
+Question donnée au partiel 1 2019-2020, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+59\% & 0\% & 26\% & 7.5\% & 7.5\% \\ \hline
+\end{tabular} 
+
+
+\end{exercice}

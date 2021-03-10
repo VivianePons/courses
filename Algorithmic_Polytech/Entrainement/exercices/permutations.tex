@@ -1,0 +1,37 @@
+
+\begin{exercice}[2019 -- 2020]
+Donner un algorithme qui prend en paramètre un tableau de taille $n$ contenant des valeurs distinctes et renvoie les $n!$ permutations possible.
+Par exemple, si on donne en entrée : {\tt [1,2,3] }, l'algorithme renverra {\tt [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]] }. 
+
+Aide : pour un tableau vide, on renvoie le tableau contenant l'unique permutation vide donc {\tt [ [] ] }. Pour un tableau de taille $1$, comme $[1]$, on renvoie l'unique permutation qui est le tableau lui même donc {\tt [ [1] ] }. Quand le tableau est plus grand, une permutation est faite d'un élément du tableau puis d'une permutation des éléments restant.
+
+(Vous pouvez utiliser la syntaxe que vous voulez pour tronquer / concaténer des tableaux et ajouter / supprimer des éléments).
+
+\textbf{Solution}
+
+
+\begin{lstlisting}
+Permutations
+Input : un tableau t de taille n
+Procédé :
+    Si n = 0 ou n = 1:
+       Renvoyer [t]
+    Resultat <- []
+    Pour v dans t:
+       t2 = copie(t)
+       t2.delete(v)
+       Pour p dans Permutations(t2):
+           Resultat.append([v] + p)
+    Renvoyer Resultat
+\end{lstlisting}
+
+Question donnée au partiel 1 2018-2019, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+A & B & C & Non répondu  \\ \hline
+$19\%$ & $33\%$ & $26\%$ & $22\%$ \\ \hline
+\end{tabular} 
+
+
+\end{exercice}

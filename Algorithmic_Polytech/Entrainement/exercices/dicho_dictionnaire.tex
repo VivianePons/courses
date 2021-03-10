@@ -1,0 +1,50 @@
+
+\begin{exercice}[2019-2020]
+On a codé un dictionnaire à l'aide d'un tableau $D$ contenant des mots rangés par ordre alphabétique. 
+
+\begin{enumerate}
+\item \textbf{\'Ecrire une fonction qui renvoie l'indice d'un mot donné dans le dictionnaire (ou $-1$ si le mot est absent) de complexité optimale et donner sa complexité.} La fonction prend en paramètre le tableau $D$ de taille $n$ ainsi que le mot $v$. On a accès à une fonction de comparaison {\tt compare(v1,v2)} de complexité $O(1)$ qui prend en paramètre 2 mots et renvoie $-1$ si $v1$ est avant dans l'ordre alphabétique, 0 si les deux mots sont égaux et $1$ et $v1$ est après dans l'ordre alphabétique. 
+
+\item La taille $n$ du dictionnaire correspond au nombre de mots présents. Pour pouvoir rajouter des mots, le dictionnaire a aussi une capacité $c > n$. Lorsqu'on rajoute un mot et que la capacité est atteinte, elle doit être augmentée. Décrire une stratégie d'augmentation de la capacité qui permette d'obtenir une complexité optimale.
+
+
+\end{enumerate}
+
+
+\textbf{Solution}
+
+\begin{lstlisting}
+Algo1:
+Input D tableau de taille n, v un mot
+i <- 0
+j <- n
+Tant que i < j:
+    m <- (i+j)//2
+    w = D[m]
+    c <- 
+    Si c = 0:
+        Renvoyer m
+    Sinon si c < 0:
+         j <- m
+    Sinon :
+         i <- m+1
+Renvoyer -1
+\end{lstlisting}
+
+Algo2:
+On commence avec une capacité donnée (par exemple 1) et on double la capacité quand le dictionnaire est plein.
+
+Complexité de Algo1 : $O(\log(n))$.
+
+Question donnée au partiel 1 2019-2020, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+41\% & 44\% & 7\% & 4\% & 4\% \\ \hline
+\end{tabular} 
+
+
+
+\end{exercice}
+

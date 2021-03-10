@@ -115,4 +115,12 @@
       \paragraph{\tt #1:} #2%
     \end{minipage}%
   }}
+  
 
+\usepackage{environ}
+
+\NewEnviron{correction}{
+\textbf{Solution}
+
+\BODY
+}{}

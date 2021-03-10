@@ -1,0 +1,50 @@
+
+\begin{exercice}[2019 -- 2020]~
+
+La suite de Syracuse d'un nombre $k$ est donnée par l'algorithme suivant :
+\begin{align*}
+U_1 &= k \\
+U_{n+1} &= \begin{cases}
+\frac{U_n}{2}, \text{ si }n\text{ est pair}\\
+3U_n + 1, \text{ si }n\text{ est impair}.
+\end{cases}
+\end{align*}
+
+Par exemple, pour $k = 3$, on obtient $3, 10, 5, 16, 8, 4, 2, 1, 4, 2, 1, \dots$. La conjecture de Syracuse prétend que la suite atteint toujours la valeur $1$. Ainsi, on définit la \emph{taille de Syracuse} $n$ d'un entier $k$ par le plus petit $n$ tel que $U_n = 1$. Pour $k = 3$, la taille est donc 8 car la 8ème valeur de la suite est 1. Pour $7$, on obtient la suite : $7, 22, 11, 34, 17, 52, 26,
+13,
+40,
+20,
+10,
+5,
+16,
+8,
+4,
+2,1$ soit une taille de $17$.
+
+\textbf{\'Ecrire une fonction récursive qui calcule la taille de Syracuse d'un nombre donné}.
+
+
+\textbf{Solution}
+
+\begin{lstlisting}
+Syracuse
+Input : un entier k positif
+Procédé :
+    Si k = 1:
+        Renvoyer 1
+    Si k%2 = 0:
+        Renvoyer 1 + Syracuse(k/2)
+    Sinon:
+        Renvoyer 1 + Syracuse(3k+1)
+\end{lstlisting}
+
+
+
+Question donnée au partiel 2019 -- 2020, résultats obtenus :
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+A & B & C & D & E \\ \hline
+56\% & 15\% & 15\% & 7\% & 7\% \\ \hline
+\end{tabular}
+\end{exercice}
